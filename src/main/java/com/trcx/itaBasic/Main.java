@@ -7,25 +7,25 @@ package com.trcx.itaBasic;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.trcx.itaBasic.Common.CONSTS;
+import com.trcx.itaBasic.Common.Item.ITAArmor;
 import com.trcx.itaBasic.Common.MaterialProperty;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.HashMap;
 import java.util.Map;
 
 @Mod(modid = "ITABasic", version = Main.VERSION, name = "Infinitely Tweakable Armor - Basic")
 public class Main
 {
     public static final String VERSION = "0.0.1";
-
-    public static Map<String, MaterialProperty> Materials = new HashMap<String, MaterialProperty>();
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException{
@@ -41,7 +41,7 @@ public class Main
         Type typeOfMaterials = new TypeToken<Map<String, MaterialProperty>>() { }.getType();
         if (materialsFile.exists()){
             String json = new String(Files.readAllBytes(Paths.get(materialsFile.getPath())));
-            Materials = gson.fromJson(json, typeOfMaterials);
+            ITABasic.Materials = gson.fromJson(json, typeOfMaterials);
         } else {
             RegisterArmorMaterial(1.83, 25, 0.2, 14, "#EAEE57", "ingotGold"); //vanilla values (minus Weight)
             RegisterArmorMaterial(1.50, 30, 0  , 10, "#E0D495", "ingotNickel");
@@ -83,14 +83,19 @@ public class Main
             RegisterArmorMaterial(3.20, 28,-0.3, 60, "#FACAFC", "ingotElvenElementium");
             RegisterArmorMaterial(3.50, 25, 0  , 70, "#90E764", "ingotTerrasteel"); // TODO Health Increase
             RegisterArmorMaterial(2.70, 18, 0  , 45, "#CAEAFD", "ingotManasteel");
-            String json = gson.toJson(Materials,typeOfMaterials);
+            String json = gson.toJson(ITABasic.Materials,typeOfMaterials);
             Files.write(Paths.get(materialsFile.getPath()), json.getBytes());
         }
 
+        ITABasic.Helmet = new ITAArmor(CONSTS.typeHELMET).setUnlocalizedName("ITAHelmet").setTextureName("ITA:Helmet");
+        ITABasic.Chestplate = new ITAArmor(CONSTS.typeCHESTPLATE).setUnlocalizedName("ITAChestplate").setTextureName("ITA:Chestplate");
+        ITABasic.Leggings = new ITAArmor(CONSTS.typeLEGGINGS).setUnlocalizedName("ITALeggings").setTextureName("ITA:Leggings");
+        ITABasic.Boots = new ITAArmor(CONSTS.typeBOOTS).setUnlocalizedName("ITABoots").setTextureName("ITA:Boots");
 
-//        System.out.println(gson.toJson(test));
-
-
+        GameRegistry.registerItem(ITABasic.Helmet,CONSTS.idHELMENT);
+        GameRegistry.registerItem(ITABasic.Chestplate, CONSTS.idCHESTPLATE);
+        GameRegistry.registerItem(ITABasic.Leggings, CONSTS.idLEGGINGS);
+        GameRegistry.registerItem(ITABasic.Boots, CONSTS.idBOOTS);
 
     }
 
@@ -99,15 +104,15 @@ public class Main
     {
     }
 
-    private void RegisterArmorMaterial(double protection,Integer enchantability,double weight,Integer maxDurability,String color,String oreDictName){
+    private void RegisterArmorMaterial(double protection,Integer enchantability,double weight,Integer maxDurability,String hexColor,String oreDictName){
         MaterialProperty newMat = new MaterialProperty();
         newMat.protection = protection;
         newMat.enchantability = enchantability;
         newMat.weight = weight;
         newMat.durability = maxDurability;
-        newMat.color = color;
+        newMat.hexColor = hexColor;
         newMat.oreDictionaryName = oreDictName;
-        newMat.friendlyName = oreDictName;
-        Materials.put(oreDictName, newMat);
+        newMat.setFriendlyNameFromOreDictionaryName();
+        ITABasic.Materials.put(oreDictName, newMat);
     }
 }

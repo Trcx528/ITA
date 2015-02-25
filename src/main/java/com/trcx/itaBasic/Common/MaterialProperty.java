@@ -9,7 +9,7 @@ import java.util.Map;
 public class MaterialProperty {
     public String oreDictionaryName;
     public String friendlyName;
-    public String color;
+    public String hexColor;
     public double protection;
     public int enchantability;
     public double weight;
@@ -18,16 +18,28 @@ public class MaterialProperty {
 
     public MaterialProperty(){}
 
-    public MaterialProperty(String friendlyName, String color, double protection, int enchantability, double weight, int durability) {
+    public MaterialProperty(String friendlyName, String hexColor, double protection, int enchantability, double weight, int durability) {
         this.friendlyName = friendlyName;
-        this.color = color;
+        this.hexColor = hexColor;
         this.protection = protection;
         this.enchantability = enchantability;
         this.weight = weight;
         this.durability = durability;
     }
 
-    public void getFriendlyNameFromOreDictionaryName (String oreDictionaryName){
+    public void setFriendlyNameFromOreDictionaryName (){
+        if (this.friendlyName == null) {
+            String[] chunks = this.oreDictionaryName.split("(?=[A-Z])");
+            for (int i = 0; i < chunks.length; i++) {
+                if (i != 0) {
+                    if (i == 1) {
+                        this.friendlyName = chunks[i];
+                    } else {
+                        this.friendlyName = this.friendlyName + " " + chunks[i];
+                    }
+                }
+            }
 
+        }
     }
 }
