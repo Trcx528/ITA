@@ -8,8 +8,10 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.trcx.itaBasic.Common.CONSTS;
+import com.trcx.itaBasic.Common.Item.ArmorHammer;
 import com.trcx.itaBasic.Common.Item.ITAArmor;
 import com.trcx.itaBasic.Common.MaterialProperty;
+import com.trcx.itaBasic.Common.Recipes.RecipeITAAarmor;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -83,19 +85,28 @@ public class Main
             RegisterArmorMaterial(3.20, 28,-0.3, 60, "#FACAFC", "ingotElvenElementium");
             RegisterArmorMaterial(3.50, 25, 0  , 70, "#90E764", "ingotTerrasteel"); // TODO Health Increase
             RegisterArmorMaterial(2.70, 18, 0  , 45, "#CAEAFD", "ingotManasteel");
-            String json = gson.toJson(ITABasic.Materials,typeOfMaterials);
-            Files.write(Paths.get(materialsFile.getPath()), json.getBytes());
         }
+
+        for (String key: ITABasic.Materials.keySet()){
+            ITABasic.Materials.get(key).oreDictionaryName = key;
+        }
+
+        String json = gson.toJson(ITABasic.Materials,typeOfMaterials);
+        Files.write(Paths.get(materialsFile.getPath()), json.getBytes());
 
         ITABasic.Helmet = new ITAArmor(CONSTS.typeHELMET).setUnlocalizedName("ITAHelmet").setTextureName("ITA:Helmet");
         ITABasic.Chestplate = new ITAArmor(CONSTS.typeCHESTPLATE).setUnlocalizedName("ITAChestplate").setTextureName("ITA:Chestplate");
         ITABasic.Leggings = new ITAArmor(CONSTS.typeLEGGINGS).setUnlocalizedName("ITALeggings").setTextureName("ITA:Leggings");
         ITABasic.Boots = new ITAArmor(CONSTS.typeBOOTS).setUnlocalizedName("ITABoots").setTextureName("ITA:Boots");
+        ITABasic.ArmorHammer = new ArmorHammer();
 
         GameRegistry.registerItem(ITABasic.Helmet,CONSTS.idHELMENT);
         GameRegistry.registerItem(ITABasic.Chestplate, CONSTS.idCHESTPLATE);
         GameRegistry.registerItem(ITABasic.Leggings, CONSTS.idLEGGINGS);
         GameRegistry.registerItem(ITABasic.Boots, CONSTS.idBOOTS);
+        GameRegistry.registerItem(ITABasic.ArmorHammer, CONSTS.idARMORHAMMER);
+
+        GameRegistry.addRecipe(new RecipeITAAarmor());
 
     }
 
@@ -112,6 +123,7 @@ public class Main
         newMat.durability = maxDurability;
         newMat.hexColor = hexColor;
         newMat.oreDictionaryName = oreDictName;
+        newMat.friendlyName = null;
         newMat.setFriendlyNameFromOreDictionaryName();
         ITABasic.Materials.put(oreDictName, newMat);
     }

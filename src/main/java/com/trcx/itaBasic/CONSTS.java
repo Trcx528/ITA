@@ -14,5 +14,6 @@ public class CONSTS {
     public static final String idCHESTPLATE = "ITAChestplate";
     public static final String idLEGGINGS = "ITALeggings";
     public static final String idBOOTS = "ITABoots";
+    public static final String idARMORHAMMER = "ArmorHammer";
 
 }

@@ -4,6 +4,7 @@ import com.trcx.itaBasic.Common.MaterialProperty;
 import net.minecraft.item.Item;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -13,8 +14,17 @@ import java.util.Map;
 
 public class ITABasic {
     public static Map<String, MaterialProperty> Materials = new HashMap<String, MaterialProperty>();
+
     public static Item Helmet;
     public static Item Chestplate;
     public static Item Leggings;
     public static Item Boots;
+    public static Item ArmorHammer;
+
+    public static MaterialProperty getArmorProps(List<MaterialProperty> Materials){
+
+
+
+        return null;
+    }
 }
