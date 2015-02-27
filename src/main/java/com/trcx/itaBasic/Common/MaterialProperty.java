@@ -1,6 +1,8 @@
 package com.trcx.itaBasic.Common;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +16,8 @@ public class MaterialProperty {
     public int enchantability;
     public double weight;
     public int durability;
+    public List<Integer> invalidTypes;
+
     public Map<String, Integer> traits = new HashMap<String, Integer>();
 
     public MaterialProperty(){}
@@ -25,6 +29,11 @@ public class MaterialProperty {
         this.enchantability = enchantability;
         this.weight = weight;
         this.durability = durability;
+    }
+
+    public void onLoadFromFileUpdate(String oreDictionaryName){
+        this.oreDictionaryName = oreDictionaryName;
+        this.invalidTypes = new ArrayList<Integer>();
     }
 
     public void setFriendlyNameFromOreDictionaryName (){

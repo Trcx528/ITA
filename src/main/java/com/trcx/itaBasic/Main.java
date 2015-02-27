@@ -88,7 +88,7 @@ public class Main
         }
 
         for (String key: ITABasic.Materials.keySet()){
-            ITABasic.Materials.get(key).oreDictionaryName = key;
+            ITABasic.Materials.get(key).onLoadFromFileUpdate(key);
         }
 
         String json = gson.toJson(ITABasic.Materials,typeOfMaterials);
@@ -98,7 +98,7 @@ public class Main
         ITABasic.Chestplate = new ITAArmor(CONSTS.typeCHESTPLATE).setUnlocalizedName("ITAChestplate").setTextureName("ITA:Chestplate");
         ITABasic.Leggings = new ITAArmor(CONSTS.typeLEGGINGS).setUnlocalizedName("ITALeggings").setTextureName("ITA:Leggings");
         ITABasic.Boots = new ITAArmor(CONSTS.typeBOOTS).setUnlocalizedName("ITABoots").setTextureName("ITA:Boots");
-        ITABasic.ArmorHammer = new ArmorHammer();
+        ITABasic.ArmorHammer = new ArmorHammer().setUnlocalizedName("ITAHammer").setTextureName("ITA:Hammer");
 
         GameRegistry.registerItem(ITABasic.Helmet,CONSTS.idHELMENT);
         GameRegistry.registerItem(ITABasic.Chestplate, CONSTS.idCHESTPLATE);

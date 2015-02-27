@@ -21,10 +21,4 @@ public class ITABasic {
     public static Item Boots;
     public static Item ArmorHammer;
 
-    public static MaterialProperty getArmorProps(List<MaterialProperty> Materials){
-
-
-
-        return null;
-    }
 }
