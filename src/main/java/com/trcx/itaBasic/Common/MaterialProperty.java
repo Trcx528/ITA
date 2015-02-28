@@ -14,7 +14,8 @@ public class MaterialProperty {
     public String hexColor;
     public double protection;
     public int enchantability;
-    public double weight;
+    //private double weight;
+    public double speed;
     public int durability;
     public List<Integer> invalidTypes;
 
@@ -22,21 +23,17 @@ public class MaterialProperty {
 
     public MaterialProperty(){}
 
-    public MaterialProperty(String friendlyName, String hexColor, double protection, int enchantability, double weight, int durability) {
+    public MaterialProperty(String friendlyName, String hexColor, double protection, int enchantability, double speed, int durability) {
         this.friendlyName = friendlyName;
         this.hexColor = hexColor;
         this.protection = protection;
         this.enchantability = enchantability;
-        this.weight = weight;
+        this.speed = speed;
         this.durability = durability;
     }
 
-    public void onLoadFromFileUpdate(String oreDictionaryName){
-        this.oreDictionaryName = oreDictionaryName;
+    public void onLoadFromFileUpdate(){
         this.invalidTypes = new ArrayList<Integer>();
-    }
-
-    public void setFriendlyNameFromOreDictionaryName (){
         if (this.friendlyName == null) {
             String[] chunks = this.oreDictionaryName.split("(?=[A-Z])");
             for (int i = 0; i < chunks.length; i++) {
@@ -48,7 +45,6 @@ public class MaterialProperty {
                     }
                 }
             }
-
         }
     }
 }

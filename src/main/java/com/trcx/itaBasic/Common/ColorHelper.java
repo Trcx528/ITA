@@ -11,12 +11,8 @@ public class ColorHelper {
         return Color.decode(hex);
     }
 
-    public static void addToColorMap(Map<String, Double> ColorMap, String Hex, Double Weight){
-        if (ColorMap.containsKey(Hex)){
-            ColorMap.put(Hex, Weight + ColorMap.get(Hex));
-        } else {
-            ColorMap.put(Hex, Weight);
-        }
+    public static Color colorFromInt(Integer col){
+        return colorFromHex(hexFromInt(col));
     }
 
     public static int intFromHex(String hex){
@@ -28,7 +24,11 @@ public class ColorHelper {
         return "#" + Integer.toHexString(dColor);
     }
 
-    public static int getAvgColor(Map<String, Double> colors){
+    public static Color getAvgColor(Map<String, Integer> colors){
+        return colorFromInt(getAvgColorInt(colors));
+    }
+
+    public static int getAvgColorInt(Map<String, Integer> colors){
         double total = 0;
         int r =0;
         int g =0;
