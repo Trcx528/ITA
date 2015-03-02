@@ -57,6 +57,7 @@ public class ITAArmorProperties {
             armorDisplayValue = Math.round((float) armorProtectionValue / 4);
             maxDurability *= typeDurabilityFactor;
             enchantability /= totalQty;
+            speedModifier /= totalQty;
             color = ColorHelper.getAvgColor(ColorMap);
         }
     }

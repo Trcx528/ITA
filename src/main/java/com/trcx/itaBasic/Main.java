@@ -8,6 +8,7 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.trcx.itaBasic.Common.CONSTS;
+import com.trcx.itaBasic.Common.ITAArmorProperties;
 import com.trcx.itaBasic.Common.ITACommand;
 import com.trcx.itaBasic.Common.Item.ArmorHammer;
 import com.trcx.itaBasic.Common.Item.ITAArmor;
@@ -19,9 +20,13 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
+import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.oredict.OreDictionary;
@@ -157,6 +162,8 @@ public class Main
         event.registerServerCommand(new ITACommand());
     }
 
+
+
     private void RegisterArmorMaterial(double protection,Integer enchantability,double speedModifier,Integer maxDurability,String hexColor,String oreDictName){
         MaterialProperty newMat = new MaterialProperty();
         newMat.protection = protection;
@@ -167,5 +174,30 @@ public class Main
         newMat.oreDictionaryName = oreDictName;
         newMat.friendlyName = null;
         tempMaterials.add(newMat);
+    }
+
+    @SubscribeEvent
+    public void speedApplicator(TickEvent.PlayerTickEvent event){
+        double speedModifier = 0D;
+        for (int i=0; i < 4; i++){
+            ItemStack is = event.player.getCurrentArmor(i);
+            if (is != null){
+                if (is.getItem() == ITABasic.Helmet || is.getItem() == ITABasic.Chestplate ||
+                        is.getItem() == ITABasic.Leggings || is.getItem() == ITABasic.Boots){
+                    speedModifier += (new ITAArmorProperties(is).speedModifier / 4) + 0.25;
+
+                } else {
+                    speedModifier += 0.25; // unknown armor don't do any special speed
+                }
+            } else {
+                speedModifier += 0.25; // no armor don't do any special speed
+            }
+        }
+
+        if (!event.player.isAirBorne && !event.player.capabilities.isFlying) {
+            event.player.motionX *= speedModifier;
+            //event.player.motionY *= speedModifier; //breaks jumping and falling
+            event.player.motionZ *= speedModifier;
+        }
     }
 }

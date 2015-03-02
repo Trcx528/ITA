@@ -22,7 +22,6 @@ public class RecipeITAAarmor implements IRecipe {
         boolean t = true;
         boolean f = false;
         ArmorNBT anbt = new ArmorNBT();
-        //Map<MaterialProperty, Integer> armorMaterials = new HashMap<MaterialProperty,Integer>();
         int armorType = 5; //bad armor value
 
         for (int i = 0; i < 9; i++) {
