@@ -8,14 +8,23 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.trcx.itaBasic.Common.CONSTS;
+import com.trcx.itaBasic.Common.ITACommand;
 import com.trcx.itaBasic.Common.Item.ArmorHammer;
 import com.trcx.itaBasic.Common.Item.ITAArmor;
 import com.trcx.itaBasic.Common.MaterialProperty;
 import com.trcx.itaBasic.Common.Recipes.RecipeITAAarmor;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,6 +40,11 @@ public class Main
     public static final String VERSION = "0.0.1";
 
     private List<MaterialProperty> tempMaterials = new ArrayList<MaterialProperty>();
+
+    public Main(){
+        MinecraftForge.EVENT_BUS.register(this);
+        FMLCommonHandler.instance().bus().register(this);
+    }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException{
@@ -126,6 +140,21 @@ public class Main
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
+    }
+
+    @SideOnly(Side.CLIENT)
+    @SubscribeEvent
+    public void toolTipListener(ItemTooltipEvent event){
+        for (int id: OreDictionary.getOreIDs(event.itemStack)){
+            if (ITABasic.Materials.containsKey(OreDictionary.getOreName(id))){
+                ITABasic.Materials.get(OreDictionary.getOreName(id)).getToolTip(event.toolTip);
+            }
+        }
+    }
+
+    @Mod.EventHandler
+    public void serverInit(FMLServerStartingEvent event){
+        event.registerServerCommand(new ITACommand());
     }
 
     private void RegisterArmorMaterial(double protection,Integer enchantability,double speedModifier,Integer maxDurability,String hexColor,String oreDictName){

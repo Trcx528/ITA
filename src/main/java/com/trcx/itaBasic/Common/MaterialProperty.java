@@ -1,5 +1,7 @@
 package com.trcx.itaBasic.Common;
 
+import net.minecraft.util.EnumChatFormatting;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,13 +26,17 @@ public class MaterialProperty {
 
     public MaterialProperty(){}
 
-    public MaterialProperty(String friendlyName, String hexColor, double protection, int enchantability, double speed, int durability) {
-        this.friendlyName = friendlyName;
-        this.hexColor = hexColor;
-        this.protection = protection;
-        this.enchantability = enchantability;
-        this.speed = speed;
-        this.durability = durability;
+    public void getToolTip(List<String> data){
+        data.add(EnumChatFormatting.BLUE + "Armor: " + this.protection);
+        data.add(EnumChatFormatting.AQUA + "Durability " + this.durability);
+        data.add(EnumChatFormatting.GREEN + "Enchantability: " + this.enchantability);
+        data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + this.speed);
+        if (traits.keySet().size() > 0) {
+            data.add(EnumChatFormatting.DARK_AQUA + "Traits: ");
+            for (String trait : this.traits.keySet()) {
+                data.add(trait + " " + traits.get(trait).toString());
+            }
+        }
     }
 
     public void onLoadFromFileUpdate(){
