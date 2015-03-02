@@ -2,28 +2,21 @@ package com.trcx.itaBasic.Common.Recipes;
 
 import com.trcx.itaBasic.Common.ArmorNBT;
 import com.trcx.itaBasic.Common.CONSTS;
-import com.trcx.itaBasic.Common.Item.ArmorHammer;
 import com.trcx.itaBasic.Common.MaterialProperty;
 import com.trcx.itaBasic.ITABasic;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by Trcx on 2/25/2015.
  */
 public class RecipeITAAarmor implements IRecipe {
 
     private ItemStack getOutput(InventoryCrafting inv, Boolean shouldCreate){
-        ArrayList<Integer> slotsUsed = new ArrayList<Integer>();
         int hammerCount = 0;
         boolean[] materialSlots = new boolean[9];
         boolean t = true;
@@ -93,7 +86,9 @@ public class RecipeITAAarmor implements IRecipe {
             returnArmor = new ItemStack(ITABasic.Boots);
         }
 
+        anbt.armorType = armorType;
         ArmorNBT.writeToNBT(anbt, returnArmor);
+
         if (shouldCreate)
             returnArmor.stackSize = 1;
 

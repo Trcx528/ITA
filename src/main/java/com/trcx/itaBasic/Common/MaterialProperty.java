@@ -17,6 +17,7 @@ public class MaterialProperty {
     //private double weight;
     public double speed;
     public int durability;
+    public String comment;
     public List<Integer> invalidTypes;
 
     public Map<String, Integer> traits = new HashMap<String, Integer>();
