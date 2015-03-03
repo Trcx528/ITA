@@ -1,6 +1,7 @@
 package com.trcx.ita.Common;
 
 import com.trcx.ita.ITA;
+import com.trcx.ita.Main;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -43,6 +44,8 @@ public class ITACommand implements ICommand {
                     for (int id : ids) {
                         sender.addChatMessage(new ChatComponentText(OreDictionary.getOreName(id)));
                     }
+                } else if (parameters[0].equals("reload")) {
+                    Main.loadConfigs();
                 }
             }
         }
@@ -54,7 +57,13 @@ public class ITACommand implements ICommand {
     }
 
     @Override
-    public List addTabCompletionOptions(ICommandSender p_71516_1_, String[] p_71516_2_) {
+    public List addTabCompletionOptions(ICommandSender sender, String[] parameters) {
+        if (parameters.length <= 1){
+            List<String> retVal = new ArrayList<String>();
+            retVal.add("dictionary");
+            retVal.add("reload");
+            return retVal;
+        }
         return null;
     }
 

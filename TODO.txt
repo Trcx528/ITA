@@ -8,6 +8,8 @@
   - maybe make it editable in game?
 - Add slash commands to change values on the fly?
 - alloys
+- After the fact upgrades?
+  - Steo Assist
 
 Wishlist:
 - auto tool switcher/toggle

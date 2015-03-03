@@ -12,7 +12,7 @@ import java.util.Map;
 
 
 public class ITA {
-    public static Map<String, MaterialProperty> Materials = new HashMap<String, MaterialProperty>();
+    public static Map<String, MaterialProperty> Materials;
 
     public static boolean debug;
 
