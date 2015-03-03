@@ -17,8 +17,11 @@ public class ITAArmorProperties {
     public double armorProtectionValue = 0;
     public double speedModifier = 0;
     public int enchantability = 0;
-    public Color color;
     public int maxDurability = 0;
+    public boolean isInvisible = false;
+    public int armorType = 5;
+
+    private int nbtColor;
     private Map<String, Integer> ColorMap = new HashMap<String, Integer>();
 
     public ITAArmorProperties(ItemStack is) {
@@ -33,6 +36,8 @@ public class ITAArmorProperties {
             maxDurability += mat.durability * qty;
             ColorMap.put(mat.hexColor, qty);
         }
+
+        this.armorType = anbt.armorType;
 
         if (totalQty != 0) {
             double typeArmorFactor = 0;
@@ -61,8 +66,16 @@ public class ITAArmorProperties {
             maxDurability *= typeDurabilityFactor;
             enchantability /= totalQty;
             speedModifier /= totalQty;
-            color = ColorHelper.getAvgColor(ColorMap);
+
+            isInvisible = anbt.invisible;
+            nbtColor = anbt.color;
         }
+    }
+
+    public int getColor(){
+        if (nbtColor != 0)
+            return nbtColor;
+        return ColorHelper.getAvgColorInt(ColorMap);
     }
 
     public void getToolTip(List<String> data){
@@ -75,5 +88,8 @@ public class ITAArmorProperties {
         data.add(EnumChatFormatting.AQUA + "Max Durability: " + this.maxDurability);
         data.add(EnumChatFormatting.GREEN + "Enchantability: " + this.enchantability);
         data.add(EnumChatFormatting.LIGHT_PURPLE + "Weight: " + ((this.speedModifier * -1) + 1));
+        if (isInvisible){
+            data.add(EnumChatFormatting.GRAY + "Invisible");
+        }
     }
 }

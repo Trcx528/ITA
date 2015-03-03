@@ -15,9 +15,13 @@ public class ArmorNBT {
 
     private static final String stringNBTMATERIAL = "itaMaterials";
     private static final String stringNBTARMORTYPE = "itaArmorType";
+    private static final String stringNBTARMORCOLOR = "itaArmorColor";
+    private static final String stringNBTARMORINVISIBLE = "itaArmorInvisible";
 
     public Map<MaterialProperty, Integer> materials = new HashMap<MaterialProperty, Integer>();
     public int armorType = 5;
+    public int color = 0;
+    public boolean invisible = false;
 
     public ArmorNBT(ItemStack is){
         if (is.hasTagCompound()) {
@@ -30,9 +34,14 @@ public class ArmorNBT {
                     }
                 }
             }
-            if (is.stackTagCompound.hasKey(stringNBTARMORTYPE)){
+            if (is.stackTagCompound.hasKey(stringNBTARMORTYPE))
                 armorType = is.stackTagCompound.getInteger(stringNBTARMORTYPE);
-            }
+
+            if (is.stackTagCompound.hasKey(stringNBTARMORCOLOR))
+                color = is.stackTagCompound.getInteger(stringNBTARMORCOLOR);
+
+            if (is.stackTagCompound.hasKey(stringNBTARMORINVISIBLE))
+                invisible = is.stackTagCompound.getBoolean(stringNBTARMORINVISIBLE);
         }
     }
 
@@ -48,5 +57,9 @@ public class ArmorNBT {
         }
         is.stackTagCompound.setTag(stringNBTMATERIAL, nbt);
         is.stackTagCompound.setInteger(stringNBTARMORTYPE, anbt.armorType);
+        if (anbt.invisible)
+            is.stackTagCompound.setBoolean(stringNBTARMORINVISIBLE, true);
+        if (anbt.color != 0)
+            is.stackTagCompound.setInteger(stringNBTARMORCOLOR, anbt.color);
     }
 }

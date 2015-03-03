@@ -1,8 +1,12 @@
 package com.trcx.ita.Common;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
+import net.minecraft.util.IChatComponent;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +34,16 @@ public class ITACommand implements ICommand {
 
     @Override
     public void processCommand(ICommandSender sender, String[] parameters) {
-        if (parameters.length > 0){ // do more with this later
-            sender.addChatMessage(new ChatComponentText(parameters.toString()));
+        if (sender instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer)sender;
+            if (parameters.length > 0) { // do more with this later
+                if (parameters[0].equals("dictionary")) {
+                    int[] ids = OreDictionary.getOreIDs(player.getHeldItem());
+                    for (int id : ids) {
+                        sender.addChatMessage(new ChatComponentText(OreDictionary.getOreName(id)));
+                    }
+                }
+            }
         }
     }
 

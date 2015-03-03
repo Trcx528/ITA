@@ -17,4 +17,9 @@ public class ArmorHammer extends Item {
         GameRegistry.addShapedRecipe(new ItemStack(this), " i ", " si", "s  ", 's', new ItemStack(Items.stick),
                 'i', new ItemStack(Items.iron_ingot));
     }
+
+    @Override
+    public boolean doesContainerItemLeaveCraftingGrid(ItemStack is) {
+        return false;
+    }
 }

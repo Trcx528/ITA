@@ -1,8 +1,16 @@
 package com.trcx.ita.Common.Item;
 
+import com.trcx.ita.Client.ArmorRenderer;
+import com.trcx.ita.Common.ArmorNBT;
 import com.trcx.ita.Common.ITAArmorProperties;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.model.ModelBiped;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -16,8 +24,51 @@ import java.util.List;
  */
 public class ITAArmor extends ItemArmor implements ISpecialArmor {
 
+    private ArmorRenderer model = null;
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public ModelBiped getArmorModel(EntityLivingBase entityLiving, ItemStack itemStack, int armorSlot) {
+        ITAArmorProperties props = new ITAArmorProperties(itemStack);
+
+        if (props.isInvisible){
+          return null;
+        } else {
+            if (this.model == null) {
+                this.model = new ArmorRenderer();
+            }
+            this.model.bipedHead.showModel = (props.armorType == 0);
+            this.model.bipedHeadwear.showModel = (props.armorType == 0);
+            this.model.bipedBody.showModel = ((props.armorType == 1) || (props.armorType == 2));
+            this.model.bipedLeftArm.showModel = (props.armorType == 1);
+            this.model.bipedRightArm.showModel = (props.armorType == 1);
+            this.model.bipedLeftLeg.showModel = (props.armorType == 2 || props.armorType == 3);
+            this.model.bipedRightLeg.showModel = (props.armorType == 2 || props.armorType == 3);
+            this.model.isSneak = entityLiving.isSneaking();
+
+            this.model.isRiding = entityLiving.isRiding();
+            this.model.isChild = entityLiving.isChild();
+
+            this.model.aimedBow = false;
+            this.model.heldItemRight = (entityLiving.getHeldItem() != null ? 1 : 0);
+            this.model.setColor(props.getColor());
+            return this.model;
+        }
+    }
+
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
+        if (new ArmorNBT(stack).invisible){
+            return "ITA:textures/models/armor/invisble.png";
+        } else if (this.armorType == 2) {
+            return "ITA:textures/models/armor/basicarmor_2.png";
+        } else {
+            return "ITA:textures/models/armor/basicarmor_1.png";
+        }
+    }
+
     public ITAArmor(int armorTypeIndex) {
-        super(ArmorMaterial.IRON, 0, armorTypeIndex);
+        super(ArmorMaterial.DIAMOND, 0, armorTypeIndex);
     }
 
     @Override
@@ -50,11 +101,6 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
     }
 
     @Override
-    public void addInformation(ItemStack is, EntityPlayer player, List data, boolean p_77624_4_) {
-
-    }
-
-    @Override
     public int getArmorDisplay(EntityPlayer player, ItemStack armor, int slot) {
         return new ITAArmorProperties(armor).armorDisplayValue;
     }
@@ -62,5 +108,27 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
     @Override
     public void damageArmor(EntityLivingBase entity, ItemStack stack, DamageSource source, int damage, int slot) {
         stack.damageItem(damage, entity);
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean hasColor(ItemStack is) {return  true;}
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void registerIcons(IIconRegister register) {
+        this.itemIcon = register.registerIcon(this.getIconString());
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public int getColor(ItemStack is) {
+        return new ITAArmorProperties(is).getColor();
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public boolean requiresMultipleRenderPasses() {
+        return false;
     }
 }

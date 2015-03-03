@@ -13,6 +13,7 @@ import com.trcx.ita.Common.ITACommand;
 import com.trcx.ita.Common.Item.ArmorHammer;
 import com.trcx.ita.Common.Item.ITAArmor;
 import com.trcx.ita.Common.MaterialProperty;
+import com.trcx.ita.Common.Recipes.RecipeArmorDye;
 import com.trcx.ita.Common.Recipes.RecipeITAAarmor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
@@ -158,6 +159,7 @@ public class Main
         GameRegistry.registerItem(ITA.ArmorHammer, CONSTS.idARMORHAMMER);
 
         GameRegistry.addRecipe(new RecipeITAAarmor());
+        GameRegistry.addRecipe(new RecipeArmorDye());
 
     }
 
