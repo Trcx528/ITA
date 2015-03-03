@@ -1,5 +1,6 @@
 package com.trcx.ita.Common;
 
+import com.trcx.ita.Common.Traits.BaseTrait;
 import com.trcx.ita.ITA;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
@@ -20,6 +21,8 @@ public class ITAArmorProperties {
     public boolean isInvisible = false;
     public int armorType = 5;
 
+    public Map<BaseTrait, Integer> traits = new HashMap<BaseTrait, Integer>();
+
     private int nbtColor;
     private Map<String, Integer> ColorMap = new HashMap<String, Integer>();
     private ItemStack armorStack;
@@ -36,6 +39,16 @@ public class ITAArmorProperties {
             enchantability += mat.enchantability * qty;
             maxDurability += mat.durability * qty;
             ColorMap.put(mat.hexColor, qty);
+            for (String traitName : mat.traits.keySet()){
+                if (ITA.Traits.containsKey(traitName)){
+                    BaseTrait trait = ITA.Traits.get(traitName);
+                    if (traits.containsKey(trait)){
+                        traits.put(trait,traits.get(trait) + (mat.traits.get(traitName) * qty));
+                    } else {
+                        traits.put(trait, mat.traits.get(traitName) * qty);
+                    }
+                }
+            }
         }
 
         this.armorType = anbt.armorType;

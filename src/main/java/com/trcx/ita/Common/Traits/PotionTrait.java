@@ -10,13 +10,13 @@ import java.util.Random;
  */
 public class PotionTrait extends BaseTrait {
 
-    public Integer potionID;
-    public Integer duration;
-    public Integer potency;
-    public Integer minWeightForAlwaysActive;
-    public Integer randActivationFrequency;
-    public String weightFrequencyImpact;
-    public String weightDurationImpact;
+    public int potionID;
+    public int duration = 0;
+    public int potency = 0;
+    public int minWeightForAlwaysActive = -1;
+    public int randActivationFrequency = -1;
+    public String weightFrequencyImpact = "none";
+    public String weightDurationImpact = "none";
 
     private static Random random = new Random();
 
@@ -28,7 +28,7 @@ public class PotionTrait extends BaseTrait {
                 player.addPotionEffect(effect);
             } else if (randActivationFrequency > 0) {
                 double calcWeight = getCalculatedWeight(weight, weightFrequencyImpact);
-                if (random.nextInt(2000) <= Math.floor(calcWeight * randActivationFrequency)){
+                if (random.nextInt(3600) <= Math.floor(calcWeight * randActivationFrequency)){ // weight of 1 should trigger once every hour
                     player.addPotionEffect(effect);
                 }
             }

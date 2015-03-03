@@ -15,6 +15,8 @@ import com.trcx.ita.Common.Item.ITAArmor;
 import com.trcx.ita.Common.MaterialProperty;
 import com.trcx.ita.Common.Recipes.RecipeArmorDye;
 import com.trcx.ita.Common.Recipes.RecipeITAAarmor;
+import com.trcx.ita.Common.Traits.BaseTrait;
+import com.trcx.ita.Common.Traits.PotionTrait;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -25,8 +27,10 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Potion;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.MinecraftForge;
@@ -34,6 +38,7 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.input.Keyboard;
+import scala.Int;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,6 +48,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mod(modid = "ITA", version = Main.VERSION, name = "Infinitely Tweakable Armor")
 public class Main
@@ -54,6 +60,9 @@ public class Main
     private static File configDir;
 
     private static List<MaterialProperty> tempMaterials = new ArrayList<MaterialProperty>();
+    private static List<PotionTrait> tempPotionTraits = new ArrayList<PotionTrait>();
+
+    private static int tickCounter = 0;
 
     public Main(){
         MinecraftForge.EVENT_BUS.register(this);
@@ -70,22 +79,26 @@ public class Main
 
 
             File materialsFile = new File(configDir, "ArmorMaterials.json");
+            File potionTraitFile = new File(configDir, "Traits.json");
             File clientConfigFile = new File(configDir, "Client.cfg");
 
-            Type typeOfMaterials = new TypeToken<List<MaterialProperty>>() {
-            }.getType();
+            Type typeOfMaterials = new TypeToken<List<MaterialProperty>>() {}.getType();
+            Type typeOfPotionTraits = new TypeToken<List<PotionTrait>>() {}.getType();
+
             //Type typeOfMaterials = new TypeToken<Map<String, MaterialProperty>>() { }.getType();
             if (materialsFile.exists()) {
                 String json = new String(Files.readAllBytes(Paths.get(materialsFile.getPath())));
                 tempMaterials = gson.fromJson(json, typeOfMaterials);
             } else {
-//          RegisterArmorMaterial(double protection,Integer enchantability,double speedModifier,Integer maxDurability,String hexColor,String oreDictName){
                 RegisterArmorMaterial(2.50, 9, 0, 30, "#D8D8D8", "ingotIron");
                 tempMaterials.get(tempMaterials.size() - 1).comment = "Vanilla values";
                 RegisterArmorMaterial(1.83, 25, -0.2, 14, "#EAEE57", "ingotGold");
                 tempMaterials.get(tempMaterials.size() - 1).comment = "Vanilla values (except for speed)";
                 RegisterArmorMaterial(3.33, 10, 0, 66, "#8CF4E2", "gemDiamond");
                 tempMaterials.get(tempMaterials.size() - 1).comment = "Vanilla values";
+
+                RegisterArmorMaterial(0, 0, 0, 5, "#7FCC19", "dyeLime");
+                tempMaterials.get(tempMaterials.size() - 1).traits.put("Night Vision", 1);
 
                 RegisterArmorMaterial(1.50, 30, 0, 10, "#E0D495", "ingotNickel");
                 RegisterArmorMaterial(2.00, 23, -0.1, 16, "#A5BCC3", "ingotSilver");
@@ -136,6 +149,27 @@ public class Main
 
             String json = gson.toJson(tempMaterials, typeOfMaterials);
             Files.write(Paths.get(materialsFile.getPath()), json.getBytes());
+
+            if (potionTraitFile.exists()) {
+                json = new String(Files.readAllBytes(Paths.get(potionTraitFile.getPath())));
+                tempPotionTraits = gson.fromJson(json, typeOfPotionTraits);
+            } else {
+                PotionTrait trait = new PotionTrait("Night Vision");
+                trait.potionID = Potion.nightVision.id;
+                trait.weightDurationImpact = "*1";
+                trait.weightFrequencyImpact = "^2";
+                trait.randActivationFrequency = 5;
+                trait.duration = 600;
+                trait.minWeightForAlwaysActive = 5;
+                tempPotionTraits.add(trait);
+            }
+
+            ITA.Traits = new HashMap<String, BaseTrait>();
+            for (PotionTrait trait: tempPotionTraits){
+                ITA.Traits.put(trait.name, trait);
+            }
+            json = gson.toJson(tempPotionTraits, typeOfPotionTraits);
+            Files.write(Paths.get(potionTraitFile.getPath()), json.getBytes());
 
             clientConfig = new Configuration(clientConfigFile);
             clientConfig.load();
@@ -230,6 +264,45 @@ public class Main
         newMat.friendlyName = null;
         tempMaterials.add(newMat);
     }
+
+    @SubscribeEvent
+    public void playerTick(TickEvent.PlayerTickEvent event){
+        EntityPlayer player = event.player;
+        Map<PotionTrait, Integer> traits = new HashMap<PotionTrait, Integer>();
+        for(int i=0; i < 4; i++){
+            ItemStack is = player.getCurrentArmor(i);
+            if (is != null) {
+                if (is.getItem() == ITA.Helmet || is.getItem() == ITA.Chestplate ||
+                        is.getItem() == ITA.Leggings || is.getItem() == ITA.Boots) {
+                    ITAArmorProperties props = new ITAArmorProperties(is);
+                    for (BaseTrait trait : props.traits.keySet()) {
+                        if (trait instanceof PotionTrait) {
+                            if (traits.containsKey(trait)) {
+                                traits.put((PotionTrait) trait, traits.get(trait) + props.traits.get(trait));
+                            } else {
+                                traits.put((PotionTrait) trait, props.traits.get(trait));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        for (PotionTrait trait: traits.keySet()){
+            trait.tick(traits.get(trait),tickCounter, player);
+        }
+    }
+
+    @SubscribeEvent
+    public void serverTick(TickEvent.ServerTickEvent event){
+        if (event.phase == TickEvent.Phase.END) {
+            if (tickCounter >= 9999){
+                tickCounter = 0;
+            } else {
+                tickCounter ++;
+            }
+        }
+    }
+
 
     @SubscribeEvent
     public void speedApplicator(TickEvent.PlayerTickEvent event){
