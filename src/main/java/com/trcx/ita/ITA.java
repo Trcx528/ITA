@@ -11,7 +11,7 @@ import java.util.Map;
  */
 
 
-public class ITABasic {
+public class ITA {
     public static Map<String, MaterialProperty> Materials = new HashMap<String, MaterialProperty>();
 
     public static boolean debug;

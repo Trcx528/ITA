@@ -3,7 +3,7 @@ package com.trcx.ita.Common.Recipes;
 import com.trcx.ita.Common.ArmorNBT;
 import com.trcx.ita.Common.CONSTS;
 import com.trcx.ita.Common.MaterialProperty;
-import com.trcx.ita.ITABasic;
+import com.trcx.ita.ITA;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -25,15 +25,15 @@ public class RecipeITAAarmor implements IRecipe {
 
         for (int i = 0; i < 9; i++) {
             if (inv.getStackInSlot(i) != null) {
-                if (inv.getStackInSlot(i).getItem() == ITABasic.ArmorHammer) {
+                if (inv.getStackInSlot(i).getItem() == ITA.ArmorHammer) {
                     hammerCount++;
                 } else {
                     int[] ids = OreDictionary.getOreIDs(inv.getStackInSlot(i));
                     for (int id : ids) {
                         String oreDictName = OreDictionary.getOreName(id);
-                        if (ITABasic.Materials.containsKey(oreDictName)) {
+                        if (ITA.Materials.containsKey(oreDictName)) {
                             materialSlots[i] = true;
-                            MaterialProperty mat = ITABasic.Materials.get(oreDictName);
+                            MaterialProperty mat = ITA.Materials.get(oreDictName);
                             if (anbt.materials.containsKey(mat)) {
                                 Integer qty = anbt.materials.get(mat);
                                 anbt.materials.remove(mat);
@@ -75,13 +75,13 @@ public class RecipeITAAarmor implements IRecipe {
 
         ItemStack returnArmor;
         if (armorType == CONSTS.typeHELMET){
-            returnArmor = new ItemStack(ITABasic.Helmet);
+            returnArmor = new ItemStack(ITA.Helmet);
         } else if (armorType == CONSTS.typeCHESTPLATE){
-            returnArmor = new ItemStack(ITABasic.Chestplate);
+            returnArmor = new ItemStack(ITA.Chestplate);
         } else if (armorType == CONSTS.typeLEGGINGS){
-            returnArmor = new ItemStack(ITABasic.Leggings);
+            returnArmor = new ItemStack(ITA.Leggings);
         } else {
-            returnArmor = new ItemStack(ITABasic.Boots);
+            returnArmor = new ItemStack(ITA.Boots);
         }
 
         anbt.armorType = armorType;

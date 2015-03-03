@@ -125,7 +125,7 @@ public class Main
 
         for (MaterialProperty prop: tempMaterials){
             prop.onLoadFromFileUpdate();
-            ITABasic.Materials.put(prop.oreDictionaryName, prop);
+            ITA.Materials.put(prop.oreDictionaryName, prop);
         }
 
         String json = gson.toJson(tempMaterials,typeOfMaterials);
@@ -134,28 +134,28 @@ public class Main
         clientConfig = new Configuration(clientConfigFile);
         clientConfig.load();
 
-        ITABasic.debug = clientConfig.getBoolean("debug mode","Debug", false, "");
+        ITA.debug = clientConfig.getBoolean("debug mode","Debug", false, "");
 
-        ITABasic.shiftForToolTips = clientConfig.getBoolean("Shift For Tooltips", "Tooltips", false,"");
-        ITABasic.materialToolTips = clientConfig.getBoolean("Material Tooltips", "Tooltips", true,"");
-        ITABasic.basicArmorToolTips = clientConfig.getBoolean("Basic Armor Tooltips", "Tooltips", true,"");
-        ITABasic.specialArmorToolTips = clientConfig.getBoolean("Special Armor Tooltips", "Tooltips", true,"");
-        ITABasic.itaArmorToolTips = clientConfig.getBoolean("ITA Armor Tooltips", "Tooltips", true,"");
+        ITA.shiftForToolTips = clientConfig.getBoolean("Shift For Tooltips", "Tooltips", false,"");
+        ITA.materialToolTips = clientConfig.getBoolean("Material Tooltips", "Tooltips", true,"");
+        ITA.basicArmorToolTips = clientConfig.getBoolean("Basic Armor Tooltips", "Tooltips", true,"");
+        ITA.specialArmorToolTips = clientConfig.getBoolean("Special Armor Tooltips", "Tooltips", true,"");
+        ITA.itaArmorToolTips = clientConfig.getBoolean("ITA Armor Tooltips", "Tooltips", true,"");
 
         clientConfig.save();
 
 
-        ITABasic.Helmet = new ITAArmor(CONSTS.typeHELMET).setUnlocalizedName("ITAHelmet").setTextureName("ITA:Helmet");
-        ITABasic.Chestplate = new ITAArmor(CONSTS.typeCHESTPLATE).setUnlocalizedName("ITAChestplate").setTextureName("ITA:Chestplate");
-        ITABasic.Leggings = new ITAArmor(CONSTS.typeLEGGINGS).setUnlocalizedName("ITALeggings").setTextureName("ITA:Leggings");
-        ITABasic.Boots = new ITAArmor(CONSTS.typeBOOTS).setUnlocalizedName("ITABoots").setTextureName("ITA:Boots");
-        ITABasic.ArmorHammer = new ArmorHammer().setUnlocalizedName("ITAHammer").setTextureName("ITA:Hammer");
+        ITA.Helmet = new ITAArmor(CONSTS.typeHELMET).setUnlocalizedName("ITAHelmet").setTextureName("ITA:Helmet");
+        ITA.Chestplate = new ITAArmor(CONSTS.typeCHESTPLATE).setUnlocalizedName("ITAChestplate").setTextureName("ITA:Chestplate");
+        ITA.Leggings = new ITAArmor(CONSTS.typeLEGGINGS).setUnlocalizedName("ITALeggings").setTextureName("ITA:Leggings");
+        ITA.Boots = new ITAArmor(CONSTS.typeBOOTS).setUnlocalizedName("ITABoots").setTextureName("ITA:Boots");
+        ITA.ArmorHammer = new ArmorHammer().setUnlocalizedName("ITAHammer").setTextureName("ITA:Hammer");
 
-        GameRegistry.registerItem(ITABasic.Helmet,CONSTS.idHELMENT);
-        GameRegistry.registerItem(ITABasic.Chestplate, CONSTS.idCHESTPLATE);
-        GameRegistry.registerItem(ITABasic.Leggings, CONSTS.idLEGGINGS);
-        GameRegistry.registerItem(ITABasic.Boots, CONSTS.idBOOTS);
-        GameRegistry.registerItem(ITABasic.ArmorHammer, CONSTS.idARMORHAMMER);
+        GameRegistry.registerItem(ITA.Helmet,CONSTS.idHELMENT);
+        GameRegistry.registerItem(ITA.Chestplate, CONSTS.idCHESTPLATE);
+        GameRegistry.registerItem(ITA.Leggings, CONSTS.idLEGGINGS);
+        GameRegistry.registerItem(ITA.Boots, CONSTS.idBOOTS);
+        GameRegistry.registerItem(ITA.ArmorHammer, CONSTS.idARMORHAMMER);
 
         GameRegistry.addRecipe(new RecipeITAAarmor());
 
@@ -169,26 +169,26 @@ public class Main
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void toolTipListener(ItemTooltipEvent event) {
-        if (!ITABasic.shiftForToolTips || event.entityPlayer.isSneaking()) {
-            if ((event.itemStack.getItem() == ITABasic.Helmet || event.itemStack.getItem() == ITABasic.Chestplate ||
-                    event.itemStack.getItem() == ITABasic.Leggings || event.itemStack.getItem() == ITABasic.Boots) && ITABasic.itaArmorToolTips) {
+        if (!ITA.shiftForToolTips || event.entityPlayer.isSneaking()) {
+            if ((event.itemStack.getItem() == ITA.Helmet || event.itemStack.getItem() == ITA.Chestplate ||
+                    event.itemStack.getItem() == ITA.Leggings || event.itemStack.getItem() == ITA.Boots) && ITA.itaArmorToolTips) {
                 new ITAArmorProperties(event.itemStack).getToolTip(event.toolTip);
-            } else if (event.itemStack.getItem() instanceof ISpecialArmor && ITABasic.specialArmorToolTips) {
+            } else if (event.itemStack.getItem() instanceof ISpecialArmor && ITA.specialArmorToolTips) {
                 ISpecialArmor iarmor = (ISpecialArmor) event.itemStack.getItem();
                 ItemArmor armor = (ItemArmor) event.itemStack.getItem();
                 event.toolTip.add(EnumChatFormatting.BLUE + "Protection: " + iarmor.getArmorDisplay(event.entityPlayer, event.itemStack, 0));
                 event.toolTip.add(EnumChatFormatting.AQUA + "Max Durability: " + event.itemStack.getMaxDamage());
                 event.toolTip.add(EnumChatFormatting.GREEN + "Enchantability: " + armor.getItemEnchantability(event.itemStack));
-            } else if (event.itemStack.getItem() instanceof ItemArmor && ITABasic.basicArmorToolTips) {
+            } else if (event.itemStack.getItem() instanceof ItemArmor && ITA.basicArmorToolTips) {
                 ItemArmor armor = (ItemArmor) event.itemStack.getItem();
                 event.toolTip.add(EnumChatFormatting.BLUE + "Protection: " + armor.getArmorMaterial().getDamageReductionAmount(armor.armorType));
                 event.toolTip.add(EnumChatFormatting.AQUA + "Max Durability: " + event.itemStack.getMaxDamage());
                 event.toolTip.add(EnumChatFormatting.GREEN + "Enchantability: " + armor.getItemEnchantability(event.itemStack));
             } else {
-                if (ITABasic.materialToolTips) {
+                if (ITA.materialToolTips) {
                     for (int id : OreDictionary.getOreIDs(event.itemStack)) {
-                        if (ITABasic.Materials.containsKey(OreDictionary.getOreName(id))) {
-                            ITABasic.Materials.get(OreDictionary.getOreName(id)).getToolTip(event.toolTip);
+                        if (ITA.Materials.containsKey(OreDictionary.getOreName(id))) {
+                            ITA.Materials.get(OreDictionary.getOreName(id)).getToolTip(event.toolTip);
                         }
                     }
                 }
@@ -221,8 +221,8 @@ public class Main
         for (int i=0; i < 4; i++){
             ItemStack is = event.player.getCurrentArmor(i);
             if (is != null){
-                if (is.getItem() == ITABasic.Helmet || is.getItem() == ITABasic.Chestplate ||
-                        is.getItem() == ITABasic.Leggings || is.getItem() == ITABasic.Boots){
+                if (is.getItem() == ITA.Helmet || is.getItem() == ITA.Chestplate ||
+                        is.getItem() == ITA.Leggings || is.getItem() == ITA.Boots){
                     speedModifier += (new ITAArmorProperties(is).speedModifier / 4) + 0.25;
 
                 } else {

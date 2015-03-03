@@ -1,6 +1,6 @@
 package com.trcx.ita.Common;
 
-import com.trcx.ita.ITABasic;
+import com.trcx.ita.ITA;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
@@ -25,8 +25,8 @@ public class ArmorNBT {
                 NBTTagCompound tag = is.stackTagCompound.getCompoundTag(stringNBTMATERIAL);
                 Set<String> keys = tag.func_150296_c();
                 for (String key : keys) {
-                    if (ITABasic.Materials.containsKey(key)) {
-                        materials.put(ITABasic.Materials.get(key), tag.getInteger(key));
+                    if (ITA.Materials.containsKey(key)) {
+                        materials.put(ITA.Materials.get(key), tag.getInteger(key));
                     }
                 }
             }

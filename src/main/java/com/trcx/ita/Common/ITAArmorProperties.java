@@ -1,6 +1,6 @@
 package com.trcx.ita.Common;
 
-import com.trcx.ita.ITABasic;
+import com.trcx.ita.ITA;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 
@@ -66,7 +66,7 @@ public class ITAArmorProperties {
     }
 
     public void getToolTip(List<String> data){
-        if (!ITABasic.debug) {
+        if (!ITA.debug) {
             data.add(EnumChatFormatting.BLUE + "Protection: " + this.armorDisplayValue);
         } else {
             data.add(EnumChatFormatting.BLUE + "Armor Display: " + this.armorDisplayValue);
