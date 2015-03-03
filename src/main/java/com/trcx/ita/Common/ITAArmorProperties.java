@@ -1,9 +1,12 @@
-package com.trcx.itaBasic.Common;
+package com.trcx.ita.Common;
 
+import com.trcx.ita.ITABasic;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.awt.*;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -60,5 +63,17 @@ public class ITAArmorProperties {
             speedModifier /= totalQty;
             color = ColorHelper.getAvgColor(ColorMap);
         }
+    }
+
+    public void getToolTip(List<String> data){
+        if (!ITABasic.debug) {
+            data.add(EnumChatFormatting.BLUE + "Protection: " + this.armorDisplayValue);
+        } else {
+            data.add(EnumChatFormatting.BLUE + "Armor Display: " + this.armorDisplayValue);
+            data.add(EnumChatFormatting.BLUE + "Protection %: " + this.armorProtectionValue);
+        }
+        data.add(EnumChatFormatting.AQUA + "Max Durability: " + this.maxDurability);
+        data.add(EnumChatFormatting.GREEN + "Enchantability: " + this.enchantability);
+        data.add(EnumChatFormatting.LIGHT_PURPLE + "Weight: " + ((this.speedModifier * -1) + 1));
     }
 }

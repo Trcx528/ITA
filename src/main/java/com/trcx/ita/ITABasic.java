@@ -1,10 +1,9 @@
-package com.trcx.itaBasic;
+package com.trcx.ita;
 
-import com.trcx.itaBasic.Common.MaterialProperty;
+import com.trcx.ita.Common.MaterialProperty;
 import net.minecraft.item.Item;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,6 +13,14 @@ import java.util.Map;
 
 public class ITABasic {
     public static Map<String, MaterialProperty> Materials = new HashMap<String, MaterialProperty>();
+
+    public static boolean debug;
+
+    public static boolean materialToolTips;
+    public static boolean specialArmorToolTips;
+    public static boolean basicArmorToolTips;
+    public static boolean itaArmorToolTips;
+    public static boolean shiftForToolTips;
 
     public static Item Helmet;
     public static Item Chestplate;

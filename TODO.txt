@@ -7,7 +7,6 @@
   - show/hide tool tips
   - show/hide potion effect particles
   - maybe make it editable in game?
-- add speed
 - Add colors
 - Make armor dyeable
 - Add slash commands to change values on the fly?

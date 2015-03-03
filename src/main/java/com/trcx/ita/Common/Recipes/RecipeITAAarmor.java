@@ -1,16 +1,15 @@
-package com.trcx.itaBasic.Common.Recipes;
+package com.trcx.ita.Common.Recipes;
 
-import com.trcx.itaBasic.Common.ArmorNBT;
-import com.trcx.itaBasic.Common.CONSTS;
-import com.trcx.itaBasic.Common.MaterialProperty;
-import com.trcx.itaBasic.ITABasic;
+import com.trcx.ita.Common.ArmorNBT;
+import com.trcx.ita.Common.CONSTS;
+import com.trcx.ita.Common.MaterialProperty;
+import com.trcx.ita.ITABasic;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 
-import java.util.ArrayList;
 /**
  * Created by Trcx on 2/25/2015.
  */

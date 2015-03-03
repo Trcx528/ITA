@@ -1,6 +1,6 @@
-package com.trcx.itaBasic.Common;
+package com.trcx.ita.Common;
 
-import com.trcx.itaBasic.ITABasic;
+import com.trcx.ita.ITABasic;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 

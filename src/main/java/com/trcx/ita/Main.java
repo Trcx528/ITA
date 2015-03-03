@@ -1,4 +1,4 @@
-package com.trcx.itaBasic;
+package com.trcx.ita;
 
 /**
  * Created by Trcx on 2/24/2015.
@@ -7,13 +7,13 @@ package com.trcx.itaBasic;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.trcx.itaBasic.Common.CONSTS;
-import com.trcx.itaBasic.Common.ITAArmorProperties;
-import com.trcx.itaBasic.Common.ITACommand;
-import com.trcx.itaBasic.Common.Item.ArmorHammer;
-import com.trcx.itaBasic.Common.Item.ITAArmor;
-import com.trcx.itaBasic.Common.MaterialProperty;
-import com.trcx.itaBasic.Common.Recipes.RecipeITAAarmor;
+import com.trcx.ita.Common.CONSTS;
+import com.trcx.ita.Common.ITAArmorProperties;
+import com.trcx.ita.Common.ITACommand;
+import com.trcx.ita.Common.Item.ArmorHammer;
+import com.trcx.ita.Common.Item.ITAArmor;
+import com.trcx.ita.Common.MaterialProperty;
+import com.trcx.ita.Common.Recipes.RecipeITAAarmor;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -24,10 +24,12 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -39,10 +41,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod(modid = "ITABasic", version = Main.VERSION, name = "Infinitely Tweakable Armor - Basic")
+@Mod(modid = "ITA", version = Main.VERSION, name = "Infinitely Tweakable Armor")
 public class Main
 {
+
     public static final String VERSION = "0.0.1";
+    public static Configuration clientConfig;
 
     private List<MaterialProperty> tempMaterials = new ArrayList<MaterialProperty>();
 
@@ -62,6 +66,7 @@ public class Main
 
 
         File materialsFile = new File(configDir,"ArmorMaterials.json");
+        File clientConfigFile = new File(configDir,"Client.cfg");
 
         Type typeOfMaterials = new TypeToken<List<MaterialProperty>>() { }.getType();
         //Type typeOfMaterials = new TypeToken<Map<String, MaterialProperty>>() { }.getType();
@@ -126,6 +131,20 @@ public class Main
         String json = gson.toJson(tempMaterials,typeOfMaterials);
         Files.write(Paths.get(materialsFile.getPath()), json.getBytes());
 
+        clientConfig = new Configuration(clientConfigFile);
+        clientConfig.load();
+
+        ITABasic.debug = clientConfig.getBoolean("debug mode","Debug", false, "");
+
+        ITABasic.shiftForToolTips = clientConfig.getBoolean("Shift For Tooltips", "Tooltips", false,"");
+        ITABasic.materialToolTips = clientConfig.getBoolean("Material Tooltips", "Tooltips", true,"");
+        ITABasic.basicArmorToolTips = clientConfig.getBoolean("Basic Armor Tooltips", "Tooltips", true,"");
+        ITABasic.specialArmorToolTips = clientConfig.getBoolean("Special Armor Tooltips", "Tooltips", true,"");
+        ITABasic.itaArmorToolTips = clientConfig.getBoolean("ITA Armor Tooltips", "Tooltips", true,"");
+
+        clientConfig.save();
+
+
         ITABasic.Helmet = new ITAArmor(CONSTS.typeHELMET).setUnlocalizedName("ITAHelmet").setTextureName("ITA:Helmet");
         ITABasic.Chestplate = new ITAArmor(CONSTS.typeCHESTPLATE).setUnlocalizedName("ITAChestplate").setTextureName("ITA:Chestplate");
         ITABasic.Leggings = new ITAArmor(CONSTS.typeLEGGINGS).setUnlocalizedName("ITALeggings").setTextureName("ITA:Leggings");
@@ -149,10 +168,30 @@ public class Main
 
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
-    public void toolTipListener(ItemTooltipEvent event){
-        for (int id: OreDictionary.getOreIDs(event.itemStack)){
-            if (ITABasic.Materials.containsKey(OreDictionary.getOreName(id))){
-                ITABasic.Materials.get(OreDictionary.getOreName(id)).getToolTip(event.toolTip);
+    public void toolTipListener(ItemTooltipEvent event) {
+        if (!ITABasic.shiftForToolTips || event.entityPlayer.isSneaking()) {
+            if ((event.itemStack.getItem() == ITABasic.Helmet || event.itemStack.getItem() == ITABasic.Chestplate ||
+                    event.itemStack.getItem() == ITABasic.Leggings || event.itemStack.getItem() == ITABasic.Boots) && ITABasic.itaArmorToolTips) {
+                new ITAArmorProperties(event.itemStack).getToolTip(event.toolTip);
+            } else if (event.itemStack.getItem() instanceof ISpecialArmor && ITABasic.specialArmorToolTips) {
+                ISpecialArmor iarmor = (ISpecialArmor) event.itemStack.getItem();
+                ItemArmor armor = (ItemArmor) event.itemStack.getItem();
+                event.toolTip.add(EnumChatFormatting.BLUE + "Protection: " + iarmor.getArmorDisplay(event.entityPlayer, event.itemStack, 0));
+                event.toolTip.add(EnumChatFormatting.AQUA + "Max Durability: " + event.itemStack.getMaxDamage());
+                event.toolTip.add(EnumChatFormatting.GREEN + "Enchantability: " + armor.getItemEnchantability(event.itemStack));
+            } else if (event.itemStack.getItem() instanceof ItemArmor && ITABasic.basicArmorToolTips) {
+                ItemArmor armor = (ItemArmor) event.itemStack.getItem();
+                event.toolTip.add(EnumChatFormatting.BLUE + "Protection: " + armor.getArmorMaterial().getDamageReductionAmount(armor.armorType));
+                event.toolTip.add(EnumChatFormatting.AQUA + "Max Durability: " + event.itemStack.getMaxDamage());
+                event.toolTip.add(EnumChatFormatting.GREEN + "Enchantability: " + armor.getItemEnchantability(event.itemStack));
+            } else {
+                if (ITABasic.materialToolTips) {
+                    for (int id : OreDictionary.getOreIDs(event.itemStack)) {
+                        if (ITABasic.Materials.containsKey(OreDictionary.getOreName(id))) {
+                            ITABasic.Materials.get(OreDictionary.getOreName(id)).getToolTip(event.toolTip);
+                        }
+                    }
+                }
             }
         }
     }

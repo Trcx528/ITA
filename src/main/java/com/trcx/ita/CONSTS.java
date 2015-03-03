@@ -1,4 +1,4 @@
-package com.trcx.itaBasic.Common;
+package com.trcx.ita.Common;
 
 /**
  * Created by Trcx on 2/25/2015.

@@ -1,4 +1,4 @@
-package com.trcx.itaBasic.Common;
+package com.trcx.ita.Common;
 
 import net.minecraft.util.EnumChatFormatting;
 

@@ -1,12 +1,11 @@
-package com.trcx.itaBasic.Common.Item;
+package com.trcx.ita.Common.Item;
 
-import com.trcx.itaBasic.Common.ITAArmorProperties;
+import com.trcx.ita.Common.ITAArmorProperties;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
 
@@ -52,12 +51,7 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
 
     @Override
     public void addInformation(ItemStack is, EntityPlayer player, List data, boolean p_77624_4_) {
-        ITAArmorProperties props = new ITAArmorProperties(is);
-        data.add(EnumChatFormatting.GREEN + "Armor Display: " + props.armorDisplayValue);
-        data.add("Protection %: " + props.armorProtectionValue);
-        data.add("Enchantability: " + props.enchantability);
-        data.add("Max Durability: " + props.maxDurability);
-        data.add("Speed Modifier: " + props.speedModifier);
+
     }
 
     @Override
