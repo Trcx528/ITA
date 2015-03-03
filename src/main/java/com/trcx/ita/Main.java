@@ -33,6 +33,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.oredict.OreDictionary;
+import org.lwjgl.input.Keyboard;
 
 import java.io.File;
 import java.io.IOException;
@@ -171,7 +172,7 @@ public class Main
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void toolTipListener(ItemTooltipEvent event) {
-        if (!ITA.shiftForToolTips || event.entityPlayer.isSneaking()) {
+        if (!ITA.shiftForToolTips || ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)))) {
             if ((event.itemStack.getItem() == ITA.Helmet || event.itemStack.getItem() == ITA.Chestplate ||
                     event.itemStack.getItem() == ITA.Leggings || event.itemStack.getItem() == ITA.Boots) && ITA.itaArmorToolTips) {
                 new ITAArmorProperties(event.itemStack).getToolTip(event.toolTip);
@@ -179,12 +180,12 @@ public class Main
                 ISpecialArmor iarmor = (ISpecialArmor) event.itemStack.getItem();
                 ItemArmor armor = (ItemArmor) event.itemStack.getItem();
                 event.toolTip.add(EnumChatFormatting.BLUE + "Protection: " + iarmor.getArmorDisplay(event.entityPlayer, event.itemStack, 0));
-                event.toolTip.add(EnumChatFormatting.AQUA + "Max Durability: " + event.itemStack.getMaxDamage());
+                event.toolTip.add(EnumChatFormatting.AQUA + "Durability: "+ (event.itemStack.getMaxDamage() - event.itemStack.getItemDamage()) + "/" + event.itemStack.getMaxDamage());
                 event.toolTip.add(EnumChatFormatting.GREEN + "Enchantability: " + armor.getItemEnchantability(event.itemStack));
             } else if (event.itemStack.getItem() instanceof ItemArmor && ITA.basicArmorToolTips) {
                 ItemArmor armor = (ItemArmor) event.itemStack.getItem();
                 event.toolTip.add(EnumChatFormatting.BLUE + "Protection: " + armor.getArmorMaterial().getDamageReductionAmount(armor.armorType));
-                event.toolTip.add(EnumChatFormatting.AQUA + "Max Durability: " + event.itemStack.getMaxDamage());
+                event.toolTip.add(EnumChatFormatting.AQUA + "Durability: " + (event.itemStack.getMaxDamage() - event.itemStack.getItemDamage()) + "/" + event.itemStack.getMaxDamage());
                 event.toolTip.add(EnumChatFormatting.GREEN + "Enchantability: " + armor.getItemEnchantability(event.itemStack));
             } else {
                 if (ITA.materialToolTips) {

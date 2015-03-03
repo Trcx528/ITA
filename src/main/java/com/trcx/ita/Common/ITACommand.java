@@ -1,5 +1,6 @@
 package com.trcx.ita.Common;
 
+import com.trcx.ita.ITA;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
@@ -49,7 +50,7 @@ public class ITACommand implements ICommand {
 
     @Override
     public boolean canCommandSenderUseCommand(ICommandSender p_71519_1_) {
-        return true;
+        return ITA.debug;
     }
 
     @Override

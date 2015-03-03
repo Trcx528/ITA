@@ -4,7 +4,6 @@ import com.trcx.ita.ITA;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 
-import java.awt.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +22,10 @@ public class ITAArmorProperties {
 
     private int nbtColor;
     private Map<String, Integer> ColorMap = new HashMap<String, Integer>();
+    private ItemStack armorStack;
 
     public ITAArmorProperties(ItemStack is) {
+        armorStack = is;
         ArmorNBT anbt = new ArmorNBT(is);
         Integer totalQty = 0;
         for (MaterialProperty mat : anbt.materials.keySet()) {
@@ -85,7 +86,7 @@ public class ITAArmorProperties {
             data.add(EnumChatFormatting.BLUE + "Armor Display: " + this.armorDisplayValue);
             data.add(EnumChatFormatting.BLUE + "Protection %: " + this.armorProtectionValue);
         }
-        data.add(EnumChatFormatting.AQUA + "Max Durability: " + this.maxDurability);
+        data.add(EnumChatFormatting.AQUA + "Durability: " + (this.maxDurability - this.armorStack.getItemDamage()) + "/" + this.maxDurability);
         data.add(EnumChatFormatting.GREEN + "Enchantability: " + this.enchantability);
         data.add(EnumChatFormatting.LIGHT_PURPLE + "Weight: " + ((this.speedModifier * -1) + 1));
         if (isInvisible){
