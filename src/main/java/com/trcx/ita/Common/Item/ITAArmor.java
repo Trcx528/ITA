@@ -3,6 +3,8 @@ package com.trcx.ita.Common.Item;
 import com.trcx.ita.Client.ArmorRenderer;
 import com.trcx.ita.Common.ArmorNBT;
 import com.trcx.ita.Common.ITAArmorProperties;
+import com.trcx.ita.Common.Traits.BaseTrait;
+import com.trcx.ita.Common.Traits.ProtectionTrait;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBiped;
@@ -84,14 +86,23 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
 
     @Override
     public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
-        ArmorProperties ap= new ArmorProperties(0, 0, armor.getMaxDamage() +1  - armor.getItemDamage());
+        ArmorProperties ap= new ArmorProperties(0, 0, 100);
         ITAArmorProperties bap = new ITAArmorProperties(armor);
+
         if (!source.isUnblockable()) {
             ap.AbsorbRatio = bap.armorProtectionValue;
-            ap.AbsorbRatio /= 100;
         }
 
-        //System.out.println("Props: Max: " + ap.AbsorbMax + " Ratio: " + ap.AbsorbRatio  + "(" + damage +")" + " Unblockable: " + source.isUnblockable());
+        for (BaseTrait trait: bap.traits.keySet()){
+            if (trait instanceof ProtectionTrait){
+                if (((ProtectionTrait) trait).getDamageSourceType() == source){
+                    ap.AbsorbRatio += ((ProtectionTrait) trait).getDamageReductionPercent(bap.traits.get(trait));
+                }
+            }
+        }
+
+        ap.AbsorbRatio = Math.min(ap.AbsorbRatio / 100, 1D);
+        System.out.println("Props: Max: " + ap.AbsorbMax + " Ratio: " + ap.AbsorbRatio  + "(" + damage +")" + " Unblockable: " + source.isUnblockable());
         return ap;
     }
 

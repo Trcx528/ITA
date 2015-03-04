@@ -105,5 +105,11 @@ public class ITAArmorProperties {
         if (isInvisible){
             data.add(EnumChatFormatting.GRAY + "Invisible");
         }
+        if (traits.size() > 0){
+            data.add(EnumChatFormatting.DARK_GRAY+ String.format("Trait%s:", traits.size() > 1 ? "s" : ""));
+            for (BaseTrait trait : traits.keySet()){
+                data.add(EnumChatFormatting.DARK_PURPLE + trait.name + ": " + traits.get(trait));
+            }
+        }
     }
 }

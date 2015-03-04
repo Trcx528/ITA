@@ -24,10 +24,6 @@ public class ColorHelper {
         return "#" + Integer.toHexString(dColor);
     }
 
-    public static Color getAvgColor(Map<String, Integer> colors){
-        return colorFromInt(getAvgColorInt(colors));
-    }
-
     public static int getAvgColorInt(Map<String, Integer> colors){
         double total = 0;
         int r =0;
@@ -41,7 +37,7 @@ public class ColorHelper {
             total += colors.get(key);
         }
         if (total == 0)
-            return Integer.parseInt("0000FF", 16);
+            return Integer.parseInt("FFFFFF", 16);
 
         r /= total;
         g /= total;

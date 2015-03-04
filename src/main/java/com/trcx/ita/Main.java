@@ -17,6 +17,7 @@ import com.trcx.ita.Common.Recipes.RecipeArmorDye;
 import com.trcx.ita.Common.Recipes.RecipeITAAarmor;
 import com.trcx.ita.Common.Traits.BaseTrait;
 import com.trcx.ita.Common.Traits.PotionTrait;
+import com.trcx.ita.Common.Traits.ProtectionTrait;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -61,6 +62,7 @@ public class Main
 
     private static List<MaterialProperty> tempMaterials = new ArrayList<MaterialProperty>();
     private static List<PotionTrait> tempPotionTraits = new ArrayList<PotionTrait>();
+    private static List<ProtectionTrait> tempProtectionTraits = new ArrayList<ProtectionTrait>();
 
     private static int tickCounter = 0;
 
@@ -79,11 +81,13 @@ public class Main
 
 
             File materialsFile = new File(configDir, "ArmorMaterials.json");
-            File potionTraitFile = new File(configDir, "Traits.json");
+            File potionTraitFile = new File(configDir, "PotionTraits.json");
+            File protectionTraitFile = new File(configDir, "ProtectionTraits.json");
             File clientConfigFile = new File(configDir, "Client.cfg");
 
             Type typeOfMaterials = new TypeToken<List<MaterialProperty>>() {}.getType();
             Type typeOfPotionTraits = new TypeToken<List<PotionTrait>>() {}.getType();
+            Type typeOfProtectionTraits = new TypeToken<List<ProtectionTrait>>() {}.getType();
 
             //Type typeOfMaterials = new TypeToken<Map<String, MaterialProperty>>() { }.getType();
             if (materialsFile.exists()) {
@@ -99,6 +103,15 @@ public class Main
 
                 RegisterArmorMaterial(0, 0, 0, 5, "#7FCC19", "dyeLime");
                 tempMaterials.get(tempMaterials.size() - 1).traits.put("Night Vision", 1);
+                tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeBOOTS);
+                tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeCHESTPLATE);
+                tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeLEGGINGS);
+
+                RegisterArmorMaterial(0, 0, 0, 5, "#E5E533", "dyeYellow");
+                tempMaterials.get(tempMaterials.size() - 1).traits.put("Fall Protection", 1);
+                tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeHELMET);
+                tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeCHESTPLATE);
+                tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeLEGGINGS);
 
                 RegisterArmorMaterial(1.50, 30, 0, 10, "#E0D495", "ingotNickel");
                 RegisterArmorMaterial(2.00, 23, -0.1, 16, "#A5BCC3", "ingotSilver");
@@ -171,6 +184,24 @@ public class Main
             json = gson.toJson(tempPotionTraits, typeOfPotionTraits);
             Files.write(Paths.get(potionTraitFile.getPath()), json.getBytes());
 
+            if (protectionTraitFile.exists()) {
+                json = new String(Files.readAllBytes(Paths.get(protectionTraitFile.getPath())));
+                tempProtectionTraits = gson.fromJson(json, typeOfProtectionTraits);
+            } else {
+                ProtectionTrait sampleProtection = new ProtectionTrait("Fall Protection");
+                sampleProtection.damageSourceType = "fall";
+                sampleProtection.protectionPerWeight = 5;
+                sampleProtection.weightImpact = "^2";
+                tempProtectionTraits.add(sampleProtection);
+            }
+
+            for (ProtectionTrait trait: tempProtectionTraits){
+                ITA.Traits.put(trait.name, trait);
+            }
+            json = gson.toJson(tempProtectionTraits, typeOfProtectionTraits);
+            Files.write(Paths.get(protectionTraitFile.getPath()), json.getBytes());
+
+
             clientConfig = new Configuration(clientConfigFile);
             clientConfig.load();
 
@@ -192,7 +223,6 @@ public class Main
     public void preInit(FMLPreInitializationEvent event) throws IOException{
         configDir = new File(event.getModConfigurationDirectory(),"ITA");
         loadConfigs();
-
 
         ITA.Helmet = new ITAArmor(CONSTS.typeHELMET).setUnlocalizedName("ITAHelmet").setTextureName("ITA:Helmet");
         ITA.Chestplate = new ITAArmor(CONSTS.typeCHESTPLATE).setUnlocalizedName("ITAChestplate").setTextureName("ITA:Chestplate");

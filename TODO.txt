@@ -1,15 +1,14 @@
 - Sync Configs from server to client on login
-- Add traits
-  - configurable (like materials)
-  - potion effects
-  - damage types
 - Client side config
   - show/hide potion effect particles
   - maybe make it editable in game?
 - Add slash commands to change values on the fly?
 - alloys
 - After the fact upgrades?
-  - Steo Assist
+  - Step Assist
+- Server config
+  - require hammer
+  - debug
 
 Wishlist:
 - auto tool switcher/toggle

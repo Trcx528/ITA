@@ -20,7 +20,7 @@ public class MaterialProperty {
     public double speed;
     public int durability;
     public String comment;
-    public List<Integer> invalidTypes;
+    public List<Integer> invalidTypes = new ArrayList<Integer>();
 
     public Map<String, Integer> traits = new HashMap<String, Integer>();
 
@@ -40,7 +40,6 @@ public class MaterialProperty {
     }
 
     public void onLoadFromFileUpdate(){
-        this.invalidTypes = new ArrayList<Integer>();
         if (this.friendlyName == null) {
             String[] chunks = this.oreDictionaryName.split("(?=[A-Z])");
             for (int i = 0; i < chunks.length; i++) {

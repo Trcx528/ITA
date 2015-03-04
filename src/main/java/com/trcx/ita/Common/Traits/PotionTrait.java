@@ -35,18 +35,6 @@ public class PotionTrait extends BaseTrait {
         }
     }
 
-    private double getCalculatedWeight(double initalWeight, String impactType){
-        if (impactType.equals("none"))
-            return 0;
-        Double num = Double.parseDouble(impactType.substring(1));
-        if (impactType.startsWith("*"))
-            return initalWeight * num;
-        if (impactType.startsWith("^")){
-            return Math.pow(initalWeight, num);
-        }
-        return 0;
-    }
-
     public PotionTrait(String name){
         super(name);
     }
