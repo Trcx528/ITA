@@ -1,5 +1,6 @@
 package com.trcx.ita;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import com.trcx.ita.Common.MaterialProperty;
 import com.trcx.ita.Common.Traits.BaseTrait;
 import com.trcx.ita.Common.Traits.PotionTrait;
@@ -20,7 +21,7 @@ import java.util.Map;
 public class ITA {
     public static Map<String, MaterialProperty> Materials;
     public static Map<String, BaseTrait> Traits;
-    public static Float lastSpeedModifier = -9999F;
+    public static Float lastSpeedModifier = -9999F; // set to a weird value so that it'll refresh
     public static Double fovCalculatorValue = 0D; // only used on client
 
     public static boolean debug;

@@ -101,13 +101,9 @@ public class ITAArmorProperties {
         }
         data.add(EnumChatFormatting.AQUA + "Durability: " + (this.maxDurability - this.armorStack.getItemDamage()) + "/" + this.maxDurability);
         data.add(EnumChatFormatting.GREEN + "Enchantability: " + this.enchantability);
-        if (this.speedModifier > 1 ) {
-            data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + (this.speedModifier + 1) * 100 + "%");
-        } else if (this.speedModifier < 1){
-            data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + (1 + this.speedModifier) * 100 + "%");
-        } else {
-            data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: 100%");
-        }
+
+        data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + this.speedModifier * 100 + "%");
+
         if (isInvisible){
             data.add(EnumChatFormatting.GRAY + "Invisible");
         }

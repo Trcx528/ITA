@@ -1,5 +1,6 @@
 package com.trcx.ita.Common;
 
+import com.trcx.ita.ITA;
 import net.minecraft.util.EnumChatFormatting;
 
 import java.util.ArrayList;
@@ -30,13 +31,9 @@ public class MaterialProperty {
         data.add(EnumChatFormatting.BLUE + "Armor: " + this.protection);
         data.add(EnumChatFormatting.AQUA + "Durability " + this.durability);
         data.add(EnumChatFormatting.GREEN + "Enchantability: " + this.enchantability);
-        if (this.speed > 1 ) {
-            data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + (this.speed + 1) * 100 + "%");
-        } else if (this.speed < 1){
-            data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + (1 + this.speed) * 100 + "%");
-        } else {
-            data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: 100%");
-        }
+        if (ITA.debug)
+            data.add("Speed Modifier: " + speed);
+        data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + (this.speed) * 100 + "%");
         if (traits.keySet().size() > 0) {
             data.add(EnumChatFormatting.DARK_AQUA + "Traits: ");
             for (String trait : this.traits.keySet()) {
