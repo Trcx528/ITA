@@ -3,6 +3,9 @@ package com.trcx.ita;
 import com.trcx.ita.Common.MaterialProperty;
 import com.trcx.ita.Common.Traits.BaseTrait;
 import com.trcx.ita.Common.Traits.PotionTrait;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 
@@ -17,6 +20,9 @@ import java.util.Map;
 public class ITA {
     public static Map<String, MaterialProperty> Materials;
     public static Map<String, BaseTrait> Traits;
+    public static Float lastSpeedModifier = 1F; // only used on the client side
+    public static Double fovCalculatorValue = 0D; // only used on client
+    public static Map <EntityPlayer, AttributeModifier> playerSpeedAttributeMap = new HashMap<EntityPlayer, AttributeModifier>();
 
     public static boolean debug;
 

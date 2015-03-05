@@ -1,5 +1,7 @@
 package com.trcx.ita.Common;
 
+import java.util.UUID;
+
 /**
  * Created by Trcx on 2/25/2015.
  */
@@ -15,5 +17,7 @@ public class CONSTS {
     public static final String idLEGGINGS = "ITALeggings";
     public static final String idBOOTS = "ITABoots";
     public static final String idARMORHAMMER = "ArmorHammer";
+
+    public static final UUID speedAttribute = new UUID(528528528, 528528528);
 
 }

@@ -10,6 +10,10 @@
   - require hammer
   - debug
 
+Bugs:
+ - speed not being applied?
+ - switch material tool tip to display weight rather than speed
+
 Wishlist:
 - auto tool switcher/toggle
 - Dartcraft style backpacks

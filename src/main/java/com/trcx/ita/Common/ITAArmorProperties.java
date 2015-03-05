@@ -101,12 +101,12 @@ public class ITAArmorProperties {
         }
         data.add(EnumChatFormatting.AQUA + "Durability: " + (this.maxDurability - this.armorStack.getItemDamage()) + "/" + this.maxDurability);
         data.add(EnumChatFormatting.GREEN + "Enchantability: " + this.enchantability);
-        data.add(EnumChatFormatting.LIGHT_PURPLE + "Weight: " + ((this.speedModifier * -1) + 1));
+        data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + this.speedModifier + "%" );
         if (isInvisible){
             data.add(EnumChatFormatting.GRAY + "Invisible");
         }
         if (traits.size() > 0){
-            data.add(EnumChatFormatting.DARK_GRAY+ String.format("Trait%s:", traits.size() > 1 ? "s" : ""));
+            data.add(EnumChatFormatting.DARK_GRAY+ "Traits: ");
             for (BaseTrait trait : traits.keySet()){
                 data.add(EnumChatFormatting.DARK_PURPLE + trait.name + ": " + traits.get(trait));
             }

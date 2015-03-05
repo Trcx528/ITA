@@ -7,17 +7,16 @@ package com.trcx.ita;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.trcx.ita.Common.*;
 import com.trcx.ita.Common.CONSTS;
-import com.trcx.ita.Common.ITAArmorProperties;
-import com.trcx.ita.Common.ITACommand;
 import com.trcx.ita.Common.Item.ArmorHammer;
 import com.trcx.ita.Common.Item.ITAArmor;
-import com.trcx.ita.Common.MaterialProperty;
 import com.trcx.ita.Common.Recipes.RecipeArmorDye;
 import com.trcx.ita.Common.Recipes.RecipeITAAarmor;
 import com.trcx.ita.Common.Traits.BaseTrait;
 import com.trcx.ita.Common.Traits.PotionTrait;
 import com.trcx.ita.Common.Traits.ProtectionTrait;
+import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -28,6 +27,9 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -41,15 +43,13 @@ import net.minecraftforge.oredict.OreDictionary;
 import org.lwjgl.input.Keyboard;
 import scala.Int;
 
+import javax.swing.text.html.parser.Entity;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Mod(modid = "ITA", version = Main.VERSION, name = "Infinitely Tweakable Armor")
 public class Main
@@ -239,6 +239,8 @@ public class Main
         GameRegistry.addRecipe(new RecipeITAAarmor());
         GameRegistry.addRecipe(new RecipeArmorDye());
 
+        new speedApplicator();
+
     }
 
     @Mod.EventHandler
@@ -330,32 +332,6 @@ public class Main
             } else {
                 tickCounter ++;
             }
-        }
-    }
-
-
-    @SubscribeEvent
-    public void speedApplicator(TickEvent.PlayerTickEvent event){
-        double speedModifier = 0D;
-        for (int i=0; i < 4; i++){
-            ItemStack is = event.player.getCurrentArmor(i);
-            if (is != null){
-                if (is.getItem() == ITA.Helmet || is.getItem() == ITA.Chestplate ||
-                        is.getItem() == ITA.Leggings || is.getItem() == ITA.Boots){
-                    speedModifier += (new ITAArmorProperties(is).speedModifier / 4) + 0.25;
-
-                } else {
-                    speedModifier += 0.25; // unknown armor don't do any special speed
-                }
-            } else {
-                speedModifier += 0.25; // no armor don't do any special speed
-            }
-        }
-
-        if (!event.player.isAirBorne && !event.player.capabilities.isFlying) {
-            event.player.motionX *= speedModifier;
-            //event.player.motionY *= speedModifier; //breaks jumping and falling
-            event.player.motionZ *= speedModifier;
         }
     }
 }
