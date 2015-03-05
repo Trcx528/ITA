@@ -30,7 +30,13 @@ public class MaterialProperty {
         data.add(EnumChatFormatting.BLUE + "Armor: " + this.protection);
         data.add(EnumChatFormatting.AQUA + "Durability " + this.durability);
         data.add(EnumChatFormatting.GREEN + "Enchantability: " + this.enchantability);
-        data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + this.speed);
+        if (this.speed > 1 ) {
+            data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + (this.speed + 1) * 100 + "%");
+        } else if (this.speed < 1){
+            data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + (1 + this.speed) * 100 + "%");
+        } else {
+            data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: 100%");
+        }
         if (traits.keySet().size() > 0) {
             data.add(EnumChatFormatting.DARK_AQUA + "Traits: ");
             for (String trait : this.traits.keySet()) {
