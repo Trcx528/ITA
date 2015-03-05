@@ -102,7 +102,7 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
         }
 
         ap.AbsorbRatio = Math.min(ap.AbsorbRatio / 100, 1D);
-        System.out.println("Props: Max: " + ap.AbsorbMax + " Ratio: " + ap.AbsorbRatio  + "(" + damage +")" + " Unblockable: " + source.isUnblockable());
+        //System.out.println("Props: Max: " + ap.AbsorbMax + " Ratio: " + ap.AbsorbRatio  + "(" + damage +")" + " Unblockable: " + source.isUnblockable());
         return ap;
     }
 

@@ -12,6 +12,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -34,25 +35,33 @@ public class speedApplicator {
                 if (is.getItem() == ITA.Helmet || is.getItem() == ITA.Chestplate ||
                         is.getItem() == ITA.Leggings || is.getItem() == ITA.Boots) {
                     Double armorSpeedMod = new ITAArmorProperties(is).speedModifier;
-                    if (speedModifier < 0) {
-                        speedModifier += armorSpeedMod / 4;
+                    if (armorSpeedMod > 1 ) {
+                         speedModifier += (armorSpeedMod + 1) * 100;
+                    } else if (armorSpeedMod < 1){
+                        speedModifier += (1 + armorSpeedMod) * 100;
                     } else {
-                        speedModifier += (armorSpeedMod / 4) + 0.25F;
+                        speedModifier += 100;
                     }
                 } else {
-                    speedModifier += 0.25F;
+                    speedModifier += 100;
                 }
             } else {
-                speedModifier += 0.25F;
+                speedModifier += 100;
             }
         }
+        speedModifier /= 400;
         if (speedModifier < 1)
             speedModifier += -1F;
 
-        if (speedModifier > 1)
-            speedModifier += 1F;
+        /*if (speedModifier > 1)
+            speedModifier += 1F;*/
 
-        return Math.max(speedModifier, -1);
+        speedModifier = Math.max(speedModifier, -1);
+
+        if (ITA.debug)
+            System.out.println("Speed Modifier: " + speedModifier);
+
+        return speedModifier;
     }
 
     @SideOnly(Side.CLIENT)
