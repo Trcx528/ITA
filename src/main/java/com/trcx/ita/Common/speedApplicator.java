@@ -99,7 +99,7 @@ public class speedApplicator {
 
                 if (speedModifier != 1F) {
                     double x = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
-                    modifier = new AttributeModifier(CONSTS.speedAttribute, "ITA Speed Modifier", -x + (x * speedModifier), 0);
+                    modifier = new AttributeModifier(CONSTS.speedAttribute, "ITA Speed Modifier", -x + Math.max(x * speedModifier, 0.005), 0);
                     p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).applyModifier(modifier);
                 }
             }
