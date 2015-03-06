@@ -92,8 +92,8 @@ public class speedApplicator {
                     ITA.fovCalculatorValue != p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue()) {
                 ITA.lastSpeedModifier = speedModifier;
 
-                //if (modifier != null)
-                //    p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).removeModifier(modifier);
+                if (modifier != null)
+                    p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).removeModifier(modifier);
 
                 ITA.fovCalculatorValue = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
 

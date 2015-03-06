@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.IChatComponent;
 import net.minecraftforge.oredict.OreDictionary;
@@ -52,8 +53,8 @@ public class ITACommand implements ICommand {
     }
 
     @Override
-    public boolean canCommandSenderUseCommand(ICommandSender p_71519_1_) {
-        return ITA.debug;
+    public boolean canCommandSenderUseCommand(ICommandSender sender) {
+        return true;
     }
 
     @Override

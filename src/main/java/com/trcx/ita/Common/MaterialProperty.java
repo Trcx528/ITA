@@ -37,7 +37,7 @@ public class MaterialProperty {
         if (traits.keySet().size() > 0) {
             data.add(EnumChatFormatting.DARK_AQUA + "Traits: ");
             for (String trait : this.traits.keySet()) {
-                data.add(trait + " " + traits.get(trait).toString());
+                data.add(" - " + trait + " " + traits.get(trait).toString());
             }
         }
     }

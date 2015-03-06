@@ -5,6 +5,7 @@ import com.trcx.ita.Common.ArmorNBT;
 import com.trcx.ita.Common.ITAArmorProperties;
 import com.trcx.ita.Common.Traits.BaseTrait;
 import com.trcx.ita.Common.Traits.ProtectionTrait;
+import com.trcx.ita.ITA;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.model.ModelBiped;
@@ -86,7 +87,7 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
 
     @Override
     public ArmorProperties getProperties(EntityLivingBase player, ItemStack armor, DamageSource source, double damage, int slot) {
-        ArmorProperties ap= new ArmorProperties(0, 0, 100);
+        ArmorProperties ap= new ArmorProperties(0, 0, 500);
         ITAArmorProperties bap = new ITAArmorProperties(armor);
 
         if (!source.isUnblockable()) {
@@ -101,8 +102,10 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
             }
         }
 
-        ap.AbsorbRatio = Math.min(ap.AbsorbRatio / 100, 1D);
-        //System.out.println("Props: Max: " + ap.AbsorbMax + " Ratio: " + ap.AbsorbRatio  + "(" + damage +")" + " Unblockable: " + source.isUnblockable());
+        //ap.AbsorbRatio = Math.min(ap.AbsorbRatio / 100, 1D);
+        if (ITA.debug) {
+            System.out.println("Props: Max: " + ap.AbsorbMax + " Ratio: " + ap.AbsorbRatio + "(" + damage + ")" + " Unblockable: " + source.isUnblockable());
+        }
         return ap;
     }
 

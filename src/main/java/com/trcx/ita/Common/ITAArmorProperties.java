@@ -5,6 +5,7 @@ import com.trcx.ita.ITA;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumChatFormatting;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -93,16 +94,17 @@ public class ITAArmorProperties {
     }
 
     public void getToolTip(List<String> data){
+        DecimalFormat df = new DecimalFormat("#.#");
         if (!ITA.debug) {
-            data.add(EnumChatFormatting.BLUE + "Protection: " + this.armorDisplayValue);
+            data.add(EnumChatFormatting.BLUE + "Shields: " + df.format((float)this.armorDisplayValue /2 ));
         } else {
             data.add(EnumChatFormatting.BLUE + "Armor Display: " + this.armorDisplayValue);
-            data.add(EnumChatFormatting.BLUE + "Protection %: " + this.armorProtectionValue);
+            data.add(EnumChatFormatting.BLUE + "Protection: " + df.format(this.armorProtectionValue) + "%");
         }
         data.add(EnumChatFormatting.AQUA + "Durability: " + (this.maxDurability - this.armorStack.getItemDamage()) + "/" + this.maxDurability);
         data.add(EnumChatFormatting.GREEN + "Enchantability: " + this.enchantability);
 
-        data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + this.speedModifier * 100 + "%");
+        data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + df.format(this.speedModifier * 100) + "%");
 
         if (isInvisible){
             data.add(EnumChatFormatting.GRAY + "Invisible");
@@ -110,7 +112,7 @@ public class ITAArmorProperties {
         if (traits.size() > 0){
             data.add(EnumChatFormatting.DARK_GRAY+ "Traits: ");
             for (BaseTrait trait : traits.keySet()){
-                data.add(EnumChatFormatting.DARK_PURPLE + trait.name + ": " + traits.get(trait));
+                data.add(" - " + EnumChatFormatting.DARK_PURPLE + trait.name + ": " + traits.get(trait));
             }
         }
     }
