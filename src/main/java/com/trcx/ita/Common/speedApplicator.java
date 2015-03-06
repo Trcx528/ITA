@@ -40,10 +40,6 @@ public class speedApplicator {
             }
         }
         speedModifier = Math.max(speedModifier, 0);
-
-        if (ITA.debug)
-            System.out.println("Speed Modifier: " + speedModifier);
-
         return speedModifier;
     }
 
@@ -89,8 +85,10 @@ public class speedApplicator {
             float speedModifier = getSpeedModifier(event.player);
             AttributeModifier modifier = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getModifier(CONSTS.speedAttribute);
             if (ITA.lastSpeedModifier != speedModifier || modifier == null ||
-                    ITA.fovCalculatorValue != p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue()) {
+                    p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue() != ITA.lastSpeedValue) {
                 ITA.lastSpeedModifier = speedModifier;
+                if (ITA.debug)
+                    System.out.println("Speed Modifier: " + speedModifier);
 
                 if (modifier != null)
                     p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).removeModifier(modifier);
@@ -102,6 +100,7 @@ public class speedApplicator {
                     modifier = new AttributeModifier(CONSTS.speedAttribute, "ITA Speed Modifier", -x + Math.max(x * speedModifier, 0.005), 0);
                     p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).applyModifier(modifier);
                 }
+                ITA.lastSpeedValue = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
             }
         }
     }

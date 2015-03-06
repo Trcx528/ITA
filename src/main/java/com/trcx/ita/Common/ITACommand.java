@@ -61,8 +61,10 @@ public class ITACommand implements ICommand {
     public List addTabCompletionOptions(ICommandSender sender, String[] parameters) {
         if (parameters.length <= 1){
             List<String> retVal = new ArrayList<String>();
-            retVal.add("dictionary");
-            retVal.add("reload");
+            if (parameters[0].startsWith("r"))
+                retVal.add("reload");
+            if (parameters[0].startsWith("d"))
+                retVal.add("dictionary");
             return retVal;
         }
         return null;

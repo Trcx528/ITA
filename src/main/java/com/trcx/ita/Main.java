@@ -50,6 +50,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.util.*;
 
 @Mod(modid = "ITA", version = Main.VERSION, name = "Infinitely Tweakable Armor")
@@ -95,20 +96,22 @@ public class Main
                 String json = new String(Files.readAllBytes(Paths.get(materialsFile.getPath())));
                 tempMaterials = gson.fromJson(json, typeOfMaterials);
             } else {
-                RegisterArmorMaterial(2.50, 9, 1.0, 30, "#D8D8D8", "ingotIron");
+                RegisterArmorMaterial(2.50,   9, 1.0, 36, "#D8D8D8", "ingotIron");
                 tempMaterials.get(tempMaterials.size() - 1).comment = "Vanilla values";
-                RegisterArmorMaterial(1.83, 25, 0.8, 14, "#EAEE57", "ingotGold");
+                RegisterArmorMaterial(1.83,  25, 0.8, 17, "#EAEE57", "ingotGold");
                 tempMaterials.get(tempMaterials.size() - 1).comment = "Vanilla values (except for speed)";
-                RegisterArmorMaterial(3.33, 10, 0, 66, "#8CF4E2", "gemDiamond");
+                RegisterArmorMaterial(3.33,  10,   1, 80, "#8CF4E2", "gemDiamond");
                 tempMaterials.get(tempMaterials.size() - 1).comment = "Vanilla values";
 
                 RegisterArmorMaterial(0, 0, 1.0, 5, "#7FCC19", "dyeLime");
+                tempMaterials.get(tempMaterials.size() - 1).comment = "For testing only";
                 tempMaterials.get(tempMaterials.size() - 1).traits.put("Night Vision", 1);
                 tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeBOOTS);
                 tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeCHESTPLATE);
                 tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeLEGGINGS);
 
                 RegisterArmorMaterial(0, 0, 1.0, 5, "#E5E533", "dyeYellow");
+                tempMaterials.get(tempMaterials.size() - 1).comment = "For testing only";
                 tempMaterials.get(tempMaterials.size() - 1).traits.put("Fall Protection", 1);
                 tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeHELMET);
                 tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeCHESTPLATE);
@@ -144,7 +147,7 @@ public class Main
                 RegisterArmorMaterial(2.60, 25,1.0, 30, "#7A6AAE", "ingotThaumium");
                 RegisterArmorMaterial(1.30, 9,1.05, 40, "#F0A8A4", "ingotPigIron");
                 RegisterArmorMaterial(4.00, 25,1.0, 50, "#200D36", "ingotVoid");
-                RegisterArmorMaterial(1.00, 25,1.0, 500, "#737372", "ingotUnstable");
+                RegisterArmorMaterial(0.00, 25,1.0, 500, "#737372", "ingotUnstable");
                 tempMaterials.get(tempMaterials.size() - 1).comment = "the irony, unstable ingots form the most stable(durable) armor";
                 RegisterArmorMaterial(1.00,  5,0.7, 21, "#D9DB5C", "ingotYellorium");
                 RegisterArmorMaterial(2.00,  7,0.8, 18, "#4642D6", "ingotBlutonium");
@@ -255,18 +258,19 @@ public class Main
     @SubscribeEvent
     public void toolTipListener(ItemTooltipEvent event) {
         if (!ITA.shiftForToolTips || ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)))) {
+            DecimalFormat df = new DecimalFormat("#.#");
             if ((event.itemStack.getItem() == ITA.Helmet || event.itemStack.getItem() == ITA.Chestplate ||
                     event.itemStack.getItem() == ITA.Leggings || event.itemStack.getItem() == ITA.Boots) && ITA.itaArmorToolTips) {
                 new ITAArmorProperties(event.itemStack).getToolTip(event.toolTip);
             } else if (event.itemStack.getItem() instanceof ISpecialArmor && ITA.specialArmorToolTips) {
-                ISpecialArmor iarmor = (ISpecialArmor) event.itemStack.getItem();
+                ISpecialArmor iArmor = (ISpecialArmor) event.itemStack.getItem();
                 ItemArmor armor = (ItemArmor) event.itemStack.getItem();
-                event.toolTip.add(EnumChatFormatting.BLUE + "Protection: " + iarmor.getArmorDisplay(event.entityPlayer, event.itemStack, 0));
+                event.toolTip.add(EnumChatFormatting.BLUE + "Shields: " +  df.format((float)iArmor.getArmorDisplay(event.entityPlayer, event.itemStack, 0) / 2));
                 event.toolTip.add(EnumChatFormatting.AQUA + "Durability: "+ (event.itemStack.getMaxDamage() - event.itemStack.getItemDamage()) + "/" + event.itemStack.getMaxDamage());
                 event.toolTip.add(EnumChatFormatting.GREEN + "Enchantability: " + armor.getItemEnchantability(event.itemStack));
             } else if (event.itemStack.getItem() instanceof ItemArmor && ITA.basicArmorToolTips) {
                 ItemArmor armor = (ItemArmor) event.itemStack.getItem();
-                event.toolTip.add(EnumChatFormatting.BLUE + "Protection: " + armor.getArmorMaterial().getDamageReductionAmount(armor.armorType));
+                event.toolTip.add(EnumChatFormatting.BLUE + "Shields: " + df.format((float)armor.getArmorMaterial().getDamageReductionAmount(armor.armorType) /2));
                 event.toolTip.add(EnumChatFormatting.AQUA + "Durability: " + (event.itemStack.getMaxDamage() - event.itemStack.getItemDamage()) + "/" + event.itemStack.getMaxDamage());
                 event.toolTip.add(EnumChatFormatting.GREEN + "Enchantability: " + armor.getItemEnchantability(event.itemStack));
             } else {

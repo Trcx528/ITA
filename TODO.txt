@@ -1,22 +1,26 @@
+- alloys
 - Sync Configs from server to client on login
+- test on server
 - Client side config
   - show/hide potion effect particles
   - maybe make it editable in game?
-- Add slash commands to change values on the fly?
-- alloys
+- RF power armor
 - After the fact upgrades?
   - Step Assist
-- Server config
+  - jetpack
+  - night vision
+  - swim boost
+  - magenet
+  - torch placer
+  - fire protection
+  - auto feeder
+  - way point tp
+- Common config
   - require hammer
   - debug
-
-Bugs:
- - speed not being applied?
- - switch material tool tip to display weight rather than speed
+  - alloy multiplier
 
 Wishlist:
 - auto tool switcher/toggle
 - Dartcraft style backpacks
 - redstone wand
-- maybe some basic modules
-  - step assist

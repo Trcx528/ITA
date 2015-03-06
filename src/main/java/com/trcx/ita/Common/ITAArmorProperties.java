@@ -60,19 +60,19 @@ public class ITAArmorProperties {
             switch (anbt.armorType) {
                 case (0): //helmet
                     typeArmorFactor = 0.758;
-                    typeDurabilityFactor = 1.6;
+                    typeDurabilityFactor = 0.919;
                     break;
                 case (1): //chestplate
                     typeArmorFactor = 1.315;
-                    typeDurabilityFactor = 1.1;
+                    typeDurabilityFactor = 0.833;
                     break;
                 case (2): //leggings
                     typeArmorFactor = 0.919;
-                    typeDurabilityFactor = 1.0;
+                    typeDurabilityFactor = 0.892;
                     break;
                 case (3): //boots
                     typeArmorFactor = 0.811;
-                    typeDurabilityFactor = 1.1;
+                    typeDurabilityFactor = 1.355;
                     break;
             }
 
