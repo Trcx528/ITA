@@ -1,7 +1,9 @@
 package com.trcx.ita.Common;
 
+import com.trcx.ita.ITA;
 import com.trcx.ita.Main;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,7 +16,7 @@ import java.util.List;
 /**
  * Created by Trcx on 3/2/2015.
  */
-public class ITACommand implements ICommand {
+public class ITACommand extends CommandBase {
     @Override
     public String getCommandName() {
         return "ITA";
@@ -45,7 +47,7 @@ public class ITACommand implements ICommand {
                         sender.addChatMessage(new ChatComponentText(OreDictionary.getOreName(id)));
                     }
                 } else if (parameters[0].equals("reload")) {
-                    Main.loadConfigs();
+                    ITA.config.loadConfigs();
                     sender.addChatMessage(new ChatComponentText("Configs reloaded"));
                 }
             }
@@ -53,9 +55,7 @@ public class ITACommand implements ICommand {
     }
 
     @Override
-    public boolean canCommandSenderUseCommand(ICommandSender sender) {
-        return true;
-    }
+    public boolean canCommandSenderUseCommand(ICommandSender sender) { return true; }
 
     @Override
     public List addTabCompletionOptions(ICommandSender sender, String[] parameters) {
@@ -77,6 +77,11 @@ public class ITACommand implements ICommand {
 
     @Override
     public int compareTo(Object o) {
+        return 0;
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
         return 0;
     }
 }

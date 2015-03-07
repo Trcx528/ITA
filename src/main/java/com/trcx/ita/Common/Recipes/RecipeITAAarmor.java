@@ -18,7 +18,7 @@ import net.minecraftforge.oredict.OreDictionary;
 public class RecipeITAAarmor implements IRecipe {
 
     private ItemStack getOutput(InventoryCrafting inv, Boolean shouldCreate){
-        int hammerCount = 0;
+        int hammerCount = ITA.craftingHammerRequired ? 0 : 1;
         boolean[] materialSlots = new boolean[9];
         boolean t = true;
         boolean f = false;

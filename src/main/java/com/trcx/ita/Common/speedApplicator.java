@@ -39,6 +39,7 @@ public class speedApplicator {
             }
         }
         speedModifier = Math.max(speedModifier, 0);
+        speedModifier = Math.min(speedModifier, ITA.maxSpeedMultiplier);
         return speedModifier;
     }
 

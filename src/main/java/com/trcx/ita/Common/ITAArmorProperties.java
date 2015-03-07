@@ -54,6 +54,7 @@ public class ITAArmorProperties {
 
         this.armorType = anbt.armorType;
 
+        this.armorProtectionValue = Math.min(armorProtectionValue, ITA.maxProtectionPreType);
         if (totalQty != 0) {
             double typeArmorFactor = 0;
             double typeDurabilityFactor = 0;
