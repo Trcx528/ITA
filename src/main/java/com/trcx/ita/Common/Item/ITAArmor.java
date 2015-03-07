@@ -59,6 +59,7 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
         }
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) {
         if (new ArmorNBT(stack).invisible){
@@ -72,12 +73,6 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
 
     public ITAArmor(int armorTypeIndex) {
         super(ArmorMaterial.DIAMOND, 0, armorTypeIndex);
-    }
-
-    @Override
-    public void onCreated(ItemStack armor, World world, EntityPlayer player) {
-        super.onCreated(armor, world, player);
-        setMaxDamage(new ITAArmorProperties(armor).maxDurability);
     }
 
     @Override
@@ -143,6 +138,18 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
     @SideOnly(Side.CLIENT)
     @Override
     public boolean requiresMultipleRenderPasses() {
+        return false;
+    }
+
+    @Override
+    public boolean isRepairable() {
+        return true;
+    }
+
+    @Override
+    public boolean getIsRepairable(ItemStack armor, ItemStack material) {
+        if (material.getItem() == Items.diamond)
+            return true;
         return false;
     }
 }

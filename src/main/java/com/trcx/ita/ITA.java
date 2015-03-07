@@ -23,7 +23,7 @@ public class ITA {
     public static Map<String, BaseTrait> Traits;
     public static Float lastSpeedModifier = -9999F; // set to a weird value so that it'll refresh
     public static Double fovCalculatorValue = 0D; // only used on client
-    public static double lastSpeedValue = 10000D;
+    public static Double lastSpeedValue = 10000D;
 
     public static boolean debug;
 
