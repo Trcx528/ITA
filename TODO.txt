@@ -1,9 +1,15 @@
-- alloys
 - Sync Configs from server to client on login
 - test on server
 - Client side config
   - show/hide potion effect particles
   - maybe make it editable in game?
+- Common config
+  - require hammer
+  - debug
+  - alloy multiplier
+- config balance
+- code cleanup
+
 - RF power armor
 - After the fact upgrades?
   - Step Assist
@@ -15,10 +21,6 @@
   - fire protection
   - auto feeder
   - way point tp
-- Common config
-  - require hammer
-  - debug
-  - alloy multiplier
 
 Wishlist:
 - auto tool switcher/toggle
