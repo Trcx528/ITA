@@ -14,6 +14,10 @@ public class CONSTS {
 
     public static final String stringMaterialAlloyName = "matAlloy";
 
+    public static final String packetMaterialId = "Material";
+    public static final String packetPotionTraitsId = "Potion";
+    public static final String packetProtectionTraitsId = "Protection";
+
     public static final String idHELMENT = "ITAHelmet";
     public static final String idCHESTPLATE = "ITAChestplate";
     public static final String idLEGGINGS = "ITALeggings";

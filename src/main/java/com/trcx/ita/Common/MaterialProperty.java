@@ -15,7 +15,6 @@ import java.util.Map;
  * Created by Trcx on 2/24/2015.
  */
 public class MaterialProperty {
-    public String oreDictionaryName;
     public String identifier;
     public String friendlyName;
     public String hexColor;
@@ -74,10 +73,6 @@ public class MaterialProperty {
     }
 
     public void onLoadFromFileUpdate(){
-        if (this.identifier == null ){
-            this.identifier = this.oreDictionaryName;
-            this.oreDictionaryName = null;
-        }
         if (this.friendlyName == null) {
             String[] chunks = this.identifier.split("(?=[A-Z])");
             for (int i = 0; i < chunks.length; i++) {

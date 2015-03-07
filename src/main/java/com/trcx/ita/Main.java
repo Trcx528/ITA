@@ -4,9 +4,7 @@ package com.trcx.ita;
  * Created by Trcx on 2/24/2015.
  */
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.trcx.ita.Common.Network.*;
 import com.trcx.ita.Common.*;
 import com.trcx.ita.Common.Item.Alloy;
 import com.trcx.ita.Common.Item.ArmorHammer;
@@ -16,25 +14,25 @@ import com.trcx.ita.Common.Recipes.RecipeArmorDye;
 import com.trcx.ita.Common.Recipes.RecipeITAAarmor;
 import com.trcx.ita.Common.Traits.BaseTrait;
 import com.trcx.ita.Common.Traits.PotionTrait;
-import com.trcx.ita.Common.Traits.ProtectionTrait;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.Potion;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.ISpecialArmor;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
@@ -65,6 +63,10 @@ public class Main
         ITA.config.configDir = configDir;
         ITA.config.loadConfigs();
 
+        ITA.net = NetworkRegistry.INSTANCE.newSimpleChannel("ITA");
+        ITA.registerMessage(jsonConfigPacket.class, jsonConfigPacket.jsonConfigMessage.class);
+        ITA.registerMessage(commonConfigPacket.class, commonConfigPacket.commonConfigMessage.class);
+
         ITA.Helmet = new ITAArmor(CONSTS.typeHELMET).setUnlocalizedName("ITAHelmet").setTextureName("ITA:Helmet");
         ITA.Chestplate = new ITAArmor(CONSTS.typeCHESTPLATE).setUnlocalizedName("ITAChestplate").setTextureName("ITA:Chestplate");
         ITA.Leggings = new ITAArmor(CONSTS.typeLEGGINGS).setUnlocalizedName("ITALeggings").setTextureName("ITA:Leggings");
@@ -93,6 +95,20 @@ public class Main
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
+    }
+
+    @SideOnly(Side.SERVER)
+    @SubscribeEvent
+    public void playerLoggedIn(PlayerEvent.PlayerLoggedInEvent event){
+        if (ITA.syncConfigToPlayersOnLogin) {
+            jsonConfigPacket.jsonConfigMessage msg = new jsonConfigPacket.jsonConfigMessage(ITA.jsonMaterial, CONSTS.packetMaterialId);
+            ITA.net.sendTo(msg, (EntityPlayerMP) event.player);
+            msg = new jsonConfigPacket.jsonConfigMessage(ITA.jsonPotionTraits, CONSTS.packetPotionTraitsId);
+            ITA.net.sendTo(msg, (EntityPlayerMP) event.player);
+            msg = new jsonConfigPacket.jsonConfigMessage(ITA.jsonProtectionTraits, CONSTS.packetProtectionTraitsId);
+            ITA.net.sendTo(msg, (EntityPlayerMP) event.player);
+            ITA.net.sendTo(new commonConfigPacket.commonConfigMessage(), (EntityPlayerMP) event.player);
+        }
     }
 
     @SideOnly(Side.CLIENT)

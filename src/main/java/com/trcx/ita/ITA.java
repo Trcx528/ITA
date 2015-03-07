@@ -7,6 +7,8 @@ import com.trcx.ita.Common.MaterialProperty;
 import com.trcx.ita.Common.Traits.BaseTrait;
 import com.trcx.ita.Common.Traits.PotionTrait;
 import com.trcx.ita.Common.Traits.ProtectionTrait;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import cpw.mods.fml.relauncher.Side;
 import net.minecraft.item.Item;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.config.Configuration;
@@ -31,6 +33,8 @@ public class ITA {
     public static Float lastSpeedModifier = -9999F; // set to a weird value so that it'll refresh
     public static Double fovCalculatorValue = 0D; // only used on client
     public static Double lastSpeedValue = 10000D;
+    public static SimpleNetworkWrapper net;
+    public static int nextPacketId = 0;
 
     //common config
     public static float alloyMultiplier;
@@ -38,6 +42,7 @@ public class ITA {
     public static boolean craftingHammerRequired;
     public static float maxSpeedMultiplier;
     public static float maxProtectionPreType;
+    public static boolean syncConfigToPlayersOnLogin;
 
     //client config
     public static boolean materialToolTips;
@@ -46,12 +51,23 @@ public class ITA {
     public static boolean itaArmorToolTips;
     public static boolean shiftForToolTips;
 
+    public static String jsonMaterial;
+    public static String jsonPotionTraits;
+    public static String jsonProtectionTraits;
+
     public static Item Helmet;
     public static Item Chestplate;
     public static Item Leggings;
     public static Item Boots;
     public static Item ArmorHammer;
     public static Item Alloy;
+
+    public static void registerMessage(Class packet, Class message)
+    {
+        net.registerMessage(packet, message, nextPacketId, Side.CLIENT);
+        net.registerMessage(packet, message, nextPacketId, Side.SERVER);
+        nextPacketId++;
+    }
 
     public static class config{
         public static File configDir;
@@ -62,17 +78,43 @@ public class ITA {
         private static List<PotionTrait> tempPotionTraits = new ArrayList<PotionTrait>();
         private static List<ProtectionTrait> tempProtectionTraits = new ArrayList<ProtectionTrait>();
         private static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        private static Gson gsonCompact = new GsonBuilder().create();
 
         private static Type typeOfMaterials = new TypeToken<List<MaterialProperty>>() {}.getType();
         private static Type typeOfPotionTraits = new TypeToken<List<PotionTrait>>() {}.getType();
         private static Type typeOfProtectionTraits = new TypeToken<List<ProtectionTrait>>() {}.getType();
 
+        public static void loadFromCachedJSON(String id){
+            try {
+                if (id.equals(CONSTS.packetMaterialId)) {
+                    tempMaterials = gson.fromJson(jsonMaterial, typeOfMaterials);
+                    ITA.Materials = new HashMap<String, MaterialProperty>();
+                    for (MaterialProperty prop : tempMaterials) {
+                        prop.onLoadFromFileUpdate();
+                        ITA.Materials.put(prop.identifier, prop);
+                    }
+                    ITA.Traits = new HashMap<String, BaseTrait>();
+                } else if (id.equals(CONSTS.packetPotionTraitsId)) {
+                    tempPotionTraits = gson.fromJson(jsonPotionTraits, typeOfPotionTraits);
+                    for (PotionTrait trait : tempPotionTraits) {
+                        ITA.Traits.put(trait.name, trait);
+                    }
+                } else if (id.equals(CONSTS.packetProtectionTraitsId)) {
+                    tempProtectionTraits = gson.fromJson(jsonProtectionTraits, typeOfProtectionTraits);
+                    for (ProtectionTrait trait : tempProtectionTraits) {
+                        ITA.Traits.put(trait.name, trait);
+                    }
+                }
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        }
 
         private static void loadMaterialConfig(File materialsFile) {
             try {
                 if (materialsFile.exists()) {
-                    String json = new String(Files.readAllBytes(Paths.get(materialsFile.getPath())));
-                    tempMaterials = gson.fromJson(json, typeOfMaterials);
+                    jsonMaterial = new String(Files.readAllBytes(Paths.get(materialsFile.getPath())));
+                    tempMaterials = gson.fromJson(jsonMaterial, typeOfMaterials);
                 } else {
                     RegisterArmorMaterial(2.50, 9, 1.0, 36, "#D8D8D8", "ingotIron");
                     tempMaterials.get(tempMaterials.size() - 1).comment = "Vanilla values";
@@ -103,7 +145,7 @@ public class ITA {
                     RegisterArmorMaterial(3.00, 11, 1.0, 30, "#FC5D2D", "ingotBronze");
                     RegisterArmorMaterial(3.80, 10, 1.0, 40, "#898989", "ingotSteel");
                     RegisterArmorMaterial(3.50, 18, 1.3, 9, "#FFFF0F", "ingotRefinedGlowstone");
-                    RegisterArmorMaterial(4.10, 40, 1.0, 80, "#1E0059", "ingotRefinedObsidian");
+                    RegisterArmorMaterial(4.10, 40, 1.0, 120, "#1E0059", "ingotRefinedObsidian");
                     RegisterArmorMaterial(4.10, 15, 0.0, 70, "#A97DE0", "ingotManyullyn"); //TODO undo weight nerf (testing)
                     RegisterArmorMaterial(4.00, 20, 1.8, 50, "#F48A00", "ingotArdite");
                     RegisterArmorMaterial(4.00, 25, 0.9, 60, "#2376DD", "ingotCobalt");
@@ -142,10 +184,11 @@ public class ITA {
                     ITA.Materials.put(prop.identifier, prop);
                 }
 
-                String json = gson.toJson(tempMaterials, typeOfMaterials);
-                Files.write(Paths.get(materialsFile.getPath()), json.getBytes());
+                jsonMaterial = gson.toJson(tempMaterials, typeOfMaterials);
+                Files.write(Paths.get(materialsFile.getPath()), jsonMaterial.getBytes());
+                jsonMaterial = gsonCompact.toJson(tempMaterials, typeOfMaterials);
             } catch (Exception e) {
-
+                e.printStackTrace();
             }
         }
         private static void RegisterArmorMaterial(double protection,Integer enchantability,double speedModifier,Integer maxDurability,String hexColor,String oreDictName){
@@ -161,10 +204,9 @@ public class ITA {
         }
         private static void loadPotionTraits(File potionTraitFile){
             try{
-                String json;
                 if (potionTraitFile.exists()) {
-                    json = new String(Files.readAllBytes(Paths.get(potionTraitFile.getPath())));
-                    tempPotionTraits = gson.fromJson(json, typeOfPotionTraits);
+                    jsonPotionTraits = new String(Files.readAllBytes(Paths.get(potionTraitFile.getPath())));
+                    tempPotionTraits = gson.fromJson(jsonPotionTraits, typeOfPotionTraits);
                 } else {
                     PotionTrait trait = new PotionTrait("Night Vision");
                     trait.potionID = Potion.nightVision.id;
@@ -179,18 +221,18 @@ public class ITA {
                 for (PotionTrait trait : tempPotionTraits) {
                     ITA.Traits.put(trait.name, trait);
                 }
-                json = gson.toJson(tempPotionTraits, typeOfPotionTraits);
-                Files.write(Paths.get(potionTraitFile.getPath()), json.getBytes());
+                jsonPotionTraits = gson.toJson(tempPotionTraits, typeOfPotionTraits);
+                Files.write(Paths.get(potionTraitFile.getPath()), jsonPotionTraits.getBytes());
+                jsonPotionTraits = gsonCompact.toJson(tempPotionTraits, typeOfPotionTraits);
             } catch (Exception e){
                 e.printStackTrace();
             }
         }
         private static void loadProtectionTraits(File protectionTraitFile){
             try {
-                String json;
                 if (protectionTraitFile.exists()) {
-                    json = new String(Files.readAllBytes(Paths.get(protectionTraitFile.getPath())));
-                    tempProtectionTraits = gson.fromJson(json, typeOfProtectionTraits);
+                    jsonProtectionTraits = new String(Files.readAllBytes(Paths.get(protectionTraitFile.getPath())));
+                    tempProtectionTraits = gson.fromJson(jsonProtectionTraits, typeOfProtectionTraits);
                 } else {
                     ProtectionTrait sampleProtection = new ProtectionTrait("Fall Protection");
                     sampleProtection.damageSourceType = "fall";
@@ -202,8 +244,9 @@ public class ITA {
                 for (ProtectionTrait trait : tempProtectionTraits) {
                     ITA.Traits.put(trait.name, trait);
                 }
-                json = gson.toJson(tempProtectionTraits, typeOfProtectionTraits);
-                Files.write(Paths.get(protectionTraitFile.getPath()), json.getBytes());
+                jsonProtectionTraits = gson.toJson(tempProtectionTraits, typeOfProtectionTraits);
+                Files.write(Paths.get(protectionTraitFile.getPath()), jsonProtectionTraits.getBytes());
+                jsonProtectionTraits = gsonCompact.toJson(tempProtectionTraits, typeOfProtectionTraits);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -230,8 +273,9 @@ public class ITA {
             ITA.alloyMultiplier = commonConfig.getFloat("Alloy Multiplier", "Balance",0.375F, 0.0F, 10.0F, "");
             ITA.debug = commonConfig.getBoolean("debug mode", "Debug", false, "");
             ITA.maxProtectionPreType = commonConfig.getFloat("Max Protection (Pre Type) Factor", "Balance", 50.0F, 0.0F, 100.0F, "");
-            ITA.maxSpeedMultiplier = commonConfig.getFloat("Max Speed Multiplier", "Balance", 10F, 0F, 100F, "");
+            ITA.maxSpeedMultiplier = commonConfig.getFloat("Max Speed Multiplier", "Balance", 16F, 0F, 100F, "");
             ITA.craftingHammerRequired = commonConfig.getBoolean("Require Crafting Hammer","Balance", true, "Might cause recipe conflicts if disabled");
+            ITA.syncConfigToPlayersOnLogin = commonConfig.getBoolean("Sync Server Config To Players On Login", "General", true, "Recommended to leave enable");
 
             ITA.shiftForToolTips = clientConfig.getBoolean("Shift For Tooltips", "Tooltips", false, "");
             ITA.materialToolTips = clientConfig.getBoolean("Material Tooltips", "Tooltips", true, "");

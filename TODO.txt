@@ -1,18 +1,7 @@
 - Sync Configs from server to client on login
-- test on server
-- Client side config
-  - show/hide potion effect particles
-  - maybe make it editable in game?
-- Common config
-  - require hammer
-  - debug
-  - alloy multiplier
-  - max speed multiplyer
-  - max protection value (pre type multiplier)
 - config balance
 - code cleanup
   - unify tool tips
-  - break out main into separate functions
   - insert into map function
 
 
@@ -32,3 +21,6 @@ Wishlist:
 - auto tool switcher/toggle
 - Dartcraft style backpacks
 - redstone wand
+- Client side config
+  - show/hide potion effect particles
+  - maybe make it editable in game?

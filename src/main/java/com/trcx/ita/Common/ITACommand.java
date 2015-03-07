@@ -1,10 +1,11 @@
 package com.trcx.ita.Common;
 
+import com.trcx.ita.CONSTS;
+import com.trcx.ita.Common.Network.commonConfigPacket;
+import com.trcx.ita.Common.Network.jsonConfigPacket;
 import com.trcx.ita.ITA;
-import com.trcx.ita.Main;
 import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.command.CommandBase;
-import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ChatComponentText;
@@ -49,6 +50,14 @@ public class ITACommand extends CommandBase {
                 } else if (parameters[0].equals("reload")) {
                     ITA.config.loadConfigs();
                     sender.addChatMessage(new ChatComponentText("Configs reloaded"));
+                } else if (parameters[0].equals("sync")){
+                    jsonConfigPacket.jsonConfigMessage msg = new jsonConfigPacket.jsonConfigMessage(ITA.jsonMaterial, CONSTS.packetMaterialId);
+                    ITA.net.sendToAll(msg);
+                    msg = new jsonConfigPacket.jsonConfigMessage(ITA.jsonPotionTraits, CONSTS.packetPotionTraitsId);
+                    ITA.net.sendToAll(msg);
+                    msg = new jsonConfigPacket.jsonConfigMessage(ITA.jsonProtectionTraits, CONSTS.packetProtectionTraitsId);
+                    ITA.net.sendToAll(msg);
+                    ITA.net.sendToAll(new commonConfigPacket.commonConfigMessage());
                 }
             }
         }
@@ -59,15 +68,20 @@ public class ITACommand extends CommandBase {
 
     @Override
     public List addTabCompletionOptions(ICommandSender sender, String[] parameters) {
+        List<String> retVal = new ArrayList<String>();
         if (parameters.length <= 1){
-            List<String> retVal = new ArrayList<String>();
             if (parameters[0].startsWith("r"))
                 retVal.add("reload");
             if (parameters[0].startsWith("d"))
                 retVal.add("dictionary");
-            return retVal;
+            if (parameters[0].startsWith("s"))
+                retVal.add("sync");
+        } else {
+            retVal.add("reload");
+            retVal.add("dictionary");
+            retVal.add("sync");
         }
-        return null;
+        return retVal;
     }
 
     @Override
