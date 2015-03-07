@@ -1,7 +1,10 @@
 package com.trcx.ita.Common;
 
+import com.trcx.ita.CONSTS;
 import com.trcx.ita.ITA;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,17 +18,44 @@ public class MaterialProperty {
     public String oreDictionaryName;
     public String friendlyName;
     public String hexColor;
-    public double protection;
-    public int enchantability;
+    public double protection = 0D;
+    public int enchantability = 0;
     //private double weight;
-    public double speed;
-    public int durability;
+    public double speed = 0;
+    public int durability = 0;
     public String comment;
+    public NBTTagCompound alloyNBT;
     public List<Integer> invalidTypes = new ArrayList<Integer>();
 
     public Map<String, Integer> traits = new HashMap<String, Integer>();
 
     public MaterialProperty(){}
+
+    public static MaterialProperty forAlloy(AlloyNBT aNBT) {
+        MaterialProperty retMat = new MaterialProperty();
+        retMat.alloyNBT = aNBT.getNBT();
+        retMat.friendlyName = "Alloy";
+        retMat.oreDictionaryName = CONSTS.stringMaterialAlloyName;
+        Map<String, Integer> colorMap = new HashMap<String, Integer>();
+        for (MaterialProperty mat : aNBT.materials.keySet()) {
+            colorMap.put(mat.hexColor, aNBT.materials.get(mat));
+            retMat.protection += mat.protection * aNBT.materials.get(mat) * ITA.alloyMultiplier;
+            retMat.enchantability += mat.enchantability * aNBT.materials.get(mat);
+            retMat.speed += mat.speed * aNBT.materials.get(mat);
+            retMat.durability += mat.durability * aNBT.materials.get(mat) * ITA.alloyMultiplier;
+            for (String trait : mat.traits.keySet()) {
+                if (retMat.traits.containsKey(trait)) {
+                    retMat.traits.put(trait, retMat.traits.get(trait) + (mat.traits.get(trait) / 4));
+                } else {
+                    retMat.traits.put(trait, mat.traits.get(trait) / 4);
+                }
+            }
+        }
+        retMat.hexColor = ColorHelper.hexFromInt(ColorHelper.getAvgColorInt(colorMap));
+        retMat.enchantability /= 4;
+        retMat.speed /= 4;
+        return retMat;
+    }
 
     public void getToolTip(List<String> data){
         data.add(EnumChatFormatting.BLUE + "Armor: " + this.protection);

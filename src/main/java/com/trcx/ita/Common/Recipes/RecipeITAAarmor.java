@@ -1,7 +1,8 @@
 package com.trcx.ita.Common.Recipes;
 
+import com.trcx.ita.CONSTS;
+import com.trcx.ita.Common.AlloyNBT;
 import com.trcx.ita.Common.ArmorNBT;
-import com.trcx.ita.Common.CONSTS;
 import com.trcx.ita.Common.MaterialProperty;
 import com.trcx.ita.ITA;
 import net.minecraft.inventory.InventoryCrafting;
@@ -41,6 +42,15 @@ public class RecipeITAAarmor implements IRecipe {
                             } else {
                                 anbt.materials.put(mat, 1);
                             }
+                        }
+                    }
+                    if (inv.getStackInSlot(i).getItem() == ITA.Alloy){
+                        materialSlots[i] = true;
+                        MaterialProperty alloy = MaterialProperty.forAlloy(AlloyNBT.fromStack(inv.getStackInSlot(i)));
+                        if (anbt.materials.containsKey(alloy)){
+                            anbt.materials.put(alloy, anbt.materials.get(alloy) + 1);
+                        } else {
+                            anbt.materials.put(alloy,1);
                         }
                     }
                 }

@@ -1,14 +1,11 @@
 package com.trcx.ita.Common;
 
-import com.trcx.ita.ITA;
 import com.trcx.ita.Main;
-import net.minecraft.client.Minecraft;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.IChatComponent;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -41,12 +38,15 @@ public class ITACommand implements ICommand {
             EntityPlayer player = (EntityPlayer)sender;
             if (parameters.length > 0) { // do more with this later
                 if (parameters[0].equals("dictionary")) {
+                    GameRegistry.UniqueIdentifier uid = GameRegistry.findUniqueIdentifierFor(player.getHeldItem().getItem());
+                    sender.addChatMessage(new ChatComponentText(uid.modId + ":" + uid.name));
                     int[] ids = OreDictionary.getOreIDs(player.getHeldItem());
                     for (int id : ids) {
                         sender.addChatMessage(new ChatComponentText(OreDictionary.getOreName(id)));
                     }
                 } else if (parameters[0].equals("reload")) {
                     Main.loadConfigs();
+                    sender.addChatMessage(new ChatComponentText("Configs reloaded"));
                 }
             }
         }

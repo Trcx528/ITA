@@ -1,6 +1,6 @@
 package com.trcx.ita.Common;
 
-import com.trcx.ita.Common.CONSTS;
+import com.trcx.ita.CONSTS;
 import com.trcx.ita.ITA;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -12,7 +12,6 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -85,7 +84,7 @@ public class speedApplicator {
             float speedModifier = getSpeedModifier(event.player);
             AttributeModifier modifier = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getModifier(CONSTS.speedAttribute);
             if (ITA.lastSpeedModifier != speedModifier || modifier == null ||
-                    Double.compare(p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue(), ITA.lastSpeedValue.doubleValue()) != 0) {
+                    Double.compare(p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue(), ITA.lastSpeedValue) != 0) {
                 ITA.lastSpeedModifier = speedModifier;
                 if (ITA.debug)
                     System.out.println("Speed Modifier: " + speedModifier);

@@ -8,15 +8,15 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.trcx.ita.Common.*;
-import com.trcx.ita.Common.CONSTS;
+import com.trcx.ita.Common.Item.Alloy;
 import com.trcx.ita.Common.Item.ArmorHammer;
 import com.trcx.ita.Common.Item.ITAArmor;
+import com.trcx.ita.Common.Recipes.RecipeAlloy;
 import com.trcx.ita.Common.Recipes.RecipeArmorDye;
 import com.trcx.ita.Common.Recipes.RecipeITAAarmor;
 import com.trcx.ita.Common.Traits.BaseTrait;
 import com.trcx.ita.Common.Traits.PotionTrait;
 import com.trcx.ita.Common.Traits.ProtectionTrait;
-import cpw.mods.fml.client.FMLClientHandler;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -27,9 +27,6 @@ import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
@@ -42,9 +39,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.RecipeSorter;
 import org.lwjgl.input.Keyboard;
-import scala.Int;
 
-import javax.swing.text.html.parser.Entity;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -233,17 +228,21 @@ public class Main
         ITA.Leggings = new ITAArmor(CONSTS.typeLEGGINGS).setUnlocalizedName("ITALeggings").setTextureName("ITA:Leggings");
         ITA.Boots = new ITAArmor(CONSTS.typeBOOTS).setUnlocalizedName("ITABoots").setTextureName("ITA:Boots");
         ITA.ArmorHammer = new ArmorHammer().setUnlocalizedName("ITAHammer").setTextureName("ITA:Hammer");
+        ITA.Alloy = new Alloy().setUnlocalizedName("ITAAlloy").setTextureName("ITA:Alloy");
 
         GameRegistry.registerItem(ITA.Helmet,CONSTS.idHELMENT);
         GameRegistry.registerItem(ITA.Chestplate, CONSTS.idCHESTPLATE);
         GameRegistry.registerItem(ITA.Leggings, CONSTS.idLEGGINGS);
         GameRegistry.registerItem(ITA.Boots, CONSTS.idBOOTS);
         GameRegistry.registerItem(ITA.ArmorHammer, CONSTS.idARMORHAMMER);
+        GameRegistry.registerItem(ITA.Alloy, CONSTS.idALLOY);
 
         GameRegistry.addRecipe(new RecipeITAAarmor());
         GameRegistry.addRecipe(new RecipeArmorDye());
+        GameRegistry.addRecipe(new RecipeAlloy());
         RecipeSorter.register("ITA:armor",RecipeITAAarmor.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
-        RecipeSorter.register("ITA:armorDye",RecipeArmorDye.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
+        RecipeSorter.register("ITA:armorDye",RecipeArmorDye.class, RecipeSorter.Category.SHAPELESS, "after:minecraft:shaped");
+        RecipeSorter.register("ITA:alloy", RecipeAlloy.class, RecipeSorter.Category.SHAPED, "after:minecraft:shaped");
 
         new speedApplicator();
 
