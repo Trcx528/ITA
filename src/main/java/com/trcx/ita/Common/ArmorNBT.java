@@ -70,11 +70,11 @@ public class ArmorNBT {
         NBTTagCompound nbt = new NBTTagCompound();
         int i = 0;
         for (MaterialProperty mat: anbt.materials.keySet()){
-            if (mat.oreDictionaryName.equals(CONSTS.stringMaterialAlloyName)) {
+            if (mat.identifier.equals(CONSTS.stringMaterialAlloyName)) {
                 nbt.setTag(arrayNBTALLOYNAME.get(i),mat.alloyNBT);
                 i++;
             } else {
-                nbt.setInteger(mat.oreDictionaryName, anbt.materials.get(mat));
+                nbt.setInteger(mat.identifier, anbt.materials.get(mat));
             }
         }
         if (!is.hasTagCompound()){

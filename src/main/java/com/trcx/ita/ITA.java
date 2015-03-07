@@ -12,7 +12,6 @@ import net.minecraft.potion.Potion;
 import net.minecraftforge.common.config.Configuration;
 
 import java.io.File;
-import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -104,7 +103,7 @@ public class ITA {
                     RegisterArmorMaterial(3.00, 11, 1.0, 30, "#FC5D2D", "ingotBronze");
                     RegisterArmorMaterial(3.80, 10, 1.0, 40, "#898989", "ingotSteel");
                     RegisterArmorMaterial(3.50, 18, 1.3, 9, "#FFFF0F", "ingotRefinedGlowstone");
-                    RegisterArmorMaterial(4.10, 40, 1.0, 50, "#1E0059", "ingotRefinedObsidian");
+                    RegisterArmorMaterial(4.10, 40, 1.0, 80, "#1E0059", "ingotRefinedObsidian");
                     RegisterArmorMaterial(4.10, 15, 0.0, 70, "#A97DE0", "ingotManyullyn"); //TODO undo weight nerf (testing)
                     RegisterArmorMaterial(4.00, 20, 1.8, 50, "#F48A00", "ingotArdite");
                     RegisterArmorMaterial(4.00, 25, 0.9, 60, "#2376DD", "ingotCobalt");
@@ -140,7 +139,7 @@ public class ITA {
                 ITA.Materials = new HashMap<String, MaterialProperty>();
                 for (MaterialProperty prop : tempMaterials) {
                     prop.onLoadFromFileUpdate();
-                    ITA.Materials.put(prop.oreDictionaryName, prop);
+                    ITA.Materials.put(prop.identifier, prop);
                 }
 
                 String json = gson.toJson(tempMaterials, typeOfMaterials);
@@ -156,7 +155,7 @@ public class ITA {
             newMat.speed = speedModifier;
             newMat.durability = maxDurability;
             newMat.hexColor = hexColor;
-            newMat.oreDictionaryName = oreDictName;
+            newMat.identifier = oreDictName;
             newMat.friendlyName = null;
             tempMaterials.add(newMat);
         }

@@ -16,6 +16,7 @@ import java.util.Map;
  */
 public class MaterialProperty {
     public String oreDictionaryName;
+    public String identifier;
     public String friendlyName;
     public String hexColor;
     public double protection = 0D;
@@ -35,7 +36,7 @@ public class MaterialProperty {
         MaterialProperty retMat = new MaterialProperty();
         retMat.alloyNBT = aNBT.getNBT();
         retMat.friendlyName = "Alloy";
-        retMat.oreDictionaryName = CONSTS.stringMaterialAlloyName;
+        retMat.identifier = CONSTS.stringMaterialAlloyName;
         Map<String, Integer> colorMap = new HashMap<String, Integer>();
         for (MaterialProperty mat : aNBT.materials.keySet()) {
             colorMap.put(mat.hexColor, aNBT.materials.get(mat));
@@ -73,8 +74,12 @@ public class MaterialProperty {
     }
 
     public void onLoadFromFileUpdate(){
+        if (this.identifier == null ){
+            this.identifier = this.oreDictionaryName;
+            this.oreDictionaryName = null;
+        }
         if (this.friendlyName == null) {
-            String[] chunks = this.oreDictionaryName.split("(?=[A-Z])");
+            String[] chunks = this.identifier.split("(?=[A-Z])");
             for (int i = 0; i < chunks.length; i++) {
                 if (i != 0) {
                     if (i == 1) {

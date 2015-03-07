@@ -50,7 +50,7 @@ public class AlloyNBT {
     public NBTTagCompound getNBT(){
         NBTTagCompound retVal = new NBTTagCompound();
         for (MaterialProperty mat: this.materials.keySet()){
-            retVal.setInteger(mat.oreDictionaryName, this.materials.get(mat));
+            retVal.setInteger(mat.identifier, this.materials.get(mat));
         }
         NBTTagCompound rev = new NBTTagCompound();
         rev.setTag(stringNBTALLOYMATERIALS, retVal);

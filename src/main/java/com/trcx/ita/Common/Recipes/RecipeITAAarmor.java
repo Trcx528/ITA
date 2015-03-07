@@ -68,7 +68,7 @@ public class RecipeITAAarmor implements IRecipe {
             }
         }
 
-        if (hammerCount != 1){
+        if (hammerCount != 1 && ITA.craftingHammerRequired){
             return null;
         }
 
