@@ -1,8 +1,7 @@
-- Sync Configs from server to client on login
-- config balance
+- balance configs
 - code cleanup
   - unify tool tips
-  - insert into map function
+  - add to existing map function?
 
 
 - RF power armor
