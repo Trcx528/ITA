@@ -3,6 +3,7 @@ package com.trcx.ita.Common.Recipes;
 import com.trcx.ita.Common.AlloyNBT;
 import com.trcx.ita.Common.MaterialProperty;
 import com.trcx.ita.ITA;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.InventoryCrafting;
@@ -37,6 +38,17 @@ public class RecipeAlloy implements IRecipe {
                         } else {
                             materials.put(mat, 1);
                         }
+                    }
+                }
+
+                GameRegistry.UniqueIdentifier uid = GameRegistry.findUniqueIdentifierFor(is.getItem());
+                if (ITA.Materials.containsKey(uid.modId + ":" + uid.name)){
+                    found = true;
+                    MaterialProperty mat = ITA.Materials.get(uid.modId + ":" + uid.name);
+                    if (materials.containsKey(mat)) {
+                        materials.put(mat, materials.get(mat) + 1);
+                    } else {
+                        materials.put(mat, 1);
                     }
                 }
                 if (!found)

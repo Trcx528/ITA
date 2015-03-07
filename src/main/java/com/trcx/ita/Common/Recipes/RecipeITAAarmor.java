@@ -5,6 +5,7 @@ import com.trcx.ita.Common.AlloyNBT;
 import com.trcx.ita.Common.ArmorNBT;
 import com.trcx.ita.Common.MaterialProperty;
 import com.trcx.ita.ITA;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -42,6 +43,16 @@ public class RecipeITAAarmor implements IRecipe {
                             } else {
                                 anbt.materials.put(mat, 1);
                             }
+                        }
+                    }
+                    GameRegistry.UniqueIdentifier uid = GameRegistry.findUniqueIdentifierFor(inv.getStackInSlot(i).getItem());
+                    if (ITA.Materials.containsKey(uid.modId + ":" + uid.name)){
+                        materialSlots[i] = true;
+                        MaterialProperty mat = ITA.Materials.get(uid.modId + ":" + uid.name);
+                        if (anbt.materials.containsKey(mat)) {
+                            anbt.materials.put(mat, anbt.materials.get(mat) + 1);
+                        } else {
+                            anbt.materials.put(mat, 1);
                         }
                     }
                     if (inv.getStackInSlot(i).getItem() == ITA.Alloy){

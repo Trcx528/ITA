@@ -279,6 +279,10 @@ public class Main
                             ITA.Materials.get(OreDictionary.getOreName(id)).getToolTip(event.toolTip);
                         }
                     }
+                    GameRegistry.UniqueIdentifier uid = GameRegistry.findUniqueIdentifierFor(event.itemStack.getItem());
+                    if (ITA.Materials.containsKey(uid.modId + ":" + uid.name)){
+                        ITA.Materials.get(uid.modId + ":" + uid.name).getToolTip(event.toolTip);
+                    }
                 }
             }
         }
