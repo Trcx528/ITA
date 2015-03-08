@@ -20,6 +20,7 @@ public class MaterialProperty {
     public String hexColor;
     public double protection = 0D;
     public int enchantability = 0;
+    public Integer metadata;
     //private double weight;
     public double speed = 0;
     public int durability = 0;

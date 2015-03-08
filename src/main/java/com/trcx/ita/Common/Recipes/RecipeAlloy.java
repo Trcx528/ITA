@@ -42,13 +42,17 @@ public class RecipeAlloy implements IRecipe {
                 }
 
                 GameRegistry.UniqueIdentifier uid = GameRegistry.findUniqueIdentifierFor(is.getItem());
-                if (ITA.Materials.containsKey(uid.modId + ":" + uid.name)){
-                    found = true;
-                    MaterialProperty mat = ITA.Materials.get(uid.modId + ":" + uid.name);
-                    if (materials.containsKey(mat)) {
-                        materials.put(mat, materials.get(mat) + 1);
-                    } else {
-                        materials.put(mat, 1);
+                if (uid != null) {
+                    if (ITA.Materials.containsKey(uid.modId + ":" + uid.name)) {
+                        MaterialProperty mat = ITA.Materials.get(uid.modId + ":" + uid.name);
+                        if (mat.metadata == null || mat.metadata == is.getItemDamage()) {
+                            found = true;
+                            if (materials.containsKey(mat)) {
+                                materials.put(mat, materials.get(mat) + 1);
+                            } else {
+                                materials.put(mat, 1);
+                            }
+                        }
                     }
                 }
                 if (!found)

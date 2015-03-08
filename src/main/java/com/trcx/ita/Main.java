@@ -140,7 +140,10 @@ public class Main
                     GameRegistry.UniqueIdentifier uid = GameRegistry.findUniqueIdentifierFor(event.itemStack.getItem());
                     if (uid != null) {
                         if (ITA.Materials.containsKey(uid.modId + ":" + uid.name)) {
-                            ITA.Materials.get(uid.modId + ":" + uid.name).getToolTip(event.toolTip);
+                            MaterialProperty mat = ITA.Materials.get(uid.modId + ":" + uid.name);
+                            if (mat.metadata == null || mat.metadata == event.itemStack.getItemDamage()){
+                                ITA.Materials.get(uid.modId + ":" + uid.name).getToolTip(event.toolTip);
+                            }
                         }
                     }
                 }
