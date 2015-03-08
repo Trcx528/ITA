@@ -138,8 +138,10 @@ public class Main
                         }
                     }
                     GameRegistry.UniqueIdentifier uid = GameRegistry.findUniqueIdentifierFor(event.itemStack.getItem());
-                    if (ITA.Materials.containsKey(uid.modId + ":" + uid.name)){
-                        ITA.Materials.get(uid.modId + ":" + uid.name).getToolTip(event.toolTip);
+                    if (uid != null) {
+                        if (ITA.Materials.containsKey(uid.modId + ":" + uid.name)) {
+                            ITA.Materials.get(uid.modId + ":" + uid.name).getToolTip(event.toolTip);
+                        }
                     }
                 }
             }
