@@ -28,8 +28,8 @@ import java.util.Map;
 
 
 public class ITA {
-    public static Map<String, MaterialProperty> Materials;
-    public static Map<String, BaseTrait> Traits;
+    public static Map<String, MaterialProperty> Materials = new HashMap<String, MaterialProperty>();
+    public static Map<String, BaseTrait> Traits = new HashMap<String, BaseTrait>();
     public static Float lastSpeedModifier = -9999F; // set to a weird value so that it'll refresh
     public static Double fovCalculatorValue = 0D; // only used on client
     public static Double lastSpeedValue = 10000D;
