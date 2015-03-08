@@ -47,7 +47,7 @@ import java.util.*;
 public class Main
 {
 
-    public static final String VERSION = "0.0.5";
+    public static final String VERSION = "0.0.6";
     private static int tickCounter = 0;
 
     public Main(){
