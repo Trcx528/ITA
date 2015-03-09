@@ -22,7 +22,7 @@ public class ITAArmorProperties {
     public boolean isInvisible = false;
     public int armorType = 5;
 
-    public Map<BaseTrait, Integer> traits = new HashMap<BaseTrait, Integer>();
+    public Map<BaseTrait, Float> traits = new HashMap<BaseTrait, Float>();
 
     private int nbtColor;
     private Map<String, Integer> ColorMap = new HashMap<String, Integer>();

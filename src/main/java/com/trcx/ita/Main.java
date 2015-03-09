@@ -160,7 +160,7 @@ public class Main
     @SubscribeEvent
     public void playerTick(TickEvent.PlayerTickEvent event){
         EntityPlayer player = event.player;
-        Map<PotionTrait, Integer> traits = new HashMap<PotionTrait, Integer>();
+        Map<PotionTrait, Float> traits = new HashMap<PotionTrait, Float>();
         for(int i=0; i < 4; i++){
             ItemStack is = player.getCurrentArmor(i);
             if (is != null) {

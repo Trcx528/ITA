@@ -125,14 +125,14 @@ public class ITA {
 
                     RegisterArmorMaterial(0, 0, 1.0, 5, "#7FCC19", "dyeLime");
                     tempMaterials.get(tempMaterials.size() - 1).comment = "For testing only";
-                    tempMaterials.get(tempMaterials.size() - 1).traits.put("Night Vision", 1);
+                    tempMaterials.get(tempMaterials.size() - 1).traits.put("Night Vision", 1F);
                     tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeBOOTS);
                     tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeCHESTPLATE);
                     tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeLEGGINGS);
 
                     RegisterArmorMaterial(0, 0, 1.0, 5, "#E5E533", "dyeYellow");
                     tempMaterials.get(tempMaterials.size() - 1).comment = "For testing only";
-                    tempMaterials.get(tempMaterials.size() - 1).traits.put("Fall Protection", 1);
+                    tempMaterials.get(tempMaterials.size() - 1).traits.put("Fall Protection", 1F);
                     tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeHELMET);
                     tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeCHESTPLATE);
                     tempMaterials.get(tempMaterials.size() - 1).invalidTypes.add(CONSTS.typeLEGGINGS);

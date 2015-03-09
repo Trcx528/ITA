@@ -6,6 +6,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -28,7 +29,7 @@ public class MaterialProperty {
     public NBTTagCompound alloyNBT;
     public List<Integer> invalidTypes = new ArrayList<Integer>();
 
-    public Map<String, Integer> traits = new HashMap<String, Integer>();
+    public Map<String, Float> traits = new HashMap<String, Float>();
 
     public MaterialProperty(){}
 
@@ -62,9 +63,8 @@ public class MaterialProperty {
         data.add(EnumChatFormatting.BLUE + "Armor: " + this.protection);
         data.add(EnumChatFormatting.AQUA + "Durability " + this.durability);
         data.add(EnumChatFormatting.GREEN + "Enchantability: " + this.enchantability);
-        if (ITA.debug)
-            data.add("Speed Modifier: " + speed);
-        data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + (this.speed) * 100 + "%");
+        DecimalFormat df = new DecimalFormat("#.##");
+        data.add(EnumChatFormatting.LIGHT_PURPLE + "Speed: " + df.format(this.speed * 100) + "%");
         if (traits.keySet().size() > 0) {
             data.add(EnumChatFormatting.DARK_AQUA + "Traits: ");
             for (String trait : this.traits.keySet()) {
