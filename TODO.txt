@@ -3,6 +3,7 @@
   - unify tool tips
   - add to existing map function?
 
+- Thaumcraft Support (helmet)
 
 - RF power armor
 - After the fact upgrades?
