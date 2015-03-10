@@ -164,7 +164,7 @@
     "identifier": "ingotCobalt",
     "friendlyName": "Cobalt",
     "hexColor": "#2376DD",
-    "protection": 4.0,
+    "protection": 3.0,
     "enchantability": 25,
     "speed": 1.5,
     "durability": 60,

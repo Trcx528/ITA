@@ -147,7 +147,7 @@
     "randActivationFrequency": 5,
     "weightFrequencyImpact": "^3",
     "weightDurationImpact": "*2",
-    "name": "Repell Attacker"
+    "name": "Repel Attacker"
   },
   {
     "potionID": 53,

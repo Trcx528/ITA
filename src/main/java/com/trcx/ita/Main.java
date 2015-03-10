@@ -4,12 +4,12 @@ package com.trcx.ita;
  * Created by Trcx on 2/24/2015.
  */
 
-import com.trcx.ita.Common.Config;
-import com.trcx.ita.Common.Network.*;
 import com.trcx.ita.Common.*;
 import com.trcx.ita.Common.Item.Alloy;
 import com.trcx.ita.Common.Item.ArmorHammer;
 import com.trcx.ita.Common.Item.ITAArmor;
+import com.trcx.ita.Common.Network.commonConfigPacket;
+import com.trcx.ita.Common.Network.jsonConfigPacket;
 import com.trcx.ita.Common.Recipes.RecipeAlloy;
 import com.trcx.ita.Common.Recipes.RecipeArmorDye;
 import com.trcx.ita.Common.Recipes.RecipeITAAarmor;
@@ -42,13 +42,14 @@ import org.lwjgl.input.Keyboard;
 import java.io.File;
 import java.io.IOException;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Mod(modid = "ITA", version = Main.VERSION, name = "Infinitely Tweakable Armor")
 public class Main
 {
 
-    public static final String VERSION = "0.0.8";
+    public static final String VERSION = "0.1.0";
     private static int tickCounter = 0;
 
     public Main(){
