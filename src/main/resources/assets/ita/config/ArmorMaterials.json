@@ -36,42 +36,6 @@
     "traits": {}
   },
   {
-    "identifier": "dyeLime",
-    "friendlyName": "Lime",
-    "hexColor": "#7FCC19",
-    "protection": 0.0,
-    "enchantability": 0,
-    "speed": 1.0,
-    "durability": 5,
-    "comment": "For testing only",
-    "invalidTypes": [
-      3,
-      1,
-      2
-    ],
-    "traits": {
-      "Night Vision": 1
-    }
-  },
-  {
-    "identifier": "dyeYellow",
-    "friendlyName": "Yellow",
-    "hexColor": "#E5E533",
-    "protection": 0.0,
-    "enchantability": 0,
-    "speed": 1.0,
-    "durability": 5,
-    "comment": "For testing only",
-    "invalidTypes": [
-      0,
-      1,
-      2
-    ],
-    "traits": {
-      "Fall Protection": 1
-    }
-  },
-  {
     "identifier": "ingotNickel",
     "friendlyName": "Nickel",
     "hexColor": "#E0D495",
