@@ -49,7 +49,7 @@ public class RecipeITAAarmor implements IRecipe {
                     if (uid != null) {
                         if (ITA.Materials.containsKey(uid.modId + ":" + uid.name)) {
                             MaterialProperty mat = ITA.Materials.get(uid.modId + ":" + uid.name);
-                            if (mat.metadata == inv.getStackInSlot(i).getItemDamage() || mat.metadata == null) {
+                            if (mat.metadata == null || mat.metadata == inv.getStackInSlot(i).getItemDamage()) {
                                 materialSlots[i] = true;
                                 if (anbt.materials.containsKey(mat)) {
                                     anbt.materials.put(mat, anbt.materials.get(mat) + 1);
