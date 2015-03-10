@@ -155,7 +155,7 @@
     "hexColor": "#F48A00",
     "protection": 4.0,
     "enchantability": 20,
-    "speed": 1.8,
+    "speed": 1.0,
     "durability": 75,
     "invalidTypes": [],
     "traits": {}
@@ -166,19 +166,8 @@
     "hexColor": "#2376DD",
     "protection": 4.0,
     "enchantability": 25,
-    "speed": 0.9,
+    "speed": 1.5,
     "durability": 60,
-    "invalidTypes": [],
-    "traits": {}
-  },
-  {
-    "identifier": "ingotMeatRaw",
-    "friendlyName": "Meat Raw",
-    "hexColor": "#CD8B7D",
-    "protection": 0.3,
-    "enchantability": 3,
-    "speed": 1.0,
-    "durability": 5,
     "invalidTypes": [],
     "traits": {}
   },
@@ -281,9 +270,9 @@
     "identifier": "ingotLumium",
     "friendlyName": "Lumium",
     "hexColor": "#D5BF6D",
-    "protection": 0.9,
+    "protection": 0.5,
     "enchantability": 20,
-    "speed": 2.0,
+    "speed": 1.8,
     "durability": 20,
     "invalidTypes": [],
     "traits": {
@@ -308,7 +297,7 @@
     "protection": 4.0,
     "enchantability": 5,
     "speed": 1.0,
-    "durability": 80,
+    "durability": 160,
     "invalidTypes": [],
     "traits": {}
   },
@@ -358,7 +347,7 @@
     "protection": 1.3,
     "enchantability": 9,
     "speed": 1.05,
-    "durability": 40,
+    "durability": 20,
     "invalidTypes": [],
     "traits": {
       "Saturation": 1
@@ -386,7 +375,7 @@
     "enchantability": 25,
     "speed": 1.0,
     "durability": 500,
-    "comment": "the irony, unstable ingots form the most stable(durable) armor",
+    "comment": "the irony, unstable ingots form the most stable (durable) armor",
     "invalidTypes": [],
     "traits": {}
   },
@@ -394,10 +383,10 @@
     "identifier": "ingotYellorium",
     "friendlyName": "Yellorium",
     "hexColor": "#D9DB5C",
-    "protection": 1.0,
+    "protection": 0.5,
     "enchantability": 5,
     "speed": 0.7,
-    "durability": 21,
+    "durability": 11,
     "invalidTypes": [],
     "traits": {
       "Wither Protection": 1
@@ -407,10 +396,10 @@
     "identifier": "ingotBlutonium",
     "friendlyName": "Blutonium",
     "hexColor": "#4642D6",
-    "protection": 2.0,
+    "protection": 0.7,
     "enchantability": 7,
     "speed": 0.8,
-    "durability": 18,
+    "durability": 16,
     "invalidTypes": [],
     "traits": {
       "Wither Protection": 1
@@ -420,7 +409,7 @@
     "identifier": "ingotCyanite",
     "friendlyName": "Cyanite",
     "hexColor": "#5CAFDB",
-    "protection": 0.7,
+    "protection": 0.4,
     "enchantability": 4,
     "speed": 0.6,
     "durability": 19,
@@ -538,9 +527,6 @@
     "traits": {
       "Fall Protection": 10,
       "Falling Block Protection": 10,
-      "OnFire Protection": 10,
-      "InFire Protection": 10,
-      "Lava Protection": 10,
       "Hunger": 1
     }
   },
@@ -548,7 +534,7 @@
     "identifier": "RandomThings:ingredient",
     "friendlyName": "Spectre Iron",
     "hexColor": "#90E764",
-    "protection": 3.3,
+    "protection": 3.0,
     "enchantability": 17,
     "metadata": 4,
     "speed": 1.0,
@@ -804,7 +790,7 @@
     "hexColor": "#8F60D4",
     "protection": 4.0,
     "enchantability": 25,
-    "speed": 1.0,
+    "speed": 0.8,
     "durability": 101,
     "invalidTypes": [],
     "traits": {
