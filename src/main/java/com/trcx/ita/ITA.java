@@ -219,6 +219,7 @@ public class ITA {
                 }
 
                 for (PotionTrait trait : tempPotionTraits) {
+                    trait.updateTrait();
                     ITA.Traits.put(trait.name, trait);
                 }
                 jsonPotionTraits = gson.toJson(tempPotionTraits, typeOfPotionTraits);
