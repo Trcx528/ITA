@@ -465,7 +465,7 @@
   {
     "identifier": "fieryIngot",
     "friendlyName": "Fiery Ingot",
-    "hexColor": "#90E764",
+    "hexColor": "#fda923",
     "protection": 4.0,
     "enchantability": 10,
     "speed": 1.0,
@@ -479,7 +479,7 @@
   {
     "identifier": "ironwood",
     "friendlyName": "Ironwood Ingot",
-    "hexColor": "#90E764",
+    "hexColor": "#82764a",
     "protection": 2.5,
     "enchantability": 15,
     "speed": 1.0,
@@ -490,7 +490,7 @@
   {
     "identifier": "ingotFzDarkIron",
     "friendlyName": "Dark Iron Ingot",
-    "hexColor": "#90E764",
+    "hexColor": "#5d126b",
     "protection": 4.0,
     "enchantability": 11,
     "speed": 1.0,
@@ -503,7 +503,7 @@
   {
     "identifier": "witchery:ingredient",
     "friendlyName": "Koboldite Ingot",
-    "hexColor": "#90E764",
+    "hexColor": "#84c6f4",
     "protection": 4.0,
     "enchantability": 32,
     "metadata": 150,
@@ -518,8 +518,8 @@
   {
     "identifier": "ExtraUtilities:bedrockiumIngot",
     "friendlyName": "Bedrockium Ingot",
-    "hexColor": "#90E764",
-    "protection": 6.0,
+    "hexColor": "#837c7c",
+    "protection": 8.0,
     "enchantability": 0,
     "speed": 0.0,
     "durability": 1000,
@@ -533,8 +533,8 @@
   {
     "identifier": "RandomThings:ingredient",
     "friendlyName": "Spectre Iron",
-    "hexColor": "#90E764",
-    "protection": 3.0,
+    "hexColor": "#81e4ec",
+    "protection": 3.3,
     "enchantability": 17,
     "metadata": 4,
     "speed": 1.0,
@@ -547,7 +547,7 @@
   {
     "identifier": "ingotCeruclase",
     "friendlyName": "Ceruclase Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#458fab",
     "protection": 3.0,
     "enchantability": 14,
     "speed": 1.0,
@@ -561,7 +561,7 @@
   {
     "identifier": "ingotDeepIron",
     "friendlyName": "Deep Iron Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#252f38",
     "protection": 2.5,
     "enchantability": 14,
     "speed": 1.0,
@@ -572,7 +572,7 @@
   {
     "identifier": "ingotInolashite",
     "friendlyName": "Inolashite Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#1e4f39",
     "protection": 3.5,
     "enchantability": 5,
     "speed": 1.0,
@@ -588,7 +588,7 @@
   {
     "identifier": "ingotBlackSteel",
     "friendlyName": "Black Steel Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#1c2939",
     "protection": 3.0,
     "enchantability": 17,
     "speed": 1.0,
@@ -599,7 +599,7 @@
   {
     "identifier": "ingotAtlarus",
     "friendlyName": "Atlarus Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#ccb300",
     "protection": 3.5,
     "enchantability": 22,
     "speed": 1.0,
@@ -610,7 +610,7 @@
   {
     "identifier": "ingotHaderoth",
     "friendlyName": "Haderoth Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#77341e",
     "protection": 3.5,
     "enchantability": 19,
     "speed": 1.0,
@@ -621,7 +621,7 @@
   {
     "identifier": "ingotAlduorite",
     "friendlyName": "Alduorite Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#a3dede",
     "protection": 4.0,
     "enchantability": 25,
     "speed": 1.3,
@@ -645,7 +645,7 @@
   {
     "identifier": "ingotDamascusSteel",
     "friendlyName": "Damascus Steel Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#996d4d",
     "protection": 3.0,
     "enchantability": 19,
     "speed": 1.0,
@@ -656,7 +656,7 @@
   {
     "identifier": "ingotOureclase",
     "friendlyName": "Oureclase Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#b76215",
     "protection": 3.0,
     "enchantability": 18,
     "speed": 1.0,
@@ -667,7 +667,7 @@
   {
     "identifier": "ingotKalendrite",
     "friendlyName": "Kalendrite Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#aa5bbd",
     "protection": 3.0,
     "enchantability": 20,
     "speed": 1.0,
@@ -678,7 +678,7 @@
   {
     "identifier": "ingotCelenegil",
     "friendlyName": "Celenegil Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#94cc48",
     "protection": 3.5,
     "enchantability": 50,
     "speed": 1.0,
@@ -689,7 +689,7 @@
   {
     "identifier": "ingotMidasium",
     "friendlyName": "Midasium Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#ffa826",
     "protection": 2.0,
     "enchantability": 35,
     "speed": 1.0,
@@ -700,7 +700,7 @@
   {
     "identifier": "ingotCarmot",
     "friendlyName": "Carmot Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#d9cd8c",
     "protection": 3.0,
     "enchantability": 40,
     "speed": 1.0,
@@ -711,7 +711,7 @@
   {
     "identifier": "ingotInfuscolium",
     "friendlyName": "Infuscolium Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#922156",
     "protection": 2.5,
     "enchantability": 10,
     "speed": 0.7,
@@ -725,7 +725,7 @@
   {
     "identifier": "ingotManganese",
     "friendlyName": "Manganese Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#ffcaca",
     "protection": 3.0,
     "enchantability": 16,
     "speed": 1.0,
@@ -736,7 +736,7 @@
   {
     "identifier": "ingotSanguinite",
     "friendlyName": "Sanguinite Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#ff0f0f",
     "protection": 3.5,
     "enchantability": 25,
     "speed": 1.0,
@@ -747,7 +747,7 @@
   {
     "identifier": "ingotQuicksilver",
     "friendlyName": "Quicksilver Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#7cd3c7",
     "protection": 3.5,
     "enchantability": 20,
     "speed": 3.0,
@@ -763,7 +763,7 @@
   {
     "identifier": "ingotPrometheum",
     "friendlyName": "Prometheum Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#5a8156",
     "protection": 1.5,
     "enchantability": 16,
     "speed": 1.0,
@@ -774,7 +774,7 @@
   {
     "identifier": "ingotVulcanite",
     "friendlyName": "Vulcanite Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#ff8448",
     "protection": 3.5,
     "enchantability": 20,
     "speed": 1.0,
@@ -787,7 +787,7 @@
   {
     "identifier": "ingotTartarite",
     "friendlyName": "Tartarite Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#ff763c",
     "protection": 4.0,
     "enchantability": 25,
     "speed": 0.8,
@@ -801,7 +801,7 @@
   {
     "identifier": "ingotAdamantine",
     "friendlyName": "Adamantine Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#af0101",
     "protection": 3.5,
     "enchantability": 22,
     "speed": 1.0,
@@ -817,7 +817,7 @@
   {
     "identifier": "ingotZinc",
     "friendlyName": "Zinc Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#dcdfa4",
     "protection": 2.0,
     "enchantability": 8,
     "speed": 0.6,
@@ -828,7 +828,7 @@
   {
     "identifier": "ingotVyroxeres",
     "friendlyName": "Vyroxeres Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#88fe41",
     "protection": 3.0,
     "enchantability": 16,
     "speed": 1.0,
@@ -842,7 +842,7 @@
   {
     "identifier": "ingotShadowIron",
     "friendlyName": "Shadow Iron Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#5f4c3f",
     "protection": 2.5,
     "enchantability": 3,
     "speed": 1.0,
@@ -853,7 +853,7 @@
   {
     "identifier": "ingotShadowSteel",
     "friendlyName": "Shadow Steel Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#887362",
     "protection": 3.0,
     "enchantability": 5,
     "speed": 1.0,
@@ -864,7 +864,7 @@
   {
     "identifier": "ingotRubracium",
     "friendlyName": "Rubracium Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#972d2d",
     "protection": 2.5,
     "enchantability": 1,
     "speed": 1.9,
@@ -875,7 +875,7 @@
   {
     "identifier": "ingotAngmallen",
     "friendlyName": "Angmallen Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#e1d78a",
     "protection": 3.0,
     "enchantability": 30,
     "speed": 1.0,
@@ -886,7 +886,7 @@
   {
     "identifier": "ingotMeutoite",
     "friendlyName": "Meutoite Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#5f5269",
     "protection": 3.0,
     "enchantability": 25,
     "speed": 1.5,
@@ -903,7 +903,7 @@
   {
     "identifier": "ingotEximite",
     "friendlyName": "Eximite Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#7c5a96",
     "protection": 3.0,
     "enchantability": 25,
     "speed": 1.5,
@@ -914,7 +914,7 @@
   {
     "identifier": "ingotDesichalkos",
     "friendlyName": "Desichalkos Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#722fa8",
     "protection": 3.5,
     "enchantability": 30,
     "speed": 2.0,
@@ -930,7 +930,7 @@
   {
     "identifier": "ingotOrichalcum",
     "friendlyName": "Orichalcum Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#547a38",
     "protection": 3.5,
     "enchantability": 20,
     "speed": 0.6,
@@ -941,7 +941,7 @@
   {
     "identifier": "ingotLemurite",
     "friendlyName": "Lemurite Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#dbdbdb",
     "protection": 2.0,
     "enchantability": 21,
     "speed": 1.0,
@@ -952,7 +952,7 @@
   {
     "identifier": "ingotIgnatius",
     "friendlyName": "Ignatius Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#ffa953",
     "protection": 2.5,
     "enchantability": 15,
     "speed": 1.0,
@@ -966,7 +966,7 @@
   {
     "identifier": "ingotAmordrine",
     "friendlyName": "Amordrine Ingot",
-    "hexColor": "#8F60D4",
+    "hexColor": "#a98db1",
     "protection": 3.5,
     "enchantability": 50,
     "speed": 1.0,
