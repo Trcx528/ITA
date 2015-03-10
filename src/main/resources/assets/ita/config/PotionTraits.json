@@ -1,0 +1,172 @@
+[
+  {
+    "potionName": "potion.nightVision",
+    "duration": 600,
+    "potency": 0,
+    "minWeightForAlwaysActive": 5,
+    "randActivationFrequency": 5,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*1",
+    "name": "Night Vision"
+  },
+  {
+    "potionName": "potion.saturation",
+    "duration": 600,
+    "potency": 2,
+    "minWeightForAlwaysActive": 1,
+    "randActivationFrequency": 5,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*1",
+    "name": "Saturation"
+  },
+  {
+    "potionName": "potion.invisibility",
+    "duration": 20,
+    "potency": 0,
+    "minWeightForAlwaysActive": 8,
+    "randActivationFrequency": 5,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*1",
+    "name": "Invisibility"
+  },
+  {
+    "potionName": "potion.healthBoost",
+    "duration": 50,
+    "potency": 1,
+    "minWeightForAlwaysActive": 4,
+    "randActivationFrequency": 5,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*1",
+    "name": "Health Boost"
+  },
+  {
+    "potionID": 30,
+    "duration": 20,
+    "potency": 2,
+    "minWeightForAlwaysActive": 28,
+    "randActivationFrequency": 5,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*1",
+    "name": "Death Gaze"
+  },
+  {
+    "potionID": 64,
+    "duration": 99,
+    "potency": 0,
+    "minWeightForAlwaysActive": 20,
+    "randActivationFrequency": 5,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*3",
+    "name": "Reflect Projectiles"
+  },
+  {
+    "potionName": "potion.hunger",
+    "duration": 400,
+    "potency": 1,
+    "minWeightForAlwaysActive": 10,
+    "randActivationFrequency": 5,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*1",
+    "name": "Hunger"
+  },
+  {
+    "potionID": 72,
+    "duration": 400,
+    "potency": 2,
+    "minWeightForAlwaysActive": 18,
+    "randActivationFrequency": 8,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*1",
+    "name": "Fortune"
+  },
+  {
+    "potionName": "potion.confusion",
+    "duration": 45,
+    "potency": 2,
+    "minWeightForAlwaysActive": 28,
+    "randActivationFrequency": 2,
+    "weightFrequencyImpact": "^1",
+    "weightDurationImpact": "*3",
+    "name": "Confusion"
+  },
+  {
+    "potionName": "potion.regeneration",
+    "duration": 30,
+    "potency": 1,
+    "minWeightForAlwaysActive": 18,
+    "randActivationFrequency": 2,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*1",
+    "name": "Regeneration"
+  },
+  {
+    "potionName": "potion.blindness",
+    "duration": 20,
+    "potency": 1,
+    "minWeightForAlwaysActive": 26,
+    "randActivationFrequency": 2,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*2",
+    "name": "Blindness"
+  },
+  {
+    "potionName": "potion.weakness",
+    "duration": 100,
+    "potency": 2,
+    "minWeightForAlwaysActive": 26,
+    "randActivationFrequency": 2,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*2",
+    "name": "Weakness"
+  },
+  {
+    "potionID": 36,
+    "duration": 800,
+    "potency": 0,
+    "minWeightForAlwaysActive": 14,
+    "randActivationFrequency": 4,
+    "weightFrequencyImpact": "^3",
+    "weightDurationImpact": "*1",
+    "name": "Grotesque"
+  },
+  {
+    "potionID": 38,
+    "duration": 100,
+    "potency": 2,
+    "minWeightForAlwaysActive": 1,
+    "randActivationFrequency": 2,
+    "weightFrequencyImpact": "^2",
+    "weightDurationImpact": "*2",
+    "name": "Sun Allergy"
+  },
+  {
+    "potionID": 67,
+    "duration": 800,
+    "potency": 2,
+    "minWeightForAlwaysActive": 8,
+    "randActivationFrequency": 5,
+    "weightFrequencyImpact": "^3",
+    "weightDurationImpact": "*2",
+    "name": "Repell Attacker"
+  },
+  {
+    "potionID": 53,
+    "duration": 99,
+    "potency": 2,
+    "minWeightForAlwaysActive": 24,
+    "randActivationFrequency": 2,
+    "weightFrequencyImpact": "^1",
+    "weightDurationImpact": "*1",
+    "name": "Queasy"
+  },
+  {
+    "potionName": "potion.poison",
+    "duration": 99,
+    "potency": 0,
+    "minWeightForAlwaysActive": 24,
+    "randActivationFrequency": 2,
+    "weightFrequencyImpact": "^1",
+    "weightDurationImpact": "*1",
+    "name": "Poison"
+  }
+]

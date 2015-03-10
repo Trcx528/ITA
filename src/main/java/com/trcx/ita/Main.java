@@ -4,6 +4,7 @@ package com.trcx.ita;
  * Created by Trcx on 2/24/2015.
  */
 
+import com.trcx.ita.Common.Config;
 import com.trcx.ita.Common.Network.*;
 import com.trcx.ita.Common.*;
 import com.trcx.ita.Common.Item.Alloy;
@@ -60,8 +61,8 @@ public class Main
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException{
         File configDir = new File(event.getModConfigurationDirectory(),"ITA");
-        ITA.config.configDir = configDir;
-        ITA.config.loadConfigs();
+        Config.configDir = configDir;
+        Config.loadConfigs();
 
         ITA.net = NetworkRegistry.INSTANCE.newSimpleChannel("ITA");
         ITA.registerMessage(jsonConfigPacket.class, jsonConfigPacket.jsonConfigMessage.class);

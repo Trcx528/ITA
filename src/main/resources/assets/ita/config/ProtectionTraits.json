@@ -1,0 +1,80 @@
+[
+  {
+    "damageSourceType": "fall",
+    "protectionPerWeight": 5,
+    "weightImpact": "^2",
+    "name": "Fall Protection"
+  },
+  {
+    "damageSourceType": "cactus",
+    "protectionPerWeight": 5,
+    "weightImpact": "^2",
+    "name": "Cactus Protection"
+  },
+  {
+    "damageSourceType": "drown",
+    "protectionPerWeight": 7,
+    "weightImpact": "^3",
+    "name": "Drown Protection"
+  },
+  {
+    "damageSourceType": "fallingBlock",
+    "protectionPerWeight": 5,
+    "weightImpact": "^2",
+    "name": "Falling Block Protection"
+  },
+  {
+    "damageSourceType": "inFire",
+    "protectionPerWeight": 5,
+    "weightImpact": "^2",
+    "name": "InFire Protection"
+  },
+  {
+    "damageSourceType": "onFire",
+    "protectionPerWeight": 5,
+    "weightImpact": "^2",
+    "name": "OnFire Protection"
+  },
+  {
+    "damageSourceType": "lava",
+    "protectionPerWeight": 5,
+    "weightImpact": "^2",
+    "name": "Lava Protection"
+  },
+  {
+    "damageSourceType": "inWall",
+    "protectionPerWeight": 5,
+    "weightImpact": "^3",
+    "name": "InWall Protection"
+  },
+  {
+    "damageSourceType": "magic",
+    "protectionPerWeight": 5,
+    "weightImpact": "^2",
+    "name": "Magic Protection"
+  },
+  {
+    "damageSourceType": "outOfWorld",
+    "protectionPerWeight": 5,
+    "weightImpact": "^2",
+    "name": "Void Protection"
+  },
+  {
+    "damageSourceType": "starve",
+    "protectionPerWeight": 5,
+    "weightImpact": "^2",
+    "name": "Starvation Protection"
+  },
+  {
+    "damageSourceType": "wither",
+    "protectionPerWeight": 10,
+    "weightImpact": "^3",
+    "name": "Wither Protection"
+  },
+  {
+    "damageSourceType": "generic",
+    "protectionPerWeight": 5,
+    "weightImpact": "^2",
+    "name": "Generic Protection"
+  }
+]

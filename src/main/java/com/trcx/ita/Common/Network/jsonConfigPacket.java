@@ -1,6 +1,7 @@
 package com.trcx.ita.Common.Network;
 
 import com.trcx.ita.CONSTS;
+import com.trcx.ita.Common.Config;
 import com.trcx.ita.ITA;
 import cpw.mods.fml.common.network.simpleimpl.IMessage;
 import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
@@ -24,7 +25,7 @@ public class jsonConfigPacket implements IMessageHandler<jsonConfigPacket.jsonCo
             }
             System.out.println(message.configName);
             System.out.println(message.json);
-            ITA.config.loadFromCachedJSON(message.configName);
+            Config.loadFromCachedJSON(message.configName);
             return null;
         }
         return null;

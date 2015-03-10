@@ -48,7 +48,7 @@ public class ITACommand extends CommandBase {
                         sender.addChatMessage(new ChatComponentText(OreDictionary.getOreName(id)));
                     }
                 } else if (parameters[0].equals("reload")) {
-                    ITA.config.loadConfigs();
+                    Config.loadConfigs();
                     sender.addChatMessage(new ChatComponentText("Configs reloaded"));
                 } else if (parameters[0].equals("sync")){
                     jsonConfigPacket.jsonConfigMessage msg = new jsonConfigPacket.jsonConfigMessage(ITA.jsonMaterial, CONSTS.packetMaterialId);

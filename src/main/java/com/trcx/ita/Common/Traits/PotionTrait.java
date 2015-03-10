@@ -38,11 +38,13 @@ public class PotionTrait extends BaseTrait {
                         player.addPotionEffect(effect);
                     }
                 }
+            } else {
+                regenPotionMappings();
             }
         }
     }
 
-    public void updateTrait(){
+    private void regenPotionMappings(){
         potionIndex = new HashMap<String, Integer>();
         for (int i=0; i<Potion.potionTypes.length; i++) {
             if (Potion.potionTypes[i] != null) {
@@ -50,6 +52,10 @@ public class PotionTrait extends BaseTrait {
                 potionIndex.put(pe.getName(), pe.getId());
             }
         }
+    }
+
+    public void updateTrait(){
+        regenPotionMappings();
         if (potionID != null){
             if (potionIndex.containsValue(potionID)){
                 for (String key: potionIndex.keySet()){
