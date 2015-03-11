@@ -28,8 +28,14 @@ public class PotionTrait extends BaseTrait {
     public void tick(double weight, int tickCount, EntityPlayer player) {
         if ((tickCount % 20) == 1) {
             Double calculatedDuration = duration * getCalculatedWeight(weight, weightDurationImpact);
-            if (potionIndex.containsKey(potionName) && Potion.potionTypes[potionIndex.get(potionName)] != null) {
-                PotionEffect effect = new PotionEffect(potionIndex.get(potionName), calculatedDuration.intValue(), potency);
+            PotionEffect effect = null;
+            if (potionName != null && potionIndex.containsKey(potionName) && Potion.potionTypes[potionIndex.get(potionName)] != null) {
+                effect = new PotionEffect(potionIndex.get(potionName), calculatedDuration.intValue(), potency);
+            } else if (potionID != null) {
+                regenPotionMappings();
+                effect = new PotionEffect(potionID, calculatedDuration.intValue(), potency);
+            }
+            if (effect != null) {
                 if (weight >= minWeightForAlwaysActive) {
                     player.addPotionEffect(effect);
                 } else if (randActivationFrequency > 0) {
@@ -38,8 +44,6 @@ public class PotionTrait extends BaseTrait {
                         player.addPotionEffect(effect);
                     }
                 }
-            } else {
-                regenPotionMappings();
             }
         }
     }
