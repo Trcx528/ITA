@@ -123,10 +123,12 @@ public class Main
                 new ITAArmorProperties(event.itemStack).getToolTip(event.toolTip);
             } else if (event.itemStack.getItem() instanceof ISpecialArmor && ITA.specialArmorToolTips) {
                 ISpecialArmor iArmor = (ISpecialArmor) event.itemStack.getItem();
-                ItemArmor armor = (ItemArmor) event.itemStack.getItem();
                 event.toolTip.add(EnumChatFormatting.BLUE + "Shields: " +  df.format((float)iArmor.getArmorDisplay(event.entityPlayer, event.itemStack, 0) / 2));
                 event.toolTip.add(EnumChatFormatting.AQUA + "Durability: "+ (event.itemStack.getMaxDamage() - event.itemStack.getItemDamage()) + "/" + event.itemStack.getMaxDamage());
-                event.toolTip.add(EnumChatFormatting.GREEN + "Enchantability: " + armor.getItemEnchantability(event.itemStack));
+                if (event.itemStack.getItem() instanceof ItemArmor) {
+                    ItemArmor armor = (ItemArmor) event.itemStack.getItem();
+                    event.toolTip.add(EnumChatFormatting.GREEN + "Enchantability: " + armor.getItemEnchantability(event.itemStack));
+                }
             } else if (event.itemStack.getItem() instanceof ItemArmor && ITA.basicArmorToolTips) {
                 ItemArmor armor = (ItemArmor) event.itemStack.getItem();
                 event.toolTip.add(EnumChatFormatting.BLUE + "Shields: " + df.format((float)armor.getArmorMaterial().getDamageReductionAmount(armor.armorType) /2));
