@@ -49,7 +49,7 @@ import java.util.Map;
 public class Main
 {
 
-    public static final String VERSION = "0.1.0";
+    public static final String VERSION = "0.1.1";
     private static int tickCounter = 0;
 
     public Main(){
