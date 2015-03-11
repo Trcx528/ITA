@@ -4,9 +4,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Created by Trcx on 3/3/2015.
@@ -17,6 +15,7 @@ public class PotionTrait extends BaseTrait {
     public String potionName;
     public int duration = 0;
     public int potency = 0;
+    public List<Integer> dimensionBlacklist = new ArrayList<Integer>();
     public int minWeightForAlwaysActive = -1;
     public int randActivationFrequency = -1;
     public String weightFrequencyImpact = "none";
@@ -27,21 +26,23 @@ public class PotionTrait extends BaseTrait {
 
     public void tick(double weight, int tickCount, EntityPlayer player) {
         if ((tickCount % 20) == 1) {
-            Double calculatedDuration = duration * getCalculatedWeight(weight, weightDurationImpact);
-            PotionEffect effect = null;
-            if (potionName != null && potionIndex.containsKey(potionName) && Potion.potionTypes[potionIndex.get(potionName)] != null) {
-                effect = new PotionEffect(potionIndex.get(potionName), calculatedDuration.intValue(), potency);
-            } else if (potionID != null) {
-                regenPotionMappings();
-                effect = new PotionEffect(potionID, calculatedDuration.intValue(), potency);
-            }
-            if (effect != null) {
-                if (weight >= minWeightForAlwaysActive) {
-                    player.addPotionEffect(effect);
-                } else if (randActivationFrequency > 0) {
-                    double calcWeight = getCalculatedWeight(weight, weightFrequencyImpact);
-                    if (random.nextInt(3600) <= Math.floor(calcWeight * randActivationFrequency)) { // weight of 1 should trigger once every hour
+            if (!dimensionBlacklist.contains(player.worldObj.provider.dimensionId)) {
+                Double calculatedDuration = duration * getCalculatedWeight(weight, weightDurationImpact);
+                PotionEffect effect = null;
+                if (potionName != null && potionIndex.containsKey(potionName) && Potion.potionTypes[potionIndex.get(potionName)] != null) {
+                    effect = new PotionEffect(potionIndex.get(potionName), calculatedDuration.intValue(), potency);
+                } else if (potionID != null) {
+                    regenPotionMappings();
+                    effect = new PotionEffect(potionID, calculatedDuration.intValue(), potency);
+                }
+                if (effect != null) {
+                    if (weight >= minWeightForAlwaysActive) {
                         player.addPotionEffect(effect);
+                    } else if (randActivationFrequency > 0) {
+                        double calcWeight = getCalculatedWeight(weight, weightFrequencyImpact);
+                        if (random.nextInt(3600) <= Math.floor(calcWeight * randActivationFrequency)) { // weight of 1 should trigger once every hour
+                            player.addPotionEffect(effect);
+                        }
                     }
                 }
             }
@@ -60,6 +61,7 @@ public class PotionTrait extends BaseTrait {
 
     public void updateTrait(){
         regenPotionMappings();
+        dimensionBlacklist = new ArrayList<Integer>();
         if (potionID != null){
             if (potionIndex.containsValue(potionID)){
                 for (String key: potionIndex.keySet()){
