@@ -30,10 +30,10 @@ public class PotionTrait extends BaseTrait {
                 Double calculatedDuration = duration * getCalculatedWeight(weight, weightDurationImpact);
                 PotionEffect effect = null;
                 if (potionName != null && potionIndex.containsKey(potionName) && Potion.potionTypes[potionIndex.get(potionName)] != null) {
-                    effect = new PotionEffect(potionIndex.get(potionName), calculatedDuration.intValue(), potency);
+                    effect = new PotionEffect(potionIndex.get(potionName), calculatedDuration.intValue(), potency, true);
                 } else if (potionID != null) {
                     regenPotionMappings();
-                    effect = new PotionEffect(potionID, calculatedDuration.intValue(), potency);
+                    effect = new PotionEffect(potionID, calculatedDuration.intValue(), potency, true);
                 }
                 if (effect != null) {
                     if (weight >= minWeightForAlwaysActive) {
