@@ -1,5 +1,6 @@
 package com.trcx.ita.Common.Traits;
 
+import com.trcx.ita.ITA;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -30,9 +31,13 @@ public class PotionTrait extends BaseTrait {
                 Double calculatedDuration = duration * getCalculatedWeight(weight, weightDurationImpact);
                 PotionEffect effect = null;
                 if (potionName != null && potionIndex.containsKey(potionName) && Potion.potionTypes[potionIndex.get(potionName)] != null) {
+                    if (ITA.debug)
+                        System.out.println("Attempting to apply " + potionName + " to " + player.getDisplayName() + " for " + calculatedDuration.intValue() + " with potency " + potency);
                     effect = new PotionEffect(potionIndex.get(potionName), calculatedDuration.intValue(), potency, true);
                 } else if (potionID != null) {
                     regenPotionMappings();
+                    if (ITA.debug)
+                        System.out.println("Attempting to apply " + potionID + " to " + player.getDisplayName() + " for " + calculatedDuration.intValue() + " with potency " + potency);
                     effect = new PotionEffect(potionID, calculatedDuration.intValue(), potency, true);
                 }
                 if (effect != null) {
