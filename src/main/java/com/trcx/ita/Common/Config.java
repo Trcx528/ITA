@@ -41,8 +41,11 @@ public class Config{
                 tempMaterials = gson.fromJson(ITA.jsonMaterial, typeOfMaterials);
                 ITA.Materials = new HashMap<String, MaterialProperty>();
                 for (MaterialProperty prop : tempMaterials) {
-                    prop.onLoadFromFileUpdate();
-                    ITA.Materials.put(prop.identifier, prop);
+                    if (prop.metadata == null) {
+                        ITA.Materials.put(prop.identifier, prop);
+                    } else {
+                        ITA.Materials.put(prop.identifier + prop.metadata, prop);
+                    }
                 }
                 ITA.Traits = new HashMap<String, BaseTrait>();
             } else if (id.equals(CONSTS.packetPotionTraitsId)) {
@@ -75,7 +78,11 @@ public class Config{
             ITA.Materials = new HashMap<String, MaterialProperty>();
             for (MaterialProperty prop : tempMaterials) {
                 prop.onLoadFromFileUpdate();
-                ITA.Materials.put(prop.identifier, prop);
+                if (prop.metadata == null){
+                    ITA.Materials.put(prop.identifier, prop);
+                } else {
+                    ITA.Materials.put(prop.identifier + prop.metadata, prop);
+                }
             }
 
             ITA.jsonMaterial = gson.toJson(tempMaterials, typeOfMaterials);

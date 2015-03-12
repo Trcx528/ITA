@@ -45,13 +45,20 @@ public class RecipeAlloy implements IRecipe {
                 if (uid != null) {
                     if (ITA.Materials.containsKey(uid.modId + ":" + uid.name)) {
                         MaterialProperty mat = ITA.Materials.get(uid.modId + ":" + uid.name);
-                        if (mat.metadata == null || mat.metadata == is.getItemDamage()) {
-                            found = true;
-                            if (materials.containsKey(mat)) {
-                                materials.put(mat, materials.get(mat) + 1);
-                            } else {
-                                materials.put(mat, 1);
-                            }
+                        found = true;
+                        if (materials.containsKey(mat)) {
+                            materials.put(mat, materials.get(mat) + 1);
+                        } else {
+                            materials.put(mat, 1);
+                        }
+                    } else if (ITA.Materials.containsKey(uid.modId +":" + uid.name + is.getItemDamage())){
+                        MaterialProperty mat = ITA.Materials.get(uid.modId + ":" + uid.name + is.getItemDamage());
+
+                        found = true;
+                        if (materials.containsKey(mat)) {
+                            materials.put(mat, materials.get(mat) + 1);
+                        } else {
+                            materials.put(mat, 1);
                         }
                     }
                 }

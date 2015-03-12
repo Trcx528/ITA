@@ -74,7 +74,11 @@ public class ArmorNBT {
                 nbt.setTag(arrayNBTALLOYNAME.get(i),mat.alloyNBT);
                 i++;
             } else {
-                nbt.setInteger(mat.identifier, anbt.materials.get(mat));
+                if (mat.metadata == null) {
+                    nbt.setInteger(mat.identifier, anbt.materials.get(mat));
+                } else {
+                    nbt.setInteger(mat.identifier + mat.metadata, anbt.materials.get(mat));
+                }
             }
         }
         if (!is.hasTagCompound()){

@@ -49,23 +49,28 @@ public class RecipeITAAarmor implements IRecipe {
                     if (uid != null) {
                         if (ITA.Materials.containsKey(uid.modId + ":" + uid.name)) {
                             MaterialProperty mat = ITA.Materials.get(uid.modId + ":" + uid.name);
-                            if (mat.metadata == null || mat.metadata == inv.getStackInSlot(i).getItemDamage()) {
-                                materialSlots[i] = true;
-                                if (anbt.materials.containsKey(mat)) {
-                                    anbt.materials.put(mat, anbt.materials.get(mat) + 1);
-                                } else {
-                                    anbt.materials.put(mat, 1);
-                                }
-                            }
-
-                        } else if (inv.getStackInSlot(i).getItem() == ITA.Alloy) {
                             materialSlots[i] = true;
-                            MaterialProperty alloy = MaterialProperty.forAlloy(AlloyNBT.fromStack(inv.getStackInSlot(i)));
-                            if (anbt.materials.containsKey(alloy)) {
-                                anbt.materials.put(alloy, anbt.materials.get(alloy) + 1);
+                            if (anbt.materials.containsKey(mat)) {
+                                anbt.materials.put(mat, anbt.materials.get(mat) + 1);
                             } else {
-                                anbt.materials.put(alloy, 1);
+                                anbt.materials.put(mat, 1);
                             }
+                        } else if (ITA.Materials.containsKey(uid.modId +":" + uid.name + inv.getStackInSlot(i).getItemDamage())){
+                            MaterialProperty mat = ITA.Materials.get(uid.modId + ":" + uid.name + inv.getStackInSlot(i).getItemDamage());
+                            materialSlots[i] = true;
+                            if (anbt.materials.containsKey(mat)) {
+                                anbt.materials.put(mat, anbt.materials.get(mat) + 1);
+                            } else {
+                                anbt.materials.put(mat, 1);
+                            }
+                        }
+                    } else if (inv.getStackInSlot(i).getItem() == ITA.Alloy) {
+                        materialSlots[i] = true;
+                        MaterialProperty alloy = MaterialProperty.forAlloy(AlloyNBT.fromStack(inv.getStackInSlot(i)));
+                        if (anbt.materials.containsKey(alloy)) {
+                            anbt.materials.put(alloy, anbt.materials.get(alloy) + 1);
+                        } else {
+                            anbt.materials.put(alloy, 1);
                         }
                     }
                 }
