@@ -21,6 +21,8 @@ import net.minecraftforge.common.MinecraftForge;
  */
 public class speedApplicator {
 
+    private final float stepHeight = 1.0000528F;
+
     public speedApplicator() {
         MinecraftForge.EVENT_BUS.register(this);
         FMLCommonHandler.instance().bus().register(this);
@@ -81,6 +83,15 @@ public class speedApplicator {
     @SubscribeEvent
     public void doSpeedApplication(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.START) {
+            if (event.player.getCurrentArmor(0) != null) {
+                if (event.player.getCurrentArmor(0).getItem() == ITA.Boots) {
+                    event.player.stepHeight = stepHeight;
+                } else if (event.player.stepHeight == stepHeight) {
+                    event.player.stepHeight = 0.5F;
+                }
+            } else if (event.player.stepHeight == stepHeight) {
+                event.player.stepHeight = 0.5F;
+            }
             EntityPlayer p = event.player;
             float speedModifier = getSpeedModifier(event.player);
             AttributeModifier modifier = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getModifier(CONSTS.speedAttribute);
@@ -89,7 +100,6 @@ public class speedApplicator {
                 ITA.lastSpeedModifier = speedModifier;
                 if (ITA.debug)
                     System.out.println("Speed Modifier: " + speedModifier);
-
                 if (modifier != null)
                     p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).removeModifier(modifier);
 
