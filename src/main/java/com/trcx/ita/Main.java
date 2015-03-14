@@ -8,6 +8,7 @@ import com.trcx.ita.Common.*;
 import com.trcx.ita.Common.Item.Alloy;
 import com.trcx.ita.Common.Item.ArmorHammer;
 import com.trcx.ita.Common.Item.ITAArmor;
+import com.trcx.ita.Common.Item.Swapper;
 import com.trcx.ita.Common.Network.commonConfigPacket;
 import com.trcx.ita.Common.Network.jsonConfigPacket;
 import com.trcx.ita.Common.Recipes.RecipeAlloy;
@@ -57,7 +58,8 @@ public class Main
         FMLCommonHandler.instance().bus().register(this);
     }
 
-
+    @Mod.Instance("ITA")
+    public static Main instance;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException{
@@ -75,6 +77,7 @@ public class Main
         ITA.Boots = new ITAArmor(CONSTS.typeBOOTS).setUnlocalizedName("ITABoots").setTextureName("ITA:Boots");
         ITA.ArmorHammer = new ArmorHammer().setUnlocalizedName("ITAHammer").setTextureName("ITA:Hammer");
         ITA.Alloy = new Alloy().setUnlocalizedName("ITAAlloy").setTextureName("ITA:Alloy");
+        ITA.Swapper = new Swapper().setUnlocalizedName("ITASwapper").setTextureName("ITA:Swapper");
 
         GameRegistry.registerItem(ITA.Helmet,CONSTS.idHELMENT);
         GameRegistry.registerItem(ITA.Chestplate, CONSTS.idCHESTPLATE);
@@ -82,6 +85,10 @@ public class Main
         GameRegistry.registerItem(ITA.Boots, CONSTS.idBOOTS);
         GameRegistry.registerItem(ITA.ArmorHammer, CONSTS.idARMORHAMMER);
         GameRegistry.registerItem(ITA.Alloy, CONSTS.idALLOY);
+        GameRegistry.registerItem(ITA.Swapper, CONSTS.idSwapper);
+
+        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
+
 
         GameRegistry.addRecipe(new RecipeITAAarmor());
         GameRegistry.addRecipe(new RecipeArmorDye());

@@ -15,6 +15,8 @@ import java.util.Map;
 
 
 public class ITA {
+
+
     public static Map<String, MaterialProperty> Materials = new HashMap<String, MaterialProperty>();
     public static Map<String, BaseTrait> Traits = new HashMap<String, BaseTrait>();
     public static Float lastSpeedModifier = -9999F; // set to a weird value so that it'll refresh
@@ -48,6 +50,7 @@ public class ITA {
     public static Item Boots;
     public static Item ArmorHammer;
     public static Item Alloy;
+    public static Item Swapper;
 
     public static void registerMessage(Class packet, Class message)
     {
