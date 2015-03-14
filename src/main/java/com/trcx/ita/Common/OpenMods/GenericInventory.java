@@ -1,4 +1,4 @@
-package com.trcx.ita.Common;
+package com.trcx.ita.Common.OpenMods;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;

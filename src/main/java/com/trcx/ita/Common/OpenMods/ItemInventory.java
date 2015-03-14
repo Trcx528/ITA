@@ -1,4 +1,4 @@
-package com.trcx.ita.Common;
+package com.trcx.ita.Common.OpenMods;
 
 import com.google.common.base.Preconditions;
 import net.minecraft.item.ItemStack;
@@ -14,7 +14,7 @@ public class ItemInventory extends GenericInventory {
         super("", false, size);
         Preconditions.checkNotNull(containerStack);
         this.containerStack = containerStack;
-        if (containerStack.stackTagCompound == null)
+        if (!containerStack.hasTagCompound())
             containerStack.stackTagCompound = new NBTTagCompound();
         final NBTTagCompound tag  = containerStack.stackTagCompound;
         readFromNBT(getInventoryTag(tag));
@@ -24,7 +24,7 @@ public class ItemInventory extends GenericInventory {
     @Override
     public void onInventoryChanged(int slotNumber) {
         super.onInventoryChanged(slotNumber);
-        if (containerStack.stackTagCompound == null)
+        if (!containerStack.hasTagCompound())
             containerStack.stackTagCompound = new NBTTagCompound();
         NBTTagCompound tag = containerStack.stackTagCompound;
         NBTTagCompound inventoryTag = getInventoryTag(tag);
