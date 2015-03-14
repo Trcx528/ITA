@@ -13,7 +13,7 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (player.getHeldItem() != null && player.getHeldItem().getItem() == ITA.Swapper){
-            return new SwapperContainer(player.inventory, new SwapperInventory(player.getHeldItem()));
+            return new SwapperContainer(player.inventory, new ItemInventory(player.getHeldItem(),4));
         }
         return null;
     }
@@ -21,7 +21,7 @@ public class GuiHandler implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (player.getHeldItem() != null && player.getHeldItem().getItem() == ITA.Swapper){
-            return new SwapperGui(player.inventory, new SwapperInventory(player.getHeldItem()));
+            return new SwapperGui(player.inventory, new ItemInventory(player.getHeldItem(),4));
         }
         return null;
     }

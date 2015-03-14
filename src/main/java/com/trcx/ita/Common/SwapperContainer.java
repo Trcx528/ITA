@@ -12,13 +12,13 @@ import net.minecraft.item.ItemStack;
 public class SwapperContainer extends Container {
 
     private InventoryPlayer invPlayer;
-    private SwapperInventory invSwapper;
+    private ItemInventory invSwapper;
 
-    public SwapperContainer(InventoryPlayer invPlayer, SwapperInventory invSwapper){
+    public SwapperContainer(InventoryPlayer invPlayer, ItemInventory invSwapper){
         this.invPlayer = invPlayer;
         this.invSwapper = invSwapper;
         for (int i = 0; i!=4; i++){
-            addSlotToContainer(new Slot(invSwapper,i, 24, 84 + i * 18));
+            addSlotToContainer(new Slot(invSwapper,i, 44 + i * 18, 60));
         }
         bindPlayerInventory(invPlayer);
     }

@@ -1,7 +1,7 @@
 package com.trcx.ita.Client;
 
+import com.trcx.ita.Common.ItemInventory;
 import com.trcx.ita.Common.SwapperContainer;
-import com.trcx.ita.Common.SwapperInventory;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.entity.player.InventoryPlayer;
 import org.lwjgl.opengl.GL11;
@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL11;
  * Created by Trcx on 3/14/2015.
  */
 public class SwapperGui extends GuiContainer {
-    public SwapperGui (InventoryPlayer invPlayer, SwapperInventory invSwapper) {
+    public SwapperGui (InventoryPlayer invPlayer, ItemInventory invSwapper) {
         //the container is instanciated and passed to the superclass for handling
         super(new SwapperContainer(invPlayer, invSwapper));
     }
