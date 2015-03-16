@@ -5,7 +5,6 @@ import com.trcx.ita.ITA;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumChatFormatting;
 
-
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,9 +46,9 @@ public class MaterialProperty {
             retMat.durability += mat.durability * aNBT.materials.get(mat) * ITA.alloyMultiplier;
             for (String trait : mat.traits.keySet()) {
                 if (retMat.traits.containsKey(trait)) {
-                    retMat.traits.put(trait, retMat.traits.get(trait) + (mat.traits.get(trait) / 4));
+                    retMat.traits.put(trait, retMat.traits.get(trait) + ((mat.traits.get(trait) / 4) * aNBT.materials.get(mat)));
                 } else {
-                    retMat.traits.put(trait, mat.traits.get(trait) / 4);
+                    retMat.traits.put(trait, (mat.traits.get(trait) / 4) * aNBT.materials.get(mat));
                 }
             }
         }
