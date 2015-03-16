@@ -1,5 +1,6 @@
 package com.trcx.ita.Common;
 
+import com.trcx.ita.Common.Item.Swapper;
 import com.trcx.ita.Common.OpenMods.PlayerItemInventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -18,8 +19,8 @@ public class SwapperContainer extends Container {
     public SwapperContainer(InventoryPlayer invPlayer, PlayerItemInventory invSwapper){
         this.invPlayer = invPlayer;
         this.invSwapper = invSwapper;
-        for (int i = 0; i!=4; i++){
-            addSlotToContainer(new Slot(invSwapper,i, 53 + i * 18, 63));
+        for (int i = 0; i!= Swapper.swapperSlots; i++){
+            addSlotToContainer(new Slot(invSwapper,i, 44 + i * 18, 63));
         }
         bindPlayerInventory(invPlayer);
     }

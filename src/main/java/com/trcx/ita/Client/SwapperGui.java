@@ -12,7 +12,7 @@ import org.lwjgl.opengl.GL11;
  */
 public class SwapperGui extends GuiContainer {
     public SwapperGui (InventoryPlayer invPlayer, PlayerItemInventory invSwapper) {
-        //the container is instanciated and passed to the superclass for handling
+        //the container is instantiated and passed to the superclass for handling
         super(new SwapperContainer(invPlayer, invSwapper));
     }
 
