@@ -18,6 +18,7 @@ import com.trcx.ita.Common.Traits.BaseTrait;
 import com.trcx.ita.Common.Traits.PotionTrait;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
@@ -60,6 +61,9 @@ public class Main
 
     @Mod.Instance("ITA")
     public static Main instance;
+
+    @SidedProxy(clientSide = "com.trcx.ita.Client.ClientProxy", serverSide = "com.trcx.ita.Common.CommonProxy")
+    public static CommonProxy proxy;
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException{
@@ -104,6 +108,7 @@ public class Main
     @Mod.EventHandler
     public void init(FMLInitializationEvent event)
     {
+        proxy.registerRenderers();
     }
 
     @SideOnly(Side.SERVER)
