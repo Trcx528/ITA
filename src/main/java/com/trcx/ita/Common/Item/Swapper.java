@@ -21,7 +21,12 @@ import java.util.Set;
 
 /**
  * Created by Trcx on 3/14/2015.
- */
+*/
+
+//TODO funny rendering with itemBlock
+//TODO vanilla tools not taking damage
+//TODO cobweb tool swap?
+//TODO add rf charging
 public class Swapper extends Item {
 
     private static final String stringLASTTOOL = "LastTool";
@@ -166,7 +171,7 @@ public class Swapper extends Item {
     public void onUsingTick(ItemStack swapper, EntityPlayer player, int count) {
         ItemStack is = getLastStack(swapper);
         if (is != null)
-            is.getItem().onUsingTick(is,player,count);
+            is.getItem().onUsingTick(is, player, count);
     }
 
     @Override
@@ -206,7 +211,7 @@ public class Swapper extends Item {
             if (!world.isRemote)
                 player.openGui(Main.instance, 0, world, 0, 0, 0);
         } else {
-            ItemStack is = getStack(slotRightClick,swapper);
+            ItemStack is = getStack(slotRightClick, swapper);
             if (is!=null)
                 is.getItem().onItemRightClick(is,world,player);
         }
@@ -230,7 +235,7 @@ public class Swapper extends Item {
                 }
                 return !world.canPlaceEntityOnSide(placeBlock, x ,y,z,false,side,null,is);
             } else {
-                return item.onItemUse(is,player,world,x,y,z,side,hitX,hitY,hitZ);
+                return item.onItemUseFirst(is, player, world, x, y, z, side, hitX, hitY, hitZ);
             }
         }
         return false;
@@ -242,10 +247,12 @@ public class Swapper extends Item {
         if (is !=null){
             Item item = is.getItem();
             if (item instanceof ItemBlock){
-                boolean ret = ((ItemBlock)item).onItemUse(is,player,world,x,y,z,side,clickX,clickY,clickZ);
+                boolean ret = item.onItemUse(is, player, world, x, y, z, side, clickX, clickY, clickZ);
                 ItemInventory inv = new ItemInventory(swapper,swapperSlots);
                 if (is.stackSize == 0){
                     inv.setInventorySlotContents(slotRightClick,null);
+                } else {
+                    inv.setInventorySlotContents(slotRightClick, is);
                 }
                 inv.markDirty();
                 return ret;
@@ -291,8 +298,10 @@ public class Swapper extends Item {
     @Override
     public int getDamage(ItemStack swapper) {
         ItemStack is = getLastStack(swapper);
-        if (is != null)
+        if (is != null) {
+            //System.out.println("Retrieving damage from: " + is.toString() + " as: " + is.getItemDamage());
             return is.getItem().getDamage(is);
+        }
         return super.getDamage(swapper);
     }
 
@@ -317,8 +326,13 @@ public class Swapper extends Item {
     @Override
     public void setDamage(ItemStack swapper, int damage) {
         ItemStack is = getLastStack(swapper);
-        if (is != null)
+        ItemInventory inv = new ItemInventory(swapper,swapperSlots);
+        if (is != null) {
+            System.out.println("Setting damage on " + is.toString() + " to: " + damage);
             is.getItem().setDamage(is, damage);
+            inv.setInventorySlotContents(swapper.stackTagCompound.getInteger(stringLASTTOOL), is);
+            inv.markDirty();
+        }
     }
 
 //endregion
@@ -340,15 +354,21 @@ public class Swapper extends Item {
         return super.getColorFromItemStack(swapper, par2);
     }
 
-    @Override
+    @Override //called when rendering in inventory/hotbar
     public IIcon getIcon(ItemStack swapper, int renderPass) {
         ItemStack is = getLastStack(swapper);
         IIcon ret;
-        if (is != null) {
-            if (is.getItem().requiresMultipleRenderPasses()) {
-                ret = is.getItem().getIcon(is, renderPass);
+        if (renderPass == 0) {
+            ret = outlineIcon;
+        } else if (is != null) {
+            if (is.getItem() instanceof ItemBlock) {
+                ret = is.getItem().getIconFromDamage(is.getItemDamage());
             } else {
-                ret= is.getItem().getIconIndex(is);
+                if (is.getItem().requiresMultipleRenderPasses()) {
+                    ret = is.getItem().getIcon(is, renderPass - 1);
+                } else {
+                    ret = is.getItem().getIconIndex(is);
+                }
             }
         } else {
             ret = outlineIcon;
@@ -359,23 +379,24 @@ public class Swapper extends Item {
     @Override
     public void registerIcons(IIconRegister register) {
         super.registerIcons(register);
-        //transparentIcon = register.registerIcon("ITA:Transparent.png");
         outlineIcon = register.registerIcon("ITA:Swapper");
     }
 
-    @Override
+    @Override //called when held
     public IIcon getIcon(ItemStack swapper, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
         ItemStack is = getLastStack(swapper);
-        IIcon ret;
-        if (is != null){
-            if (is.getItem().requiresMultipleRenderPasses()) {
-                ret = is.getItem().getIcon(is, renderPass, player, usingItem, useRemaining);
-            } else if (renderPass == 3) {
-                ret = null;
-            }else {
-                ret = is.getItem().getIconIndex(is);
+        IIcon ret = null;
+        if (is != null) {
+            if (is.getItem() instanceof ItemBlock) {
+                ret = is.getItem().getIconFromDamage(is.getItemDamage());
+            } else {
+                if (is.getItem().requiresMultipleRenderPasses()) {
+                    ret = is.getItem().getIcon(is, renderPass, player, usingItem, useRemaining);
+                } else {
+                    ret = is.getItem().getIconIndex(is);
+                }
             }
-        }else {
+        } else{
             ret = outlineIcon;
         }
         return ret;
@@ -396,7 +417,7 @@ public class Swapper extends Item {
 
     @Override
     public int getRenderPasses(int metadata) {
-        return 16;
+        return 8;
     }
 //endregion
 
