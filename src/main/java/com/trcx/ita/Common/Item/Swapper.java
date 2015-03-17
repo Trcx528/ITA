@@ -468,11 +468,7 @@ public class Swapper extends Item implements IEnergyContainerItem{
             if (is.getItem() instanceof ItemBlock) {
                 ret = is.getItem().getIconFromDamage(is.getItemDamage());
             } else {
-                if (is.getItem().requiresMultipleRenderPasses()) {
-                    ret = is.getItem().getIcon(is, renderPass-1, player, usingItem, useRemaining);
-                } else {
-                    ret = is.getItem().getIconIndex(is);
-                }
+                ret = is.getItem().getIcon(is, renderPass-1, player, usingItem, useRemaining);
             }
             putLastStack(swapper,is);
         } else{

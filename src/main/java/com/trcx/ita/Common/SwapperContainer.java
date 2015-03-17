@@ -2,6 +2,8 @@ package com.trcx.ita.Common;
 
 import com.trcx.ita.Common.Item.Swapper;
 import com.trcx.ita.Common.OpenMods.PlayerItemInventory;
+import com.trcx.ita.ITA;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -16,16 +18,32 @@ public class SwapperContainer extends Container {
     private InventoryPlayer invPlayer;
     private PlayerItemInventory invSwapper;
 
-    public SwapperContainer(InventoryPlayer invPlayer, PlayerItemInventory invSwapper){
+    public SwapperContainer(InventoryPlayer invPlayer, final PlayerItemInventory invSwapper){
         this.invPlayer = invPlayer;
         this.invSwapper = invSwapper;
         for (int i = 0; i!= Swapper.swapperSlots; i++){
-            addSlotToContainer(new Slot(invSwapper,i, 44 + i * 18, 63));
+            final int index = i;
+            addSlotToContainer(new Slot(invSwapper,i, 44 + i * 18, 63){
+                @Override
+                public boolean isItemValid(ItemStack itemStack){
+                    GameRegistry.UniqueIdentifier uid = GameRegistry.findUniqueIdentifierFor(itemStack.getItem());
+                    for(int i =0; i != ITA.swapperBlacklist.length; i++){
+                        if (ITA.swapperBlacklist[i].equals(uid.modId + ":" + uid.name))
+                            return false;
+                        if (ITA.swapperBlacklist[i].equals(uid.modId + ":" + uid.name + itemStack.getItemDamage()))
+                            return false;
+                    }
+                    if (index == 4)
+                        return true;
+                    return itemStack.stackSize <= 1;
+                }
+
+            });
         }
         bindPlayerInventory(invPlayer);
     }
 
-    private void bindPlayerInventory(InventoryPlayer inventoryPlayer) {
+    private void bindPlayerInventory(final InventoryPlayer inventoryPlayer) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 9; j++) {
                 addSlotToContainer(new Slot(inventoryPlayer, j + i * 9 + 9,
@@ -33,7 +51,13 @@ public class SwapperContainer extends Container {
             }
         }
         for (int i = 0; i < 9; i++) {
-            addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142));
+            final int currentSlot = i;
+            addSlotToContainer(new Slot(inventoryPlayer, i, 8 + i * 18, 142) {
+                @Override
+                public boolean canTakeStack(EntityPlayer player){
+                    return currentSlot!=inventoryPlayer.currentItem;
+                }
+            });
         }
     }
 
@@ -42,24 +66,21 @@ public class SwapperContainer extends Container {
         return invSwapper.isUseableByPlayer(player);
     }
 
-    @Override // imporant for shift clicking
-    public ItemStack transferStackInSlot(EntityPlayer player, int slot) {
+    @Override // important for shift clicking
+    public ItemStack transferStackInSlot(EntityPlayer player, int slotID) { // shift clicking invalid itemStacks should be fixed in later versions of forge
+        //slotID = slot of the object shift clicked on
         ItemStack stack = null;
-        Slot slotObject = (Slot) inventorySlots.get(slot);
-
+        Slot slotObject = (Slot) inventorySlots.get(slotID);
         //null checks and checks if the item can be stacked (maxStackSize > 1)
         if (slotObject != null && slotObject.getHasStack()) {
             ItemStack stackInSlot = slotObject.getStack();
             stack = stackInSlot.copy();
 
-            //merges the item into player inventory since its in the tileEntity
-            if (slot < 9) {
-                if (!this.mergeItemStack(stackInSlot, 0, 35, true)) {
+            if (slotID < Swapper.swapperSlots) {
+                if (!this.mergeItemStack(stackInSlot, Swapper.swapperSlots, Swapper.swapperSlots + 35, true)) {
                     return null;
                 }
-            }
-            //places it into the tileEntity is possible since its in the player inventory
-            else if (!this.mergeItemStack(stackInSlot, 0, 9, false)) {
+            } else if (!this.mergeItemStack(stackInSlot, 0, Swapper.swapperSlots, false)) {
                 return null;
             }
 

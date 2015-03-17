@@ -153,12 +153,18 @@ public class Config{
         clientConfig.load();
         commonConfig.load();
 
+        String[] swapperBlacklist = new String[2];
+        swapperBlacklist[0] = "OpenBlocks:devnull";
+        swapperBlacklist[1] = "appliedenergistics2:item.ToolWirelessTerminal";
+
+
         ITA.alloyMultiplier = commonConfig.getFloat("Alloy Multiplier", "Balance",0.375F, 0.0F, 10.0F, "");
         ITA.debug = commonConfig.getBoolean("debug mode", "Debug", false, "");
         ITA.maxProtectionPreType = commonConfig.getFloat("Max Protection (Pre Type) Factor", "Balance", 50.0F, 0.0F, 100.0F, "");
         ITA.maxSpeedMultiplier = commonConfig.getFloat("Max Speed Multiplier", "Balance", 16F, 0F, 100F, "");
         ITA.craftingHammerRequired = commonConfig.getBoolean("Require Crafting Hammer","Balance", true, "Might cause recipe conflicts if disabled");
         ITA.syncConfigToPlayersOnLogin = commonConfig.getBoolean("Sync Server Config To Players On Login", "General", true, "Recommended to leave enable");
+        ITA.swapperBlacklist = commonConfig.getStringList("Swapper Blacklist", "Balance",swapperBlacklist,"List of Items to blacklist from insertion into the swapper");
 
         ITA.shiftForToolTips = clientConfig.getBoolean("Shift For Tooltips", "Tooltips", false, "");
         ITA.materialToolTips = clientConfig.getBoolean("Material Tooltips", "Tooltips", true, "");
