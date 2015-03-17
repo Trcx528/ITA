@@ -284,8 +284,7 @@ public class Swapper extends Item implements IEnergyContainerItem{
         } else {
             ItemStack is = getStack(slotRightClick, swapper);
             if (is!=null) {
-                is.getItem().onItemRightClick(is, world, player);
-                putLastStack(swapper, is);
+                putLastStack(swapper,is.getItem().onItemRightClick(is, world, player));
             }
         }
         return swapper;
@@ -653,7 +652,7 @@ public class Swapper extends Item implements IEnergyContainerItem{
         return super.getToolClasses(swapper);
     }
     //endregion
-    //region rf
+//region rf
     @Override
     public int receiveEnergy(ItemStack swapper, int maxReceive, boolean simulate) {
         ItemStack is = getLastStack(swapper);

@@ -51,7 +51,7 @@ import java.util.Map;
 public class Main
 {
 
-    public static final String VERSION = "0.1.3";
+    public static final String VERSION = "0.1.4";
     private static int tickCounter = 0;
 
     public Main(){
