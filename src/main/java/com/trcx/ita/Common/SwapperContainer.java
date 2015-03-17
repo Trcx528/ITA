@@ -77,7 +77,7 @@ public class SwapperContainer extends Container {
             stack = stackInSlot.copy();
 
             if (slotID < Swapper.swapperSlots) {
-                if (!this.mergeItemStack(stackInSlot, Swapper.swapperSlots, Swapper.swapperSlots + 35, true)) {
+                if (!this.mergeItemStack(stackInSlot, 5, 33, true)) {
                     return null;
                 }
             } else if (!this.mergeItemStack(stackInSlot, 0, Swapper.swapperSlots, false)) {

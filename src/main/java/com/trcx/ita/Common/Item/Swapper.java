@@ -7,6 +7,7 @@ import com.trcx.ita.ITA;
 import com.trcx.ita.Main;
 import cpw.mods.fml.common.Optional;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -14,6 +15,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
@@ -52,6 +54,9 @@ public class Swapper extends Item implements IEnergyContainerItem{
         setMaxStackSize(1);
         setMaxDamage(Integer.MAX_VALUE);
         MinecraftForge.EVENT_BUS.register(this);
+        GameRegistry.addShapedRecipe(new ItemStack(this), "bpa", " c ", " s ", 's', new ItemStack(Items.stick),
+                'b', new ItemStack(Items.stone_shovel), 'p', new ItemStack(Items.stone_pickaxe),
+                'a', new ItemStack(Items.stone_axe), 'c', new ItemStack(Item.getItemFromBlock(Blocks.chest)));
     }
 //region inventory stuff
     public static ItemStack getLastStack(ItemStack swapper){

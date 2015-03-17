@@ -2,7 +2,6 @@ package com.trcx.ita.Client;
 
 import com.trcx.ita.Common.Item.Swapper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -13,8 +12,6 @@ import org.lwjgl.opengl.GL11;
  * Created by Trcx on 3/16/2015.
  */
 public class SwapperRenderer implements IItemRenderer {
-
-    protected static RenderItem itemRenderer = new RenderItem();
 
     @Override
     public boolean handleRenderType(ItemStack swapper, ItemRenderType type) {
