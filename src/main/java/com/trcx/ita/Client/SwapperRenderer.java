@@ -31,7 +31,7 @@ public class SwapperRenderer implements IItemRenderer {
         if (is!=null)
             if (is.getItem() instanceof ItemBlock)
                 return true;
-        return false;
+        return type != ItemRenderType.INVENTORY;
     }
 
     @Override

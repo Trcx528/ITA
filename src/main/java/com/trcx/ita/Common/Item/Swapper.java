@@ -6,6 +6,7 @@ import com.trcx.ita.Common.OpenMods.ItemInventory;
 import com.trcx.ita.ITA;
 import com.trcx.ita.Main;
 import cpw.mods.fml.common.Optional;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.texture.IIconRegister;
@@ -17,7 +18,9 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.util.ForgeDirection;
+import net.minecraftforge.event.entity.player.EntityItemPickupEvent;
 
 import java.util.List;
 import java.util.Set;
@@ -48,6 +51,7 @@ public class Swapper extends Item implements IEnergyContainerItem{
         super();
         setMaxStackSize(1);
         setMaxDamage(Integer.MAX_VALUE);
+        MinecraftForge.EVENT_BUS.register(this);
     }
 //region inventory stuff
     public static ItemStack getLastStack(ItemStack swapper){
@@ -276,7 +280,7 @@ public class Swapper extends Item implements IEnergyContainerItem{
             ItemStack is = getStack(slotRightClick, swapper);
             if (is!=null) {
                 is.getItem().onItemRightClick(is, world, player);
-                putLastStack(swapper,is);
+                putLastStack(swapper, is);
             }
         }
         return swapper;
@@ -689,4 +693,28 @@ public class Swapper extends Item implements IEnergyContainerItem{
         return 0;
     }
     //endregion
+
+    @SubscribeEvent
+    public void onPickUp(EntityItemPickupEvent event){
+        for (int i =0; i!=event.entityPlayer.inventory.getSizeInventory(); i ++){
+            ItemStack swapper = event.entityPlayer.inventory.getStackInSlot(i);
+            if (swapper != null && swapper.getItem() == this){
+                ItemInventory inv = new ItemInventory(swapper, swapperSlots);
+                ItemStack swapperStack = inv.getStackInSlot(slotRightClick);
+                if (swapperStack != null){
+                    if (swapperStack.isItemEqual(event.item.getEntityItem()) && ItemStack.areItemStackTagsEqual(swapperStack, event.item.getEntityItem())){
+                        if (swapperStack.stackSize + event.item.getEntityItem().stackSize <= swapperStack.getMaxStackSize()){
+                            swapperStack.stackSize += event.item.getEntityItem().stackSize;
+                            event.item.getEntityItem().stackSize = 0;
+                        } else {
+                            int qtyToMove = swapperStack.getMaxStackSize() - swapperStack.stackSize;
+                            swapperStack.stackSize += qtyToMove;
+                            event.item.getEntityItem().stackSize -= qtyToMove;
+                        }
+                        inv.setInventorySlotContents(slotRightClick, swapperStack);
+                    }
+                }
+            }
+        }
+    }
 }
