@@ -32,7 +32,6 @@ public class ITA {
     public static float maxSpeedMultiplier;
     public static float maxProtectionPreType;
     public static boolean syncConfigToPlayersOnLogin;
-    public static String[] swapperBlacklist;
 
     //client config
     public static boolean materialToolTips;
@@ -51,7 +50,6 @@ public class ITA {
     public static Item Boots;
     public static Item ArmorHammer;
     public static Item Alloy;
-    public static Item Swapper;
 
     public static void registerMessage(Class packet, Class message)
     {

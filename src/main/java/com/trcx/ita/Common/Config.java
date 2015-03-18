@@ -164,7 +164,6 @@ public class Config{
         ITA.maxSpeedMultiplier = commonConfig.getFloat("Max Speed Multiplier", "Balance", 16F, 0F, 100F, "");
         ITA.craftingHammerRequired = commonConfig.getBoolean("Require Crafting Hammer","Balance", true, "Might cause recipe conflicts if disabled");
         ITA.syncConfigToPlayersOnLogin = commonConfig.getBoolean("Sync Server Config To Players On Login", "General", true, "Recommended to leave enable");
-        ITA.swapperBlacklist = commonConfig.getStringList("Swapper Blacklist", "Balance",swapperBlacklist,"List of Items to blacklist from insertion into the swapper");
 
         ITA.shiftForToolTips = clientConfig.getBoolean("Shift For Tooltips", "Tooltips", false, "");
         ITA.materialToolTips = clientConfig.getBoolean("Material Tooltips", "Tooltips", true, "");

@@ -8,7 +8,6 @@ import com.trcx.ita.Common.*;
 import com.trcx.ita.Common.Item.Alloy;
 import com.trcx.ita.Common.Item.ArmorHammer;
 import com.trcx.ita.Common.Item.ITAArmor;
-import com.trcx.ita.Common.Item.Swapper;
 import com.trcx.ita.Common.Network.commonConfigPacket;
 import com.trcx.ita.Common.Network.jsonConfigPacket;
 import com.trcx.ita.Common.Recipes.RecipeAlloy;
@@ -18,7 +17,6 @@ import com.trcx.ita.Common.Traits.BaseTrait;
 import com.trcx.ita.Common.Traits.PotionTrait;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.SidedProxy;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
@@ -62,9 +60,6 @@ public class Main
     @Mod.Instance("ITA")
     public static Main instance;
 
-    @SidedProxy(clientSide = "com.trcx.ita.Client.ClientProxy", serverSide = "com.trcx.ita.Common.CommonProxy")
-    public static CommonProxy proxy;
-
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException{
         File configDir = new File(event.getModConfigurationDirectory(),"ITA");
@@ -81,7 +76,6 @@ public class Main
         ITA.Boots = new ITAArmor(CONSTS.typeBOOTS).setUnlocalizedName("ITABoots").setTextureName("ITA:Boots");
         ITA.ArmorHammer = new ArmorHammer().setUnlocalizedName("ITAHammer").setTextureName("ITA:Hammer");
         ITA.Alloy = new Alloy().setUnlocalizedName("ITAAlloy").setTextureName("ITA:Alloy");
-        ITA.Swapper = new Swapper().setUnlocalizedName("ITASwapper").setTextureName("ITA:Swapper");
 
         GameRegistry.registerItem(ITA.Helmet,CONSTS.idHELMENT);
         GameRegistry.registerItem(ITA.Chestplate, CONSTS.idCHESTPLATE);
@@ -89,9 +83,6 @@ public class Main
         GameRegistry.registerItem(ITA.Boots, CONSTS.idBOOTS);
         GameRegistry.registerItem(ITA.ArmorHammer, CONSTS.idARMORHAMMER);
         GameRegistry.registerItem(ITA.Alloy, CONSTS.idALLOY);
-        GameRegistry.registerItem(ITA.Swapper, CONSTS.idSwapper);
-
-        NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
 
         GameRegistry.addRecipe(new RecipeITAAarmor());
@@ -106,10 +97,7 @@ public class Main
     }
 
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
-        proxy.registerRenderers();
-    }
+    public void init(FMLInitializationEvent event) {}
 
     @SideOnly(Side.SERVER)
     @SubscribeEvent

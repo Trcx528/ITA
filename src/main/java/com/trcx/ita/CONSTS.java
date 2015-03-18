@@ -24,7 +24,6 @@ public class CONSTS {
     public static final String idBOOTS = "ITABoots";
     public static final String idARMORHAMMER = "ArmorHammer";
     public static final String idALLOY = "Alloy";
-    public static final String idSwapper = "Swapper";
 
     public static final UUID speedAttribute = new UUID(528528528, 528528528);
 
