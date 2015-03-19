@@ -17,10 +17,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
 import net.minecraftforge.common.ISpecialArmor;
-
-import java.util.List;
 
 /**
  * Created by Trcx on 2/25/2015.
@@ -97,7 +94,7 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
             }
         }
 
-        //ap.AbsorbRatio = Math.min(ap.AbsorbRatio / 100, 1D);
+        ap.AbsorbRatio = ap.AbsorbRatio / 100;
         if (ITA.debug) {
             System.out.println("Props: Max: " + ap.AbsorbMax + " Ratio: " + ap.AbsorbRatio + "(" + damage + ")" + " Unblockable: " + source.isUnblockable());
         }
@@ -148,8 +145,6 @@ public class ITAArmor extends ItemArmor implements ISpecialArmor {
 
     @Override
     public boolean getIsRepairable(ItemStack armor, ItemStack material) {
-        if (material.getItem() == Items.diamond)
-            return true;
-        return false;
+        return material.getItem() == Items.diamond;
     }
 }
