@@ -46,7 +46,11 @@ public class PotionTrait extends BaseTrait {
                     } else if (randActivationFrequency > 0) {
                         double calcWeight = getCalculatedWeight(weight, weightFrequencyImpact);
                         if (random.nextInt(3600) <= Math.floor(calcWeight * randActivationFrequency)) { // weight of 1 should trigger once every hour
-                            player.addPotionEffect(effect);
+                            try {
+                                player.addPotionEffect(effect);
+                            } catch (Exception e){
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
