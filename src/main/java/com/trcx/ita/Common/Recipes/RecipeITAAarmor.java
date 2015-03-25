@@ -55,7 +55,7 @@ public class RecipeITAAarmor implements IRecipe {
                             } else {
                                 anbt.materials.put(mat, 1);
                             }
-                        } else if (ITA.Materials.containsKey(uid.modId +":" + uid.name + inv.getStackInSlot(i).getItemDamage())){
+                        } else if (ITA.Materials.containsKey(uid.modId + ":" + uid.name + inv.getStackInSlot(i).getItemDamage())) {
                             MaterialProperty mat = ITA.Materials.get(uid.modId + ":" + uid.name + inv.getStackInSlot(i).getItemDamage());
                             materialSlots[i] = true;
                             if (anbt.materials.containsKey(mat)) {
@@ -64,7 +64,8 @@ public class RecipeITAAarmor implements IRecipe {
                                 anbt.materials.put(mat, 1);
                             }
                         }
-                    } else if (inv.getStackInSlot(i).getItem() == ITA.Alloy) {
+                    }
+                    if (inv.getStackInSlot(i).getItem() == ITA.Alloy) {
                         materialSlots[i] = true;
                         MaterialProperty alloy = MaterialProperty.forAlloy(AlloyNBT.fromStack(inv.getStackInSlot(i)));
                         if (anbt.materials.containsKey(alloy)) {
@@ -74,6 +75,7 @@ public class RecipeITAAarmor implements IRecipe {
                         }
                     }
                 }
+
             }
         }
 

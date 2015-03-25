@@ -14,7 +14,7 @@ public class ArmorHammer extends Item {
     public ArmorHammer() {
         setMaxStackSize(1);
         setContainerItem(this); // player gets to keep this when crafting
-        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(this), " is", " si", "s  ", 's', new ItemStack(Items.stick),
+        GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(this), " is", " si", "s  ", 's', new ItemStack (Items.stick),
                 'i', new ItemStack(Items.iron_ingot)));
     }
 
