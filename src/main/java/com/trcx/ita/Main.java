@@ -49,7 +49,7 @@ import java.util.Map;
 public class Main
 {
 
-    public static final String VERSION = "0.1.7";
+    public static final String VERSION = "0.1.8";
     private static int tickCounter = 0;
 
     public Main(){
@@ -62,8 +62,7 @@ public class Main
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) throws IOException{
-        File configDir = new File(event.getModConfigurationDirectory(),"ITA");
-        Config.configDir = configDir;
+        Config.configDir = new File(event.getModConfigurationDirectory(),"ITA");
         Config.loadConfigs();
 
         ITA.net = NetworkRegistry.INSTANCE.newSimpleChannel("ITA");

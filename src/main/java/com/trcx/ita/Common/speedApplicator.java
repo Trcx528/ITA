@@ -7,6 +7,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -77,7 +78,8 @@ public class speedApplicator {
     @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public void fovOverride(FOVUpdateEvent event) {
-        event.newfov = getFov(event.entity);
+        if (ITA.fovOverride)
+            event.newfov = getFov(event.entity);
     }
 
     @SubscribeEvent
@@ -100,10 +102,11 @@ public class speedApplicator {
                 ITA.lastSpeedModifier = speedModifier;
                 if (ITA.debug)
                     System.out.println("Speed Modifier: " + speedModifier);
+                    System.out.println(event.player.getDisplayName() + ": " + event.player.toString());
                 if (modifier != null)
                     p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).removeModifier(modifier);
-
-                ITA.fovCalculatorValue = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
+                if (!(event.player instanceof EntityOtherPlayerMP))
+                    ITA.fovCalculatorValue = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
 
                 double x = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
                 modifier = new AttributeModifier(CONSTS.speedAttribute, "ITA Speed Modifier", -x + Math.max(x * speedModifier, 0.005), 0);

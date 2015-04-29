@@ -153,10 +153,6 @@ public class Config{
         clientConfig.load();
         commonConfig.load();
 
-        String[] swapperBlacklist = new String[2];
-        swapperBlacklist[0] = "OpenBlocks:devnull";
-        swapperBlacklist[1] = "appliedenergistics2:item.ToolWirelessTerminal";
-
 
         ITA.alloyMultiplier = commonConfig.getFloat("Alloy Multiplier", "Balance",0.375F, 0.0F, 10.0F, "");
         ITA.debug = commonConfig.getBoolean("debug mode", "Debug", false, "");
@@ -170,6 +166,7 @@ public class Config{
         ITA.basicArmorToolTips = clientConfig.getBoolean("Basic Armor Tooltips", "Tooltips", true, "");
         ITA.specialArmorToolTips = clientConfig.getBoolean("Special Armor Tooltips", "Tooltips", true, "");
         ITA.itaArmorToolTips = clientConfig.getBoolean("ITA Armor Tooltips", "Tooltips", true, "");
+        ITA.fovOverride = !clientConfig.getBoolean("Do Not Adjust Fov", "Gameplay", true, "");
 
         commonConfig.save();
         clientConfig.save();

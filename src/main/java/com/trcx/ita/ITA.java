@@ -39,6 +39,7 @@ public class ITA {
     public static boolean basicArmorToolTips;
     public static boolean itaArmorToolTips;
     public static boolean shiftForToolTips;
+    public static boolean fovOverride;
 
     public static String jsonMaterial;
     public static String jsonPotionTraits;
