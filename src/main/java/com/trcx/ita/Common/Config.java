@@ -166,7 +166,6 @@ public class Config{
         ITA.basicArmorToolTips = clientConfig.getBoolean("Basic Armor Tooltips", "Tooltips", true, "");
         ITA.specialArmorToolTips = clientConfig.getBoolean("Special Armor Tooltips", "Tooltips", true, "");
         ITA.itaArmorToolTips = clientConfig.getBoolean("ITA Armor Tooltips", "Tooltips", true, "");
-        ITA.fovOverride = !clientConfig.getBoolean("Do Not Adjust Fov", "Gameplay", true, "");
 
         commonConfig.save();
         clientConfig.save();

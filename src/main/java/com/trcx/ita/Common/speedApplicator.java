@@ -5,15 +5,10 @@ import com.trcx.ita.ITA;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.TickEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.entity.EntityOtherPlayerMP;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.client.event.FOVUpdateEvent;
 import net.minecraftforge.common.MinecraftForge;
 
 
@@ -46,42 +41,6 @@ public class speedApplicator {
         return speedModifier;
     }
 
-    @SideOnly(Side.CLIENT)
-    private float getFov(EntityPlayer player) {
-        float f = 1.0F;
-
-        if (player.capabilities.isFlying) {
-            f *= 1.1F;
-        }
-
-        f = (float) ((double) f * ((ITA.fovCalculatorValue / (double) player.capabilities.getWalkSpeed() + 1.0D) / 2.0D));
-
-        if (player.capabilities.getWalkSpeed() == 0.0F || Float.isNaN(f) || Float.isInfinite(f)) {
-            f = 1.0F;
-        }
-
-        if (player.isUsingItem() && player.getItemInUse().getItem() == Items.bow) {
-            int i = player.getItemInUseDuration();
-            float f1 = (float) i / 20.0F;
-
-            if (f1 > 1.0F) {
-                f1 = 1.0F;
-            } else {
-                f1 *= f1;
-            }
-
-            f *= 1.0F - f1 * 0.15F;
-        }
-        return f;
-    }
-
-    @SideOnly(Side.CLIENT)
-    @SubscribeEvent
-    public void fovOverride(FOVUpdateEvent event) {
-        if (ITA.fovOverride)
-            event.newfov = getFov(event.entity);
-    }
-
     @SubscribeEvent
     public void doSpeedApplication(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.START) {
@@ -105,8 +64,6 @@ public class speedApplicator {
                     System.out.println(event.player.getDisplayName() + ": " + event.player.toString());
                 if (modifier != null)
                     p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).removeModifier(modifier);
-                if (!(event.player instanceof EntityOtherPlayerMP))
-                    ITA.fovCalculatorValue = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
 
                 double x = p.getEntityAttribute(SharedMonsterAttributes.movementSpeed).getAttributeValue();
                 modifier = new AttributeModifier(CONSTS.speedAttribute, "ITA Speed Modifier", -x + Math.max(x * speedModifier, 0.005), 0);
